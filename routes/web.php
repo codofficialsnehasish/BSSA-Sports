@@ -10,11 +10,21 @@ Route::get('/', function () {
 use App\Http\Controllers\{
     AuthController,
     Dashboard,
-    MemberCategory,
+    MemberCategoryController,
     MembersController,
     FeesController,
     AdmissionController,
     AccountsController,
+    CategoriesController,
+    FeeCategoryController,
+    DesignationController,
+    ComityController,
+    RoleController,
+    PermissionController,
+    CommitteeMembersController,
+    StudentPaymentController,
+    ExpensesController,
+
 };
 
 Route::get('/',[AuthController::class,'login'])->name('login');
@@ -26,9 +36,137 @@ Route::prefix('admin')->group( function (){
         Route::get('/logout',[AuthController::class,'logout'])->name('logout');
         Route::get('/dashboard',[Dashboard::class,'dashboard'])->name('dashboard');
 
-        Route::resource('member-category',MemberCategory::class);
 
-        Route::resource('members',MembersController::class);
+        Route::controller(RoleController::class)->group(function () {
+            Route::prefix('role')->group(function () {
+                Route::get("/",'roles')->name('roles');
+                Route::post("/create-role",'create_role')->name('role.create');
+                Route::post("{roleId}/update-role",'update_role')->name('role.update');
+                Route::put("/{roleId}/destroy-role",'destroy_role')->name('role.destroy');
+                Route::get("/{roleId}/add-permission-to-role",'addPermissionToRole')->name('role.addPermissionToRole');
+                Route::post("/{roleId}/give-permissions",'givePermissionToRole')->name('role.give-permissions');
+            });
+        });
+
+        Route::controller(PermissionController::class)->group(function () {
+            Route::prefix('permission')->group(function () {
+                Route::get("/",'permission')->name('permission');
+                Route::post("/create-permission",'create_permission')->name('permission.create');
+                Route::post("{permissionId}/update-permission",'update_permission')->name('permission.update');
+                Route::put("/{permissionId}/destroy-permission",'destroy_permission')->name('permission.destroy');
+          
+            });
+        });
+     
+
+
+        Route::prefix('category')->group( function () {
+            Route::controller(CategoriesController::class)->group( function () {
+                Route::get('list','index')->name('admin.category.list');
+                Route::get('create','create')->name('admin.category.create');
+                Route::post('store','store')->name('admin.category.store');
+                Route::get('edit/{id}','edit')->name('admin.category.edit');
+                Route::post('update','update')->name('admin.category.update');
+                Route::get('delete/{id}','destroy')->name('admin.category.delete');
+     
+            });
+        });
+        Route::prefix('members')->group( function () {
+            Route::controller(MembersController::class)->group( function () {
+                Route::get('list','index')->name('admin.members.list');
+                Route::get('create','create')->name('admin.members.create');
+                Route::post('store','store')->name('admin.members.store');
+                Route::get('edit/{id}','edit')->name('admin.members.edit');
+                Route::post('update','update')->name('admin.members.update');
+                Route::get('delete/{id}','destroy')->name('admin.members.delete');
+
+                Route::post('get-category-data','get_category_data')->name('admin.member.categorydata');
+                Route::post('make-payment','make_payment')->name('admin.members.payment');
+     
+            });
+        });
+        Route::prefix('members-category')->group( function () {
+            Route::controller(MemberCategoryController::class)->group( function () {
+                Route::get('list','index')->name('admin.member_category.list');
+                Route::get('create','create')->name('admin.member_category.create');
+                Route::post('store','store')->name('admin.member_category.store');
+                Route::get('edit/{id}','edit')->name('admin.member_category.edit');
+                Route::post('update','update')->name('admin.member_category.update');
+                Route::get('delete/{id}','destroy')->name('admin.member_category.delete');
+     
+            });
+        });
+        Route::prefix('fees-category')->group( function () {
+            Route::controller(FeeCategoryController::class)->group( function () {
+                Route::get('list','index')->name('admin.fee_category.list');
+                Route::get('create','create')->name('admin.fee_category.create');
+                Route::post('store','store')->name('admin.fee_category.store');
+                Route::get('edit/{id}','edit')->name('admin.fee_category.edit');
+                Route::post('update','update')->name('admin.fee_category.update');
+                Route::get('delete/{id}','destroy')->name('admin.fee_category.delete');
+     
+            });
+        });
+        Route::prefix('student-admission')->group( function () {
+            Route::controller(AdmissionController::class)->group( function () {
+                Route::get('list','index')->name('admin.student.admission.list');
+                Route::get('create','create')->name('admin.student.admission.create');
+                Route::post('store','store')->name('admin.student.admission.store');
+                Route::get('edit/{id}','edit')->name('admin.student.admission.edit');
+                Route::post('update','update')->name('admin.student.admission.update');
+                Route::get('delete/{id}','destroy')->name('admin.student.admission.delete');
+                Route::get('/get-fee-by-age/{id}/{category_id}','getFeeByAge')->name('admin.student.admission.get_fees');
+                Route::get('/get-subdivisions/{district_id}', 'getSubdivisions');
+                Route::get('/print-form/{id}','details')->name('admin.student.admission.print_form');
+     
+            });
+        });
+
+        Route::prefix('student-payment')->group( function () {
+            Route::controller(StudentPaymentController::class)->group( function () {
+                Route::get('/','index')->name('admin.student.payment.index');
+                Route::get('create','create')->name('admin.student.payment.create');
+                Route::post('store','store')->name('admin.student.payment.store');
+                Route::post('get-students-by-category','get_students_by_category')->name('admin.student.get-students-by-category');
+                Route::get('/{id}/show','show')->name('admin.student.payment.show');
+                Route::get('/{id}/show-transactions','show_transactions')->name('admin.student.payment.show-transactions');
+                Route::get('/{date}/{id}/transaction-invoice','student_transaction_invoice')->name('admin.student.payment.transaction-invoice');
+            });
+        });
+
+        Route::prefix('designations')->group( function () {
+            Route::controller(DesignationController::class)->group( function () {
+                Route::get('list','index')->name('admin.designations.list');
+                Route::get('create','create')->name('admin.designations.create');
+                Route::post('store','store')->name('admin.designations.store');
+                Route::get('edit/{id}','edit')->name('admin.designations.edit');
+                Route::post('update','update')->name('admin.designations.update');
+                Route::get('delete/{id}','destroy')->name('admin.designations.delete');
+    
+            });
+        });
+
+        Route::prefix('comity')->group( function () {
+            Route::controller(ComityController::class)->group( function () {
+                Route::get('list','index')->name('admin.comity.list');
+                Route::get('create','create')->name('admin.comity.create');
+                Route::post('store','store')->name('admin.comity.store');
+                Route::get('edit/{id}','edit')->name('admin.comity.edit');
+                Route::post('update','update')->name('admin.comity.update');
+                Route::get('delete/{id}','destroy')->name('admin.comity.delete');
+    
+            });
+        });
+
+        Route::prefix('committe')->group( function () {
+            Route::controller(CommitteeMembersController::class)->group( function () {
+                Route::get('members/{id}','index')->name('admin.committe.members.list');
+                Route::get('assign-members/{id}','create')->name('admin.committe.members.create');
+                Route::post('assign-members-to-committe','store')->name('admin.committe.members.store');
+    
+            });
+        });
+
 
         Route::resource('fees',FeesController::class);
         Route::get('due-list',[FeesController::class,'due_list'])->name('fees.due-list');
@@ -50,6 +188,9 @@ Route::prefix('admin')->group( function (){
                 Route::get('balance-sheet','balance_sheet')->name('balance-sheet');
             });
         });
+
+        Route::resource('expenses',ExpensesController::class);
+        Route::get('expenses/{date}/expenses-details',[ExpensesController::class,'details'])->name('expenses.details');
     });
     
     

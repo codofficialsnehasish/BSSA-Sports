@@ -7,14 +7,14 @@
             <!-- ============================================================== -->
             <!-- Logo you can find that scss in header.scss -->
             <!-- ============================================================== -->
-            <a href="{{ route('dashboard') }}" class="brand-logo">
+            <a href="{{ route('dashboard') }}" class="brand-logo" style="background-color: #2f1576 !important;">
                 <span class="icon">
                     <img class="light-logo" src="{{ asset('admin_assets/assets/images/bssa.jpg') }}" width="46px">
                     <img class="dark-logo" src="{{ asset('admin_assets/assets/images/bssa.jpg') }}" width="46px">
                 </span>
                 <span class="text">
                     <!-- <img class="light-logo" src="{{ asset('admin_assets/assets/images/logo-light-text.png') }}"> -->
-                    <h1 style="margin:auto 0;"><b>BSSA</b></h1>
+                    <h1 style="margin:auto 0;color: #eeefef;"><b>BSSA</b></h1>
                     <!-- <img class="dark-logo" src="{{ asset('admin_assets/assets/images/logo-text.png') }}"> -->
                 </span>
             </a>

@@ -21,5 +21,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin'),
         ]);
+        $this->call([
+            CountriesSeeder::class,
+            StatesTableSeeder::class,
+            CitiesTableOneSeeder::class,
+            CitiesTableTwoSeeder::class,
+            CitiesTableThreeSeeder::class,
+            CitiesTableFourSeeder::class,
+            CitiesTableFiveSeeder::class,
+            DistrictsSeeder::class,
+            SubdivisionsSeeder::class,
+        ]);
     }
 }

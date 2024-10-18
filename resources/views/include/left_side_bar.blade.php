@@ -1,5 +1,5 @@
 <aside class="left-sidebar">
-    <ul id="slide-out" class="sidenav">
+    <ul id="slide-out" class="sidenav" style="background-color: #2f1576 !important;">
         <li>
             <ul class="collapsible">
                 <li class="small-cap"><span class="hide-menu">PERSONAL</span></li>
@@ -11,8 +11,8 @@
                     <a href="javascript: void(0);" class="collapsible-header has-arrow"><i class="material-icons">add_to_photos</i><span class="hide-menu"> Members Category </span></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="{{ route('member-category.create') }}"><i class="fas fa-plus"></i><span class="hide-menu">Add Category</span></a></li>
-                            <li><a href="{{ route('member-category.index') }}"><i class="fas fa-list-ol"></i><span class="hide-menu">All Category</span></a></li>
+                            <li><a href="{{ route('admin.category.create') }}"><i class="fas fa-plus"></i><span class="hide-menu">Add Category</span></a></li>
+                            <li><a href="{{ route('admin.category.list') }}"><i class="fas fa-list-ol"></i><span class="hide-menu">All Category</span></a></li>
                         </ul>
                     </div>
                 </li>
@@ -20,8 +20,8 @@
                     <a href="javascript: void(0);" class="collapsible-header has-arrow"><i class="material-icons">assignment_ind</i><span class="hide-menu"> Members </span></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="{{ route('members.create') }}"><i class="fas fa-plus"></i><span class="hide-menu">Entry Member</span></a></li>
-                            <li><a href="{{ route('members.index') }}"><i class="fas fa-list-ol"></i><span class="hide-menu">Member List</span></a></li>
+                            <li><a href="{{ route('admin.members.create') }}"><i class="fas fa-plus"></i><span class="hide-menu">Entry Member</span></a></li>
+                            <li><a href="{{ route('admin.members.list') }}"><i class="fas fa-list-ol"></i><span class="hide-menu">Member List</span></a></li>
                         </ul>
                     </div>
                 </li>

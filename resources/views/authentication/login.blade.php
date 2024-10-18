@@ -1,78 +1,134 @@
-@extends('layouts.auth_layout')
+<!doctype html>
+<html lang="en" data-bs-theme="semi-dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maxton | Bootstrap 5 Admin Dashboard Template</title>
+    <!--favicon-->
+    <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png">
+    <!-- loader-->
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+
+    <!--plugins-->
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/metisMenu.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/mm-vertical.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
+    <!--bootstrap css-->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+    <!--main css-->
+    <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/dark-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/blue-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/responsive.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--authentication-->
+    <div class="auth-basic-wrapper d-flex align-items-center justify-content-center">
+        <div class="container-fluid my-5 my-lg-0">
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto">
+                    <div class="card rounded-4 mb-0 border-top border-4 border-primary border-gradient-1">
+                        <div class="card-body p-5">
+                            {{-- <img src="{{ asset('assets/images/logo1.png') }}" class="mb-4" width="145"
+                                alt=""> --}}
+                            {{-- <h4 class="fw-bold">Get Started Now</h4> --}}
+                            <p class="mb-0">Enter your credentials to login your account</p>
+
+                            <div class="form-body my-5">
+                                <form class="row g-3" action="{{ route('login.process') }}" method="post">
+                                    @csrf
+                                    <div class="col-12">
+                                        <label for="inputEmailAddress" class="form-label">Email</label>
+                                        <input id="email" type="email" name="email" class="form-control"
+                                            id="email" placeholder="Enter Email" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="inputChoosePassword" class="form-label">Password</label>
+                                        <div class="input-group" id="show_hide_password">
+                                            <input type="password" class="form-control border-end-0"
+                                                id="inputChoosePassword" name="password" required
+                                                placeholder="Enter Password">
+                                            <a href="javascript:;" class="input-group-text bg-transparent"><i
+                                                    class="bi bi-eye-slash-fill"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">Remember
+                                                Me</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-end"> <a href="auth-basic-forgot-password.html">Forgot
+                                            Password ?</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-grd btn-grd-info px-5">Login</button>
+                                        </div>
+                                    </div>
+                                  
+                                </form>
+                            </div>
+
+                           
 
 
-@section('content')
-<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url({{ asset('admin_assets/assets/images/big/auth-background.jpg') }}) no-repeat left center;">
-    <div class="container">
-        
-        <div class="auth-box auth-sidebar">
-            <div id="loginform">
-                <div class="p-l-10">
-                    <h5 class="font-medium m-b-0 m-t-40">Sign In to Admin</h5>
-                    <small>Just login to your account</small>
+                        </div>
+                    </div>
                 </div>
-                <!-- Form -->
-                <div class="row">
-                    <form class="col s12" action="{{ route('login.process') }}" method="post">
-                        @csrf
-                        <!-- email -->
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="email" type="email" class="validate" name="email" required>
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                        <!-- pwd -->
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="password" type="password" class="validate" name="password" required>
-                                <label for="password">Password</label>
-                            </div>
-                        </div>
-                        <!-- pwd -->
-                        <div class="row m-t-5">
-                            <div class="col s7">
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Remember Me?</span>
-                                </label>
-                            </div>
-                            <div class="col s5 right-align"><a href="javascript:void(0);" class="link" id="to-recover">Forgot Pwd?</a></div>
-                        </div>
-                        <!-- pwd -->
-                        <div class="row m-t-40">
-                            <div class="col s12">
-                                <button class="btn-large w100 blue accent-4" type="submit">Login</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id="recoverform">
-                <div class="p-l-10">
-                    <h5 class="font-medium m-b-0 m-t-40">Recover password</h5>
-                    <small>Enter your Email and instructions will be sent to you!</small>
-                </div>
-                <div class="row">
-                    <!-- Form -->
-                    <form class="col s12" action="">
-                        <!-- email -->
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="email1" type="email" class="validate" required>
-                                <label for="email1">Email</label>
-                            </div>
-                        </div>
-                        <!-- pwd -->
-                        <div class="row m-t-20">
-                            <div class="col s12">
-                                <button class="btn-large w100 red" type="submit" name="action">Reset</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </div><!--end row-->
         </div>
     </div>
-</div>
-@endsection
+    <!--authentication-->
+
+
+    <!--plugins-->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <!--notification js -->
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bi-eye-slash-fill");
+                    $('#show_hide_password i').removeClass("bi-eye-fill");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bi-eye-slash-fill");
+                    $('#show_hide_password i').addClass("bi-eye-fill");
+                }
+            });
+
+            @if (session('success'))
+                round_success_noti('{{ session('success') }}');
+            @endif
+
+
+            @if ($errors->any())
+            
+                @foreach ($errors->all() as $error)
+                    round_error_noti('{{ $error }}');
+                @endforeach
+            @endif
+        });
+    </script>
+
+    
+
+</body>
+
+</html>

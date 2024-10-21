@@ -24,20 +24,18 @@
         <!--end breadcrumb-->
 
         <div class="row">
-            <form class="row g-3 needs-validation" novalidate action="{{ route('admin.student.admission.store') }}"
-                method="POST" enctype="multipart/form-data">
+            <form class="row g-3 needs-validation" novalidate action="{{ route('admin.student.admission.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-9 col-xl-9">
                     <div class="card">
                         <div class="card-body p-4">
                             <h5 class="mb-4">Admission Form</h5>
+
                             <div class="row">
                                 <div class="row">
-
                                     <div class="col-md-4">
                                         <label for="admission_fee" class="form-label">Admission Fees:</label>
                                         <span id="admission_fee" class="form-text">₹0.00</span>
-
                                         <input type="hidden" name="admission_fees" id="hidden_admission_fee">
                                     </div>
                                     <div class="col-md-4">
@@ -54,101 +52,52 @@
                             </div>
 
 
-                            <div class="col-md-12">
-                                <label for="input25" class="form-label">Full Name</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i
-                                            class="material-icons-outlined fs-5">person_outline</i></span>
-                                    <input type="text" class="form-control" id="input25" placeholder="Full Name"
-                                        name="full_name" value="{{ old('full_name') }}" required>
-
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="full_name" value="{{ old('full_name') }}" required>
+                                    <div class="invalid-feedback">Please enter your full name</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="guardian_name" class="form-label">Father / Guardian's Name</label>
+                                    <input type="text" class="form-control" id="guardian_name" placeholder="Enter Father / Guardian's Name" name="guardian_name" value="{{ old('guardian_name') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your full name
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="input25" class="form-label">Father/Guardian’s Name</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i
-                                            class="material-icons-outlined fs-5">person_outline</i></span>
-                                    <input type="text" class="form-control" id="guardian_name" placeholder="Full Name"
-                                        name="guardian_name" value="{{ old('guardian_name') }}" required>
-
-                                    <div class="invalid-feedback">
-                                        Please enter your full name
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label for="input27" class="form-label">Email</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="material-icons-outlined fs-5">mail</i></span>
-                                    <input type="text" class="form-control" id="email" name="email"
-                                        placeholder="Email" value="{{ old('email') }}" required>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email ID" value="{{ old('email') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your email
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input15" class="form-label">Phone</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">call</i></span>
-                                        <input type="text" class="form-control" id="mobile_number" name="mobile_number"
-                                            placeholder="Phone" value="{{ old('mobile_number') }}" required>
-                                        <div class="invalid-feedback">
-                                            Please enter your mobile number
-                                        </div>
+                                    <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Enter Phone Number" value="{{ old('mobile_number') }}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your mobile number
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input15" class="form-label">Whatsapp Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">call</i></span>
-                                        <input type="text" class="form-control" id="whatsapp_number"
-                                            name="whatsapp_number" placeholder="Whatsapp Number"
-                                            value="{{ old('whatsapp_number') }}" required>
-                                        <div class="invalid-feedback">
-                                            Please enter your whatsapp number
-                                        </div>
+                                    <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number" placeholder="Enter Whatsapp Number" value="{{ old('whatsapp_number') }}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your whatsapp number
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="input29" class="form-label">Date of Birth</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">calendar_today</i></span>
-                                        <input type="date" class="form-control datepicker" id="dob"
-                                            name="dob" placeholder="DOB" value="{{ old('dob') }}" required>
-
-                                        <div class="invalid-feedback">
-                                            Please enter your date of birth
-                                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control datepicker" id="dob" name="dob" placeholder="Choose Date Of Birth" value="{{ old('dob') }}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your date of birth
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="input29" class="form-label">Age</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">calendar_today</i></span>
-                                        <input type="text" class="form-control" id="age" name="age"
-                                            placeholder="Age" value="{{ old('age') }}" required readonly>
-
-                                        <div class="invalid-feedback">
-                                            Please enter your date of birth
-                                        </div>
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="text" class="form-control" id="age" name="age" placeholder="Age" value="{{ old('age') }}" required readonly>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input13" class="form-label">Sex</label>
                                     <div class="input-group">
                                         <div class="form-check">
@@ -167,217 +116,141 @@
                                             <label class="form-check-label" for="sex3">Others</label>
                                         </div>
                                     </div>
-
-
                                 </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="input18" class="form-label">Height(cm)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">event</i></span>
-                                        <input type="number" class="form-control" id="height" name="height"
-                                            placeholder="Height(cm)" value="{{ old('height') }}" required step="any" min="0">
-                                        <div class="invalid-feedback">
-                                            Please enter your height
-                                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="height" class="form-label">Height(cm)</label>
+                                    <input type="number" class="form-control" id="height" name="height"
+                                        placeholder="Height(cm)" value="{{ old('height') }}" required step="any" min="0">
+                                    <div class="invalid-feedback">
+                                        Please enter your height
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="input18" class="form-label">Weight (kg)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">event</i></span>
-                                        <input type="number" class="form-control" id="weight" name="weight"
-                                            placeholder="Weight (kg)" value="{{ old('weight') }}" required step="any" min="0">
-                                        <div class="invalid-feedback">
-                                            Please enter your Weight
-                                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="weight" class="form-label">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="weight" name="weight"
+                                        placeholder="Weight (kg)" value="{{ old('weight') }}" required step="any" min="0">
+                                    <div class="invalid-feedback">
+                                        Please enter your Weight
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="input18" class="form-label">School Portal Id</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">event</i></span>
-                                        <input type="text" class="form-control" id="school_portal_id"
-                                            name="school_portal_id" placeholder="Height(cm)" value="{{ old('age') }}"
-                                            required>
-                                        <div class="invalid-feedback">
-                                            Please enter your school portal id
-                                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="school_portal_id" class="form-label">School Portal Id</label>
+                                    <input type="text" class="form-control" id="school_portal_id"
+                                        name="school_portal_id" placeholder="Height(cm)" value="{{ old('age') }}"
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Please enter your school portal id
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="input13" class="form-label">Aadhaar Card No</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">watch_later</i></span>
-                                        <input type="text" class="form-control" id="input13" name="aadhar_card_no"
-                                            value="{{ old('aadhar_card_no') }}" placeholder="Aadhaar Card No" required>
-                                        <div class="invalid-feedback">
-                                            Please enter your aadhaar card no
-                                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="aadhaar" class="form-label">Aadhaar Card No</label>
+                                    <input type="text" class="form-control" id="aadhaar" name="aadhar_card_no"
+                                        value="{{ old('aadhar_card_no') }}" placeholder="Aadhaar Card No" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your aadhaar card no
                                     </div>
-
                                 </div>
-
-                            </div>
-
-                            <div class="row">
-                                
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input30" class="form-label">Class</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">watch_later</i></span>
-                                        <select class="form-select" id="class_id" name="class_id" required>
-
-
-                                            <option value="" disabled {{ old('class_id') ? '' : 'selected' }}>
-                                                Choose
-                                                Class</option>
-                                            @foreach ($classes as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('class_id') == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose class
-                                        </div>
+                                    <select class="form-select" id="class_id" name="class_id" required>
+                                        <option value="" disabled {{ old('class_id') ? '' : 'selected' }}>
+                                            Choose
+                                            Class</option>
+                                        @foreach ($classes as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ old('class_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose class
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+    
+                                <div class="col-md-6 mb-3">
                                     <label for="input18" class="form-label">Uniform Size(Upper)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">event</i></span>
-                                        <input type="text" class="form-control" id="uniform_size" name="uniform_size"
-                                            placeholder="Uniform Size(Upper)" value="{{ old('age') }}">
-                                        <div class="invalid-feedback">
-                                            Please enter your uniform size
-                                        </div>
+                                    <input type="text" class="form-control" id="uniform_size" name="uniform_size"
+                                        placeholder="Uniform Size(Upper)" value="{{ old('age') }}">
+                                    <div class="invalid-feedback">
+                                        Please enter your uniform size
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input30" class="form-label">Sports Category</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">watch_later</i></span>
-                                        <select class="form-select" id="category_id" name="category_id" required>
-
-
-                                            <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>
-                                                Choose
-                                                Category</option>
-                                            @foreach ($categories as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('category_id') == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose category
-                                        </div>
+                                    <select class="form-select" id="category_id" name="category_id" required>
+                                        <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>
+                                            Choose
+                                            Category</option>
+                                        @foreach ($categories as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ old('category_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose category
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">Special Interest </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">science</i></span>
-                                        <select class="form-select" id="interest_id" name="interest_id" required>
-                                            <option value="" disabled {{ old('interest_id') ? '' : 'selected' }}>
-                                                Choose
-                                                Interest</option>
-                                            @foreach ($special_interest as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('interest_id') == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose interest
-                                        </div>
+                                    <select class="form-select" id="interest_id" name="interest_id" required>
+                                        <option value="" disabled {{ old('interest_id') ? '' : 'selected' }}>
+                                            Choose
+                                            Interest</option>
+                                        @foreach ($special_interest as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ old('interest_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+    
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose interest
                                     </div>
                                 </div>
-                                
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">District</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">science</i></span>
-                                        <select class="form-select" id="district_id" name="district_id" required>
-                                            <option value="" disabled {{ old('district_id') ? '' : 'selected' }}>
-                                                Choose
-                                                District</option>
-                                            @foreach ($districts as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('district_id') == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose district
-                                        </div>
+                                    <select class="form-select" id="district_id" name="district_id" required>
+                                        <option value="" disabled {{ old('district_id') ? '' : 'selected' }}>
+                                            Choose
+                                            District</option>
+                                        @foreach ($districts as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ old('district_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose district
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">Subdivisions </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i
-                                                class="material-icons-outlined fs-5">science</i></span>
-                                        <select class="form-select" id="subdivision_id" name="subdivision_id" required>
-                                            <option value="" disabled {{ old('subdivision_id') ? '' : 'selected' }}>
-                                                Choose
-                                                Subdivisions</option>
-
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please choose subdivisions
-                                        </div>
+                                    <select class="form-select" id="subdivision_id" name="subdivision_id" required>
+                                        <option value="" disabled {{ old('subdivision_id') ? '' : 'selected' }}>
+                                            Choose
+                                            Subdivisions</option>
+    
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose subdivisions
                                     </div>
                                 </div>
-                            </div>
-
-
-
-                            <div class="col-md-12">
-                                <label for="input32" class="form-label"> Residential Address</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i
-                                            class="material-icons-outlined fs-5">opacity</i></span>
+                                <div class="col-md-6 mb-3">
+                                    <label for="residential_address" class="form-label"> Residential Address</label>
                                     <input type="text" class="form-control" id="residential_address"
-                                        name="residential_address"placeholder="Residential Address" required
+                                        name="residential_address" placeholder="Residential Address" required
                                         value="{{ old('residential_address') }}">
                                     <div class="invalid-feedback">
                                         Please enter your residential address
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="input32" class="form-label">Permanent Address</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i
-                                            class="material-icons-outlined fs-5">opacity</i></span>
+                                <div class="col-md-6 mb-3">
+                                    <label for="input32" class="form-label">Permanent Address</label>
                                     <input type="text" class="form-control" id="permanent_address"
                                         name="permanent_address"placeholder="Permanent Address" required
                                         value="{{ old('permanent_address') }}">
@@ -386,10 +259,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>

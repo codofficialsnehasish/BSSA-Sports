@@ -24,8 +24,7 @@
                 <div class="card">
                     <div class="card-body p-4">
                         <h5 class="mb-4">Add Category</h5>
-                        <form class="row g-3" id="jQueryValidationForm" action="{{ route('admin.category.store') }}"
-                            method="POST">
+                        <form class="row g-3" id="jQueryValidationForm" action="{{ route('admin.category.store') }}" method="POST">
                             @csrf
                             <div class="col-md-12">
                                 <label for="input1" class="form-label">Category Name</label>

@@ -267,25 +267,34 @@
 
                         <div class="card">
                             <div class="card-body p-4">
-                                <h5 class="mb-4">Admission Form</h5>
+                                <h5 class="mb-4">Profile & Aadhaar</h5>
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-12 mb-3">
                                     <label for="aadhaarInput" class="form-label">Aadhaar Card File</label>
-                                    <div class="input-group">
-                                        <input type="file" class="form-control" name="aadhar_proof" id="aadhaarInput"
-                                            placeholder="Aadhaar Card File" required>
+                                    <div class="mb-3">
+                                        <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input class="form-control" name="aadhar_proof" type="file" id="aadhaarInput" required>
                                         <div class="invalid-feedback">
                                             Please choose a file
                                         </div>
-                                        <img class="rounded me-2" alt="" width="200" src=""
-                                            id="aadhaarPreview">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="profileInput" class="form-label">Profile Image</label>
-                                    <div class="input-group">
+                                    <div class="mb-3">
+                                        <img class="img-thumbnail rounded me-2" id="profilePreview" alt="" width="200" src="" data-holder-rendered="true">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input class="form-control" name="profile_image" type="file" id="profileInput" required>
+                                        <div class="invalid-feedback">
+                                            Please choose a file
+                                        </div>
+                                    </div>
+                                    {{-- <div class="input-group">
                                         <input type="file" class="form-control" name="profile_image"
                                             id="profileInput" placeholder="Profile Image" required>
                                         <div class="invalid-feedback">
@@ -293,7 +302,7 @@
                                         </div>
                                         <img class="rounded me-2" alt="" width="200" src=""
                                             id="profilePreview">
-                                    </div>
+                                    </div> --}}
                                 </div>
 
 
@@ -320,15 +329,13 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-
-                                <h5 class="mb-4">Submit</h5>
-
+                                <h5 class="">Publish</h5>
                             </div>
                             <div class="card-body p-4">
                                 <div class="col-md-12">
                                     <div class="d-md-flex d-grid align-items-center gap-3">
-                                        <button type="submit" class="btn btn-grd-primary px-4">Submit</button>
-                                        <button type="reset" class="btn btn-grd-royal px-4">Reset</button>
+                                        <button type="submit" class="btn btn-grd btn-grd-info px-4">Submit</button>
+                                        <button type="reset" class="btn btn-grd btn-grd-warning px-4">Reset</button>
                                     </div>
                                 </div>
                             </div>

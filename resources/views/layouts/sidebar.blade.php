@@ -240,7 +240,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="{{ route('assets') }}" class="collapsible-header">
+                        <a href="{{ route('assets.index') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Assets</span>
                         </a>

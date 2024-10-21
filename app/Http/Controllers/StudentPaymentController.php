@@ -14,8 +14,7 @@ use App\Models\Transaction;
 
 class StudentPaymentController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $students = Student::whereHas('student_transactions') // Only get students with transactions
                         ->with('student_transactions') // Eager load the transactions
                         ->get()
@@ -54,8 +53,7 @@ class StudentPaymentController extends Controller
         return view('student_payments.index',compact('students'));
     }
 
-    public function create()
-    {
+    public function create(){
         $categories = Categories::where('is_visible',1)->get();
         return view('student_payments.create',compact('categories'));
     }
@@ -65,8 +63,7 @@ class StudentPaymentController extends Controller
         return response()->json($students);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         if(StudentTransaction::where('students_id',$request->student_id)->where('category_id',$request->category_id)->where('which_for','admission_fees')->exists()){
             // student already paid admission fees
             $student = Student::find($request->student_id);

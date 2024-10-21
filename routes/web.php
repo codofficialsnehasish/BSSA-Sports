@@ -79,6 +79,7 @@ Route::prefix('admin')->group( function (){
                 Route::get('edit/{id}','edit')->name('admin.members.edit');
                 Route::post('update','update')->name('admin.members.update');
                 Route::get('delete/{id}','destroy')->name('admin.members.delete');
+                Route::get('{id}/show','show')->name('admin.members.show');
 
                 Route::post('get-category-data','get_category_data')->name('admin.member.categorydata');
                 Route::post('make-payment','make_payment')->name('admin.members.payment');
@@ -128,6 +129,8 @@ Route::prefix('admin')->group( function (){
                 Route::get('create','create')->name('admin.student.payment.create');
                 Route::post('store','store')->name('admin.student.payment.store');
                 Route::post('get-students-by-category','get_students_by_category')->name('admin.student.get-students-by-category');
+                Route::post('get-students-payment-data','get_students_payment_data')->name('admin.student.get-students-payment-data');
+
                 Route::get('/{id}/show','show')->name('admin.student.payment.show');
                 Route::get('/{id}/show-transactions','show_transactions')->name('admin.student.payment.show-transactions');
                 Route::get('/{date}/{id}/transaction-invoice','student_transaction_invoice')->name('admin.student.payment.transaction-invoice');

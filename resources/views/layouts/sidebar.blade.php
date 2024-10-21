@@ -246,37 +246,31 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('purches') }}" class="collapsible-header">
+                        <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Purches</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('sallaries') }}" class="collapsible-header">
+                        <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Sallaries</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('missniliyes') }}" class="collapsible-header">
-                            <i class="material-icons-outlined">arrow_right</i>
-                            <span class="hide-menu"> Missniliyes exp </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('profit-loss') }}" class="collapsible-header">
+                        <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Profit / Loss </span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('criditor-dators') }}" class="collapsible-header">
+                        <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Criditor / Dators </span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('balance-sheet') }}" class="collapsible-header">
+                        <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Balance Sheet </span>
                         </a>

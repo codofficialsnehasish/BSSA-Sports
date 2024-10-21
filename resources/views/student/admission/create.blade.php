@@ -11,7 +11,7 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Members Category</li>
+                        <li class="breadcrumb-item active" aria-current="page">Admission</li>
                     </ol>
                 </nav>
             </div>
@@ -32,25 +32,22 @@
                             <h5 class="mb-4">Admission Form</h5>
 
                             <div class="row">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="admission_fee" class="form-label">Admission Fees:</label>
-                                        <span id="admission_fee" class="form-text">₹0.00</span>
-                                        <input type="hidden" name="admission_fees" id="hidden_admission_fee">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="monthly_fee" class="form-label">Monthly Fees:</label>
-                                        <span id="monthly_fee" class="form-text">₹0.00</span>
-                                        <input type="hidden" name="monthly_fees" id="hidden_monthly_fee">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="monthly_fee" class="form-label">Age Category:</label>
-                                        <span id="age_category" class="form-text"></span>
-                                        <input type="hidden" name="fee_category_id" id="hidden_age_category">
-                                    </div>
+                                <div class="col-md-4">
+                                    <label for="admission_fee" class="form-label">Admission Fees:</label>
+                                    <span id="admission_fee" class="form-text">₹0.00</span>
+                                    <input type="hidden" name="admission_fees" id="hidden_admission_fee">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="monthly_fee" class="form-label">Monthly Fees:</label>
+                                    <span id="monthly_fee" class="form-text">₹0.00</span>
+                                    <input type="hidden" name="monthly_fees" id="hidden_monthly_fee">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="monthly_fee" class="form-label">Age Category:</label>
+                                    <span id="age_category" class="form-text"></span>
+                                    <input type="hidden" name="fee_category_id" id="hidden_age_category">
                                 </div>
                             </div>
-
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -356,6 +353,7 @@
 @section('scripts')
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
     <script>
         $(".datepicker").flatpickr();
 
@@ -390,6 +388,7 @@
             dateFormat: "Y-m-d",
         });
     </script>
+
     <script>
         function readURL(input, imgElementId) {
             if (input.files && input.files[0]) {

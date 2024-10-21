@@ -22,18 +22,12 @@ use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 class MembersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $members = Members::all();
         return view('members.member.index',compact('members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
        $districts = District::where('state_id',4853)->get();
@@ -42,9 +36,6 @@ class MembersController extends Controller
         return view('members.member.create',compact('districts','categories','member_category'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         
@@ -143,12 +134,14 @@ class MembersController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $member = Members::find($id);
+        if($member){
+            return view('members.member.show',compact('member'));
+        }else{
+            return redirect()->back()->withError(['error'=>'Member Not Found.']);
+        }
     }
 
     /**

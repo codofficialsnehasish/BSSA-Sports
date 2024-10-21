@@ -66,7 +66,7 @@ class AssetController extends Controller
     public function update(Request $request, string $id){
         $validator = Validator::make($request->all(), [
             'asset_name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric',
             'remarks' => 'nullable|string|max:255',
         ]);
 

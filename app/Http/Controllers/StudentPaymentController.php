@@ -12,6 +12,8 @@ use App\Models\Student;
 use App\Models\StudentTransaction;
 use App\Models\Transaction;
 
+use Illuminate\Support\Facades\Validator;
+
 class StudentPaymentController extends Controller
 {
     public function index(){
@@ -63,7 +65,27 @@ class StudentPaymentController extends Controller
         return response()->json($students);
     }
 
+    public function get_students_payment_data(Request $request){
+        $students = Student::where('id',$request->student_id)->first(['admission_fees','monthly_fees']);
+        if(StudentTransaction::where('students_id',$request->student_id)->where('category_id',$request->category_id)->where('which_for','admission_fees')->exists()){
+            $students->is_paid_admission_fees = true;
+        }else{
+            $students->is_paid_admission_fees = false;
+        }
+        return response()->json($students);
+    }
+
     public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required|numeric|exists:students,id',
+            'category_id' => 'required|numeric|exists:categories,id',
+            'amount' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         if(StudentTransaction::where('students_id',$request->student_id)->where('category_id',$request->category_id)->where('which_for','admission_fees')->exists()){
             // student already paid admission fees
             $student = Student::find($request->student_id);

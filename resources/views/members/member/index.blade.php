@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Category List')
+@section('title', 'Member List')
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"> 
@@ -15,11 +15,15 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Category</li>
+                        <li class="breadcrumb-item active" aria-current="page">Members</li>
                     </ol>
                 </nav>
             </div>
-
+            <div class="ms-auto">
+                <a href="{{ route('admin.members.create') }}">
+                    <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
+                </a>
+            </div>
         </div>
         <!--end breadcrumb-->
 
@@ -28,25 +32,20 @@
           
 
             <div class="card">
-
-                <a href="{{ route('admin.members.create') }}"><button type="button" class="btn btn-grd btn-grd-info px-5">Add
-                    New
-                </button>
-            </a>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example2" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Sl. No.</th>
-                                    <th>Name</th>
-                                    <th>Member ID</th>
-                                    <th>Membership</th>
-                                    <th>Email</th>
-                                    <th>Contact No.</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
+                                    <th class="text-wrap">Sl. No.</th>
+                                    <th class="text-wrap">Name</th>
+                                    <th class="text-wrap">Member ID</th>
+                                    <th class="text-wrap">Membership</th>
+                                    <th class="text-wrap">Email</th>
+                                    <th class="text-wrap">Contact No.</th>
+                                    <th class="text-wrap">Status</th>
+                                    <th class="text-wrap">Created At</th>
+                                    <th class="text-wrap">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,6 +74,9 @@
                                             <td>
                                                 <a href="{{ route('admin.members.edit', $item->id) }}">
                                                     <i class="text-primary" data-feather="edit"></i></a>
+
+                                                <a href="{{ route('admin.members.show', $item->id) }}">
+                                                    <i class="text-primary" data-feather="file-text"></i></a>
 
 
                                                 <a class="delete-member"

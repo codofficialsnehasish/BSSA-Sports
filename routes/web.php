@@ -10,6 +10,9 @@ Route::get('/', function () {
 use App\Http\Controllers\{
     AuthController,
     Dashboard,
+    PermissionsController,
+    RoleController,
+    EmployeesController,
     MemberCategoryController,
     MembersController,
     FeesController,
@@ -19,8 +22,6 @@ use App\Http\Controllers\{
     FeeCategoryController,
     DesignationController,
     ComityController,
-    RoleController,
-    PermissionController,
     CommitteeMembersController,
     StudentPaymentController,
     ExpensesController,
@@ -37,26 +38,45 @@ Route::prefix('admin')->group( function (){
         Route::get('/dashboard',[Dashboard::class,'dashboard'])->name('dashboard');
 
 
-        Route::controller(RoleController::class)->group(function () {
-            Route::prefix('role')->group(function () {
-                Route::get("/",'roles')->name('roles');
-                Route::post("/create-role",'create_role')->name('role.create');
-                Route::post("{roleId}/update-role",'update_role')->name('role.update');
-                Route::put("/{roleId}/destroy-role",'destroy_role')->name('role.destroy');
-                Route::get("/{roleId}/add-permission-to-role",'addPermissionToRole')->name('role.addPermissionToRole');
-                Route::post("/{roleId}/give-permissions",'givePermissionToRole')->name('role.give-permissions');
+        Route::resource('permissions', PermissionsController::class);
+        Route::get('permissions/{permissionId}/delete', [PermissionsController::class,'destroy']);
+
+        Route::resource('roles', RoleController::class);
+        Route::get('roles/{roleId}/delete', [RoleController::class,'destroy']);
+        Route::get('roles/{roleId}/give-permissions', [RoleController::class,'addPermissionToRole']);
+        Route::put('roles/{roleId}/give-permissions', [RoleController::class,'givePermissionToRole']);
+        
+        Route::controller(EmployeesController::class)->group(function () {
+            Route::prefix('employees')->group(function () {
+                Route::get('/','index')->name('employee');
+                Route::get('/add-new','add_new')->name('employee.add');
+                Route::post('/add-new/process','process')->name('employee.add.process');
+                Route::get('/edit/{id}','edit')->name('employee.edit');
+                Route::post('/update','update_process')->name('employee.update');
+                Route::get('/delete/{id}','delete')->name('employee.delete');
             });
         });
 
-        Route::controller(PermissionController::class)->group(function () {
-            Route::prefix('permission')->group(function () {
-                Route::get("/",'permission')->name('permission');
-                Route::post("/create-permission",'create_permission')->name('permission.create');
-                Route::post("{permissionId}/update-permission",'update_permission')->name('permission.update');
-                Route::put("/{permissionId}/destroy-permission",'destroy_permission')->name('permission.destroy');
+        // Route::controller(RoleController::class)->group(function () {
+        //     Route::prefix('role')->group(function () {
+        //         Route::get("/",'roles')->name('roles');
+        //         Route::post("/create-role",'create_role')->name('role.create');
+        //         Route::post("{roleId}/update-role",'update_role')->name('role.update');
+        //         Route::put("/{roleId}/destroy-role",'destroy_role')->name('role.destroy');
+        //         Route::get("/{roleId}/add-permission-to-role",'addPermissionToRole')->name('role.addPermissionToRole');
+        //         Route::post("/{roleId}/give-permissions",'givePermissionToRole')->name('role.give-permissions');
+        //     });
+        // });
+
+        // Route::controller(PermissionController::class)->group(function () {
+        //     Route::prefix('permission')->group(function () {
+        //         Route::get("/",'permission')->name('permission');
+        //         Route::post("/create-permission",'create_permission')->name('permission.create');
+        //         Route::post("{permissionId}/update-permission",'update_permission')->name('permission.update');
+        //         Route::put("/{permissionId}/destroy-permission",'destroy_permission')->name('permission.destroy');
           
-            });
-        });
+        //     });
+        // });
      
 
 

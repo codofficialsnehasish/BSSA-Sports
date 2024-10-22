@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -43,5 +45,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class, 'profile_image', 'id');
+    }
+
+    public function aadhaar_media()
+    {
+        return $this->belongsTo(Media::class, 'aadhaar_image', 'id');
+    }
+
+    public function pan_card_media()
+    {
+        return $this->belongsTo(Media::class, 'pan_card_proof', 'id');
+    }
+
+    public function bank_passbook_media()
+    {
+        return $this->belongsTo(Media::class, 'passbook_image', 'id');
+    }
+
+    public function sallary()
+    {
+        return $this->hasOne(SalaryConfiguration::class, 'user_id', 'id');
     }
 }

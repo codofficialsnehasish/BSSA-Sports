@@ -21,6 +21,45 @@
                 </a>
             </li>
             
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="material-icons-outlined">person</i>
+                    </div>
+                    <div class="menu-title">Roles Permissions</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{ route('roles.index') }}"><i class="material-icons-outlined">arrow_right</i>Roles</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('permissions.index') }}"><i class="material-icons-outlined">arrow_right</i>Permissions</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+                        <i class="material-icons-outlined">person</i>
+                    </div>
+                    <div class="menu-title">Employees</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{ route('employee.add') }}">
+                            <i class="material-icons-outlined">arrow_right</i>Entry Employees
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('employee') }}">
+                            <i class="material-icons-outlined">arrow_right</i>Employees List
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            
             <!-- categories -->
             <li>
                 <a href="javascript:;" class="has-arrow">

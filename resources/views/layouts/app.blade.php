@@ -275,6 +275,7 @@
         </div>
     </div>
     <!--start switcher-->
+
     @include('layouts.scripts')
     
 

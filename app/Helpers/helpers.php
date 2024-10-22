@@ -4,6 +4,8 @@ use App\Models\Categories;
 use Carbon\Carbon;
 use App\Models\Comity;
 use App\Models\Media;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 if (! function_exists('d')) {
     function d($data)
@@ -280,5 +282,52 @@ if (!function_exists('format_label')) {
     {
         $formattedString = str_replace('_', ' ', $string);
         return ucwords($formattedString);
+    }
+}
+
+
+if (!function_exists('get_role')) {
+    function get_role($user_id){
+        $roleName = Role::leftJoin('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->where('model_has_roles.model_id', $user_id)
+                ->select('roles.name')
+                ->first();
+        if($roleName){
+            return $roleName->name;
+        }
+    }
+}
+
+
+if (!function_exists('is_have_image')) {
+    function is_have_image($image) {
+        if($image){
+            return 'block';
+        }else{
+            return 'none';
+        }
+    }
+}
+
+if (!function_exists('check_uncheck')) {
+    function check_uncheck($val1,$val2)
+    {
+        if($val1==$val2){
+            $str='checked';
+        }else{
+            $str='';
+        }
+        return $str;
+    }
+}
+
+if (!function_exists('check_status')){
+    function check_status($status){
+        if($status == 1){
+            $str = '<span class="badge bg-success text-light" style="font-size:15px;">Active</span>';
+        }else{
+            $str = '<span class="badge bg-danger text-light" style="font-size:15px;">Inactive</span>';
+        }
+        return $str;
     }
 }

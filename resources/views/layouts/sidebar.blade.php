@@ -21,22 +21,27 @@
                 </a>
             </li>
             
+            @canany(['View Permission', 'View Role'])
             <li>
                 <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"><i class="material-icons-outlined">person</i>
                     </div>
-                    <div class="menu-title">Roles Permissions</div>
+                    <div class="menu-title">Roles & Permissions</div>
                 </a>
                 <ul>
+                    @can('View Role')
                     <li>
                         <a href="{{ route('roles.index') }}"><i class="material-icons-outlined">arrow_right</i>Roles</a>
                     </li>
+                    @endcan
+                    @can('View Permission')
                     <li>
                         <a href="{{ route('permissions.index') }}"><i class="material-icons-outlined">arrow_right</i>Permissions</a>
                     </li>
-
+                    @endcan
                 </ul>
             </li>
+            @endcanany
 
             <li>
                 <a class="has-arrow" href="javascript:;">

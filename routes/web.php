@@ -26,6 +26,7 @@ use App\Http\Controllers\{
     StudentPaymentController,
     ExpensesController,
     AssetController,
+    ExpenseCategoryController,
 };
 
 Route::get('/',[AuthController::class,'login'])->name('login');
@@ -217,6 +218,7 @@ Route::prefix('admin')->group( function (){
 
         
         Route::resource('assets', AssetController::class);
+        Route::resource('expense-category', ExpenseCategoryController::class);
     });
     
     

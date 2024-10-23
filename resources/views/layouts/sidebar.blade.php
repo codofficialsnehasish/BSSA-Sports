@@ -117,6 +117,23 @@
 
                         </ul>
                     </li>
+                    
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="parent-icon"><i class="material-icons-outlined">arrow_right</i>
+                            </div>
+                            <div class="menu-title">Expense Category</div>
+                        </a>
+                        <ul>
+                            <li><a href="{{ route('expense-category.create') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>Add</a>
+                            </li>
+                            <li><a href="{{ route('expense-category.index') }}"><i
+                                        class="material-icons-outlined">arrow_right</i> List</a>
+                            </li>
+
+                        </ul>
+                    </li>
                 </ul>
             </li>
 

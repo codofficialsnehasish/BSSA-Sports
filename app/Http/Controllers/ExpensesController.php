@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\ExpensesTransaction;
 use App\Models\Transaction;
+use App\Models\ExpenseCategory;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,8 @@ class ExpensesController extends Controller
 
     public function create()
     {
-        return view('expenses.create');
+        $expense_categorys = ExpenseCategory::where('visiblity',1)->get();
+        return view('expenses.create',compact('expense_categorys'));
     }
 
     public function store(Request $request)

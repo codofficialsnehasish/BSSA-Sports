@@ -10,11 +10,10 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'transaction_table_name',
-        'table_id',
+        'transaction_name',
         'amount',
         'remarks',
-        'status',
+        'transaction_type',
     ];
 
     public function member_transaction()

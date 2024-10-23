@@ -54,17 +54,15 @@ class ExpensesController extends Controller
 
         foreach($request->expense_name as $key => $value){
             $expenses = new ExpensesTransaction();
-            $expenses->expenses_name = $request->expense_name[$key];
+            $expenses->expenses_category_id = $request->expense_name[$key];
             $expenses->amount = $request->amount[$key];
             $expenses->remarks = $request->remarks[$key];
             $res = $expenses->save();
 
             Transaction::create([
-                'transaction_table_name' => 'expenses_transactions',
-                'table_id' => $expenses->id,
+                'transaction_name' => $expenses->category->name,
                 'amount' => $expenses->amount,
-                'remarks' => $expenses->remarks,
-                'status' => 'credit'
+                'remarks' => $expenses->remarks
             ]);
         }
 
@@ -103,7 +101,7 @@ class ExpensesController extends Controller
         }
 
         $expenses = ExpensesTransaction::find($id);
-        $expenses->expenses_name = $request->expense_name;
+        $expenses->expenses_category_id = $request->expense_name;
         $expenses->amount = $request->amount;
         $expenses->remarks = $request->remarks;
         $res = $expenses->update();

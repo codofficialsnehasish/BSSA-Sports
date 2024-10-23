@@ -319,7 +319,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" class="collapsible-header">
+                        <a href="{{ route('accounts.profit-loss') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Profit / Loss </span>
                         </a>

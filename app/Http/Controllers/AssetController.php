@@ -37,10 +37,10 @@ class AssetController extends Controller
         $res = $asset->save();
 
         Transaction::create([
-            'transaction_table_name' => 'assets',
-            'table_id' => $asset->id,
+            'transaction_name' => $asset->title,
             'amount' => $asset->amount,
-            'remarks' => $asset->remarks
+            'remarks' => $asset->remarks,
+            'transaction_type' => 'credit'
         ]);
 
         if($res){

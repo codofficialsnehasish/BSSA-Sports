@@ -55,7 +55,7 @@
                                     @foreach ($expenses as $item)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $item->expenses_name }}</td>
+                                            <td>{{ $item->category->name }}</td>
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ $item->remarks }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ExpenseCategory extends Model
 {
     use HasFactory;
+
+    public function category()
+    {
+        return $this->hasMany(ExpenseCategory::class, 'expenses_category_id');
+    }
 }

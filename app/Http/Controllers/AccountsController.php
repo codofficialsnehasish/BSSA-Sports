@@ -4,45 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
+
 class AccountsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function assets()
+    public function showProfitLossReport()
     {
-        return view('accounts.assets');
-    }
+        // Fetch receipts (credit) and group by transaction name
+        $receipts = Transaction::select('transaction_name', DB::raw('SUM(amount) as total_amount'))
+                    ->where('transaction_type', 'credit')
+                    ->groupBy('transaction_name')
+                    ->get();
 
-    public function purches()
-    {
-        return view('accounts.purches');
-    }
+        // Fetch payments (debit) and group by transaction name
+        $payments = Transaction::select('transaction_name', DB::raw('SUM(amount) as total_amount'))
+                    ->where('transaction_type', 'debit')
+                    ->groupBy('transaction_name')
+                    ->get();
 
-    public function sallaries()
-    {
-        return view('accounts.sallaries');
-    }
+        // Calculate totals
+        $totalReceipts = $receipts->sum('total_amount');
+        $totalPayments = $payments->sum('total_amount');
 
-    public function missniliyes()
-    {
-        return view('accounts.missniliyes');
+        return view('accounts.profit_loss_report', compact('receipts', 'payments', 'totalReceipts', 'totalPayments'));
     }
-
-    public function profit_loss()
-    {
-        return view('accounts.profit_loss');
-    }
-
-    public function criditor_dators()
-    {
-        return view('accounts.criditor_dators');
-    }
-
-    public function balance_sheet()
-    {
-        return view('accounts.balance_sheet');
-    }
-
 
 }

@@ -203,13 +203,7 @@ Route::prefix('admin')->group( function (){
 
         Route::prefix('accounts')->group( function () {
             Route::controller(AccountsController::class)->group( function () {
-                Route::get('assets','assets')->name('assets');
-                Route::get('purches','purches')->name('purches');
-                Route::get('sallaries','sallaries')->name('sallaries');
-                Route::get('missniliyes','missniliyes')->name('missniliyes');
-                Route::get('profit-loss','profit_loss')->name('profit-loss');
-                Route::get('criditor-dators','criditor_dators')->name('criditor-dators');
-                Route::get('balance-sheet','balance_sheet')->name('balance-sheet');
+                Route::get('profit-loss','showProfitLossReport')->name('accounts.profit-loss');
             });
         });
 

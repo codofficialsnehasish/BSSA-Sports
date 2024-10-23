@@ -13,4 +13,9 @@ class AssetsCategory extends Model
     {
         return $this->hasMany(AssetsCategory::class, 'assets_category_id');
     }
+
+    public function assets()
+    {
+        return $this->hasMany(Asset::class, 'assets_category_id', 'id');
+    }
 }

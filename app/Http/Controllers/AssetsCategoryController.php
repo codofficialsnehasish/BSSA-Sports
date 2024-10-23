@@ -71,7 +71,7 @@ class AssetsCategoryController extends Controller
         if($res){
             return back()->with(['success'=>'Update Successfully']);
         }else{
-            return back()->with(['success'=>'Not Updated']);
+            return back()->withErrors(['error'=>'Not Updated']);
         }
     }
 
@@ -81,12 +81,16 @@ class AssetsCategoryController extends Controller
     public function destroy(string $id)
     {
         $assets_category = AssetsCategory::find($id);
-        $res = $assets_category->delete();
-
-        if($res){
-            return back()->with(['success'=>'Deleted Successfully']);
+        if($assets_category->assets->isEmpty()){
+            $res = $assets_category->delete();
+    
+            if($res){
+                return back()->with(['success'=>'Deleted Successfully']);
+            }else{
+                return back()->withErrors(['error'=>'Not Deleted']);
+            }
         }else{
-            return back()->with(['success'=>'Not Deleted']);
+            return back()->withErrors(['error'=>'This Category cannot be deleted']);
         }
     }
 }

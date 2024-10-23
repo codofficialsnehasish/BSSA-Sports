@@ -37,7 +37,7 @@ class ExpenseCategoryController extends Controller
         if($res){
             return back()->with(['success'=>'Added Successfully']);
         }else{
-            return back()->with(['success'=>'Not Added']);
+            return back()->withErrors(['error'=>'Not Added']);
         }
     }
 
@@ -71,7 +71,7 @@ class ExpenseCategoryController extends Controller
         if($res){
             return back()->with(['success'=>'Updated Successfully']);
         }else{
-            return back()->with(['success'=>'Not Updated']);
+            return back()->withErrors(['error'=>'Not Updated']);
         }
     }
 
@@ -81,12 +81,17 @@ class ExpenseCategoryController extends Controller
     public function destroy(string $id)
     {
         $expense_categorys = ExpenseCategory::find($id);
-        $res = $expense_categorys->delete();
+        if($expense_categorys->expenses->isEmpty()){
 
-        if($res){
-            return back()->with(['success'=>'Deleted Successfully']);
+            $res = $expense_categorys->delete();
+            if($res){
+                return back()->with(['success'=>'Deleted Successfully']);
+            }else{
+                return back()->withErrors(['error'=>'Not Deleted']);
+            }
         }else{
-            return back()->with(['success'=>'Not Deleted']);
+            return back()->withErrors(['error'=>'This Category cannot be deleted']);
         }
+
     }
 }

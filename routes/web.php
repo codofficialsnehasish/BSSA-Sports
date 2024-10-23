@@ -103,6 +103,7 @@ Route::prefix('admin')->group( function (){
                 Route::post('update','update')->name('admin.members.update');
                 Route::get('delete/{id}','destroy')->name('admin.members.delete');
                 Route::get('{id}/show','show')->name('admin.members.show');
+                Route::get('{id}/id-card','id_card')->name('admin.members.id-card');
 
                 Route::post('get-category-data','get_category_data')->name('admin.member.categorydata');
                 Route::post('make-payment','make_payment')->name('admin.members.payment');
@@ -145,6 +146,8 @@ Route::prefix('admin')->group( function (){
                 Route::get('/get-fee-by-age/{id}/{category_id}','getFeeByAge')->name('admin.student.admission.get_fees');
                 Route::get('/get-subdivisions/{district_id}', 'getSubdivisions');
                 Route::get('/print-form/{id}','details')->name('admin.student.admission.print_form');
+
+                Route::get('/id-card/{id}','id_card')->name('admin.student.id-card');
      
             });
         });

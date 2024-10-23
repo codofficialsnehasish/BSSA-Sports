@@ -386,4 +386,12 @@ class AdmissionController extends Controller
 
         }
     }
+
+    public function id_card(string $id)
+    {
+        $student= Student::find($id);
+
+        return view('student.admission.id_card',compact('student'));
+        
+    }
 }

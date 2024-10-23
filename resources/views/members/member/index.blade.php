@@ -75,13 +75,14 @@
                                                 <a href="{{ route('admin.members.edit', $item->id) }}">
                                                     <i class="text-primary" data-feather="edit"></i></a>
 
-                                                <a href="{{ route('admin.members.show', $item->id) }}">
-                                                    <i class="text-primary" data-feather="file-text"></i></a>
-
-
                                                 <a class="delete-member"
                                                     href="{{ route('admin.members.delete', $item->id) }}"><i
                                                         class="text-danger" data-feather="trash-2"></i></a>
+
+
+                                                <a class="btn btn-success btn-sm" href="{{ route('admin.members.show', $item->id) }}">Details</a>
+
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.members.id-card', $item->id) }}">ID Card</a>
                                             </td>
                                         </tr>
                                     @endforeach

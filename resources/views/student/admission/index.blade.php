@@ -78,6 +78,8 @@
                                                 <a class="delete-catgory"
                                                     href="{{ route('admin.student.admission.delete', $item->id) }}"><i
                                                         class="text-danger" data-feather="trash-2"></i></a>
+
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.student.id-card', $item->id) }}">ID Card</a>
                                             </td>
                                         </tr>
                                     @endforeach

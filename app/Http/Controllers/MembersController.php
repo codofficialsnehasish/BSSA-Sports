@@ -294,6 +294,14 @@ class MembersController extends Controller
         }
     }
 
+    public function id_card(string $id)
+    {
+        $member= Members::find($id);
+
+        return view('members.member.id_card',compact('member'));
+        
+    }
+
     public function get_category_data(Request $request){
         $member_category = MemberCategory::find($request->category_id);
         if($member_category){

@@ -44,7 +44,7 @@
                                         <th>Amount</th>
                                         <th>Remarks</th>
                                         <th>Date</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </tr>
                             </thead>
@@ -53,23 +53,23 @@
                                     @foreach ($assets as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->category->name }}</td>
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ $item->remarks }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ route('assets.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
                                                 <form action="{{ route('assets.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
                                                 </form>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="7" class="text-center">No transactions found.</td>
+                                        <td colspan="5" class="text-center">No transactions found.</td>
                                     </tr>
                                 @endif
                             </tbody>

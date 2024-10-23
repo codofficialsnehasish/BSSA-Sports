@@ -134,6 +134,23 @@
 
                         </ul>
                     </li>
+
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="parent-icon"><i class="material-icons-outlined">arrow_right</i>
+                            </div>
+                            <div class="menu-title">Assets Category</div>
+                        </a>
+                        <ul>
+                            <li><a href="{{ route('assets-category.create') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>Add</a>
+                            </li>
+                            <li><a href="{{ route('assets-category.index') }}"><i
+                                        class="material-icons-outlined">arrow_right</i> List</a>
+                            </li>
+
+                        </ul>
+                    </li>
                 </ul>
             </li>
 
@@ -306,12 +323,12 @@
                             <span class="hide-menu"> Assets</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
                             <span class="hide-menu"> Purches</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>

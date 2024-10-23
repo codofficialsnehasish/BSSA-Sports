@@ -41,6 +41,7 @@
                                 <tr>
                                     <th>Sl. No.</th>
                                     <th>Name</th>
+                                    <th>Visiblity</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
@@ -51,6 +52,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name }}</td>
+                                            <td>{!! check_status($item->visiblity) !!}</td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>
                                                 <a href="{{ route('expense-category.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
@@ -64,7 +66,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" class="text-center">No transactions found.</td>
+                                        <td colspan="5" class="text-center">No transactions found.</td>
                                     </tr>
                                 @endif
 

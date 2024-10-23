@@ -27,6 +27,7 @@ use App\Http\Controllers\{
     ExpensesController,
     AssetController,
     ExpenseCategoryController,
+    AssetsCategoryController,
 };
 
 Route::get('/',[AuthController::class,'login'])->name('login');
@@ -92,6 +93,7 @@ Route::prefix('admin')->group( function (){
      
             });
         });
+
         Route::prefix('members')->group( function () {
             Route::controller(MembersController::class)->group( function () {
                 Route::get('list','index')->name('admin.members.list');
@@ -107,6 +109,7 @@ Route::prefix('admin')->group( function (){
      
             });
         });
+
         Route::prefix('members-category')->group( function () {
             Route::controller(MemberCategoryController::class)->group( function () {
                 Route::get('list','index')->name('admin.member_category.list');
@@ -118,6 +121,7 @@ Route::prefix('admin')->group( function (){
      
             });
         });
+
         Route::prefix('fees-category')->group( function () {
             Route::controller(FeeCategoryController::class)->group( function () {
                 Route::get('list','index')->name('admin.fee_category.list');
@@ -129,6 +133,7 @@ Route::prefix('admin')->group( function (){
      
             });
         });
+        
         Route::prefix('student-admission')->group( function () {
             Route::controller(AdmissionController::class)->group( function () {
                 Route::get('list','index')->name('admin.student.admission.list');
@@ -213,6 +218,7 @@ Route::prefix('admin')->group( function (){
         
         Route::resource('assets', AssetController::class);
         Route::resource('expense-category', ExpenseCategoryController::class);
+        Route::resource('assets-category', AssetsCategoryController::class);
     });
     
     

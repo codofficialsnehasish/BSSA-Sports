@@ -34,8 +34,17 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="asset_name" class="form-label">Asset Name</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="asset_name" placeholder="Enter Asset"
-                                            name="asset_name" value="" required>
+                                        {{-- <input type="text" class="form-control" id="asset_name" placeholder="Enter Asset"
+                                            name="asset_name" value="" required> --}}
+
+                                        <select name="asset_name" id="asset_name" class="form-select" required>
+                                            <option value selected disabled>Select a Expance Type</option>
+                                            @foreach($assets_categorys as $assets_category)
+                                            <option value="{{ $assets_category->id }}">
+                                                {{ $assets_category->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
     
                                         <div class="invalid-feedback">
                                             Please enter expense

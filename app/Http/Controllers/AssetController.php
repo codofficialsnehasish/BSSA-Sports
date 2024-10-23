@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Transaction;
+use App\Models\AssetsCategory;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,8 @@ class AssetController extends Controller
     }
 
     public function create(){
-        return view('assets.create');    
+        $assets_categorys = AssetsCategory::where('visiblity',1)->get();
+        return view('assets.create',compact('assets_categorys'));    
     }
 
     public function store(Request $request){
@@ -31,13 +33,13 @@ class AssetController extends Controller
         }
 
         $asset = new Asset();
-        $asset->title = $request->asset_name;
+        $asset->assets_category_id = $request->asset_name;
         $asset->amount = $request->amount;
         $asset->remarks = $request->remarks;
         $res = $asset->save();
 
         Transaction::create([
-            'transaction_name' => $asset->title,
+            'transaction_name' => $asset->category->name,
             'amount' => $asset->amount,
             'remarks' => $asset->remarks,
             'transaction_type' => 'credit'
@@ -75,23 +77,23 @@ class AssetController extends Controller
         }
 
         $asset = Asset::find($id);
-        $asset->title = $request->asset_name;
+        $asset->assets_category_id = $request->asset_name;
         $asset->amount = $request->amount;
         $asset->remarks = $request->remarks;
         $res = $asset->update();
         if($res){
-            $transaction = Transaction::where('transaction_table_name','assets')->where('table_id',$asset->id)->first();
-            $transaction->amount = $asset->amount;
-            $transaction->remarks = $asset->remarks;
-            $res = $transaction->update();
+            // $transaction = Transaction::where('transaction_table_name','assets')->where('table_id',$asset->id)->first();
+            // $transaction->amount = $asset->amount;
+            // $transaction->remarks = $asset->remarks;
+            // $res = $transaction->update();
 
             if($res){
-                return redirect()->back()->with('success', 'Asset Transaction Updated Successfully.');
+                return redirect()->back()->with('success', 'Asset Updated Successfully.');
             }else{
-                return redirect()->back()->withError(['error'=>'Asset Transaction Not Updated.']);
+                return redirect()->back()->withError(['error'=>'Asset Not Updated.']);
             }
         }else{
-            return redirect()->back()->withError(['error'=>'Expenses Not Updated.']);
+            return redirect()->back()->withError(['error'=>'Asset Not Updated.']);
         }
     }
 
@@ -99,7 +101,7 @@ class AssetController extends Controller
     {
         $asset = Asset::find($id);
         if($asset){
-            Transaction::where('transaction_table_name','assets')->where('table_id',$asset->id)->delete();
+            // Transaction::where('transaction_table_name','assets')->where('table_id',$asset->id)->delete();
             $res = $asset->delete();
             if($res){
                 return redirect()->back()->with('success', 'Asset Deleted Successfully.');

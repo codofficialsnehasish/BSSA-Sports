@@ -13,19 +13,19 @@
     <div class="main-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Dashboard</div>
+            <div class="breadcrumb-title pe-3">All Categories</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Expenses Details of Date : {{ format_date($date) }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">Assets Category</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('expenses.index') }}">
-                    <button type="button" class="btn btn-grd btn-grd-info px-5">Back</button>
+                <a href="{{ route('assets-category.create') }}">
+                    <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
         </div>
@@ -40,33 +40,28 @@
                             <thead>
                                 <tr>
                                     <th>Sl. No.</th>
-                                    <th>Expense</th>
-                                    <th>Amount</th>
-                                    <th>Remarks</th>
+                                    <th>Name</th>
+                                    <th>Visiblity</th>
                                     <th>Created At</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($expenses->isNotEmpty())
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @foreach ($expenses as $item)
+                                @if ($assets_categorys->isNotEmpty())
+                                    @foreach ($assets_categorys as $item)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $item->category->name }}</td>
-                                            <td>{{ $item->amount }}</td>
-                                            <td>{{ $item->remarks }}</td>
-                                            <td>{{ format_datetime($item->created_at) }}</td>
-                                            {{-- <td>
-                                                <a href="{{ route('expenses.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
-                                                <form action="{{ route('expenses.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{!! check_status($item->visiblity) !!}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>
+                                                <a href="{{ route('assets-category.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
+                                                <form action="{{ route('assets-category.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
                                                 </form>
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -77,16 +72,6 @@
 
 
                             </tbody>
-                            <!-- <tfoot>
-                                <tr>
-                                    <th>Sl. No.</th>
-                                    <th>Name</th>
-                                    <th>Visibility</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </tfoot> -->
                         </table>
                     </div>
                 </div>

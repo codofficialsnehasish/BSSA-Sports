@@ -39,9 +39,20 @@
                                 @if (empty($data->subscription_end_date))
                                     <a class="btn btn-outline-danger" id="make-payment">Make Payment</a>
                                 @else
-                                    @if($data->member_cat_id == 2)
+                                    {{-- @if($data->member_cat_id == 2)
                                         {{ $data->member_category->name }}
                                     @else
+                                        @if ($currentDate->greaterThan($data->subscription_end_date))
+                                            <a class="btn btn-outline-danger" id="make-payment">Renew Payment</a>
+                                        @else
+                                            Next payment date is {{ $data->subscription_end_date }}
+                                        @endif
+                                    @endif --}}
+
+                                    @if($data->member_category->type == 'lifetime')
+                                        {{ $data->member_category->name }}
+                                    @endif
+                                    @if($data->member_category->type == 'renewal')
                                         @if ($currentDate->greaterThan($data->subscription_end_date))
                                             <a class="btn btn-outline-danger" id="make-payment">Renew Payment</a>
                                         @else

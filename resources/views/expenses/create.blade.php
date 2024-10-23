@@ -117,13 +117,14 @@
             document.getElementById("cont").value = idty;
                
 				
-			cell1.innerHTML = '<input type="text" class="form-control" name="expense_name[]" required>';
+			// cell1.innerHTML = '<input type="text" class="form-control" name="expense_name[]" required>';
+            cell1.innerHTML = '<select class="form-select" name="expense_name[]" ><option value selected disabled>Select a Expance Type</option><?php foreach($expense_categorys as $type){?><option value="<?= $type->id;?>"><?= $type->name;?></option><?php }?></select>'
 				
 			cell2.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
 
             cell3.innerHTML = '<textarea type="text" class="form-control" name="remarks[]"></textarea>';
             
-            cell4.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i></a>";
+            cell4.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
                  
 
 				  

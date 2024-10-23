@@ -11,23 +11,43 @@ class AccountsController extends Controller
 {
     public function showProfitLossReport()
     {
-        // Fetch receipts (credit) and group by transaction name
-        $receipts = Transaction::select('transaction_name', DB::raw('SUM(amount) as total_amount'))
+        // Fetch receipts (credit) and group by transaction name and category
+        $receipts = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
                     ->where('transaction_type', 'credit')
-                    ->groupBy('transaction_name')
+                    ->groupBy('transaction_name', 'transaction_category_name')
                     ->get();
 
-        // Fetch payments (debit) and group by transaction name
-        $payments = Transaction::select('transaction_name', DB::raw('SUM(amount) as total_amount'))
+        // Fetch payments (debit) and group by transaction name and category
+        $payments = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
                     ->where('transaction_type', 'debit')
-                    ->groupBy('transaction_name')
+                    ->groupBy('transaction_name', 'transaction_category_name')
                     ->get();
 
-        // Calculate totals
-        $totalReceipts = $receipts->sum('total_amount');
-        $totalPayments = $payments->sum('total_amount');
+        // Group receipts by transaction name
+        $groupedReceipts = $receipts->groupBy('transaction_name')->map(function ($group) {
+            return [
+                'transaction_name' => $group->first()->transaction_name,
+                'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+                'amounts' => $group->pluck('total_amount')->filter()->implode(', '),
+                'total_amount' => $group->sum('total_amount'),
+            ];
+        });
 
-        return view('accounts.profit_loss_report', compact('receipts', 'payments', 'totalReceipts', 'totalPayments'));
+        // Group payments by transaction name
+        $groupedPayments = $payments->groupBy('transaction_name')->map(function ($group) {
+            return [
+                'transaction_name' => $group->first()->transaction_name,
+                'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+                'total_amount' => $group->sum('total_amount'),
+            ];
+        });
+
+        // Calculate totals for receipts and payments
+        $totalReceipts = $groupedReceipts->sum('total_amount');
+        $totalPayments = $groupedPayments->sum('total_amount');
+
+        return view('accounts.profit_loss_report', compact('groupedReceipts', 'groupedPayments', 'totalReceipts', 'totalPayments'));
     }
+
 
 }

@@ -20,6 +20,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+
 class MembersController extends Controller
 {
     public function index()
@@ -306,6 +307,19 @@ class MembersController extends Controller
     public function make_payment(Request $request){
         $member = Members::find($request->member_id);
         if($member){
+            $transaction_category_name = '';
+            if(empty($member->subscription_end_date)){
+                if($member->member_category->type == 'lifetime'){
+                    $transaction_category_name = 'Life Membership';
+                }elseif($member->member_category->type == 'renewal'){
+                    $transaction_category_name = 'General Membership';
+                }
+            }else{
+                if($member->member_category->type == 'renewal'){
+                    $transaction_category_name = 'Renewal of Membership';
+                }
+            }
+
             $member_transaction = new MemberTransaction();
             $member_transaction->member_id = $member->id;
             $member_transaction->amount = $request->payment_amount;
@@ -323,10 +337,11 @@ class MembersController extends Controller
             $res = $member_transaction->save();
 
             Transaction::create([
-                'transaction_table_name' => 'member_transactions',
-                'table_id' => $member_transaction->id,
+                'transaction_name' => 'Membership',
+                'transaction_category_name' => $transaction_category_name,
                 'amount' => $member_transaction->amount,
                 'remarks' => $member_transaction->remarks,
+                'transaction_type' => 'credit'
             ]);
 
             if($member->member_cat_id == 2){

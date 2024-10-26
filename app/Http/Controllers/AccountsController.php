@@ -4,49 +4,128 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 
-class AccountsController extends Controller
+class AccountsController extends Controller implements HasMiddleware
 {
-    public function showProfitLossReport()
+    public static function middleware(): array
     {
-        // Fetch receipts (credit) and group by transaction name and category
-        $receipts = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
-                    ->where('transaction_type', 'credit')
-                    ->groupBy('transaction_name', 'transaction_category_name')
-                    ->get();
+        return [
+            new Middleware('permission:View Balance Sheet', only: ['showProfitLossReport']),
+        ];
+    }
 
-        // Fetch payments (debit) and group by transaction name and category
-        $payments = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
-                    ->where('transaction_type', 'debit')
-                    ->groupBy('transaction_name', 'transaction_category_name')
-                    ->get();
+    // public function showProfitLossReport()
+    // {
+    //     // Fetch receipts (credit) and group by transaction name and category
+    //     $receipts = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
+    //                 ->where('transaction_type', 'credit')
+    //                 ->groupBy('transaction_name', 'transaction_category_name')
+    //                 ->get();
 
-        // Group receipts by transaction name
-        $groupedReceipts = $receipts->groupBy('transaction_name')->map(function ($group) {
-            return [
-                'transaction_name' => $group->first()->transaction_name,
-                'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
-                'amounts' => $group->pluck('total_amount')->filter()->implode(', '),
-                'total_amount' => $group->sum('total_amount'),
-            ];
-        });
+    //     // Fetch payments (debit) and group by transaction name and category
+    //     $payments = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
+    //                 ->where('transaction_type', 'debit')
+    //                 ->groupBy('transaction_name', 'transaction_category_name')
+    //                 ->get();
 
-        // Group payments by transaction name
-        $groupedPayments = $payments->groupBy('transaction_name')->map(function ($group) {
-            return [
-                'transaction_name' => $group->first()->transaction_name,
-                'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
-                'total_amount' => $group->sum('total_amount'),
-            ];
-        });
+    //     // Group receipts by transaction name
+    //     $groupedReceipts = $receipts->groupBy('transaction_name')->map(function ($group) {
+    //         return [
+    //             'transaction_name' => $group->first()->transaction_name,
+    //             'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+    //             'amounts' => $group->pluck('total_amount')->filter()->implode(', '),
+    //             'total_amount' => $group->sum('total_amount'),
+    //         ];
+    //     });
 
-        // Calculate totals for receipts and payments
-        $totalReceipts = $groupedReceipts->sum('total_amount');
-        $totalPayments = $groupedPayments->sum('total_amount');
+    //     // Group payments by transaction name
+    //     $groupedPayments = $payments->groupBy('transaction_name')->map(function ($group) {
+    //         return [
+    //             'transaction_name' => $group->first()->transaction_name,
+    //             'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+    //             'total_amount' => $group->sum('total_amount'),
+    //         ];
+    //     });
 
-        return view('accounts.profit_loss_report', compact('groupedReceipts', 'groupedPayments', 'totalReceipts', 'totalPayments'));
+    //     // Calculate totals for receipts and payments
+    //     $totalReceipts = $groupedReceipts->sum('total_amount');
+    //     $totalPayments = $groupedPayments->sum('total_amount');
+
+    //     return view('accounts.profit_loss_report', compact('groupedReceipts', 'groupedPayments', 'totalReceipts', 'totalPayments'));
+    // }
+
+    public function showProfitLossReport(Request $request)
+    {
+        if($request->isMethod('post')){
+            // Initialize base query for receipts (credit)
+            $receiptsQuery = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
+                            ->where('transaction_type', 'credit')
+                            ->groupBy('transaction_name', 'transaction_category_name');
+    
+            // Initialize base query for payments (debit)
+            $paymentsQuery = Transaction::select('transaction_name', 'transaction_category_name', DB::raw('SUM(amount) as total_amount'))
+                            ->where('transaction_type', 'debit')
+                            ->groupBy('transaction_name', 'transaction_category_name');
+    
+            // If request is a POST and date range is provided
+            if ($request->isMethod('post') && $request->has('date_range')) {
+                $dateRange = explode(' to ', $request->input('date_range'));
+    
+                // Check if both start and end dates are provided
+                if (count($dateRange) !== 2 || empty($dateRange[0]) || empty($dateRange[1])) {
+                    return redirect()->back()->withErrors(['date_range' => 'Please provide both start and end dates in the correct format.']);
+                }
+                $startDate = $dateRange[0];
+                $endDate = $dateRange[1];
+    
+                // Apply date range filter to both queries
+                // $receiptsQuery->whereBetween('created_at', [$startDate, $endDate]);
+                $receiptsQuery->whereDate('created_at', '>=', $startDate)
+                                ->whereDate('created_at', '<=', $endDate);
+                // $paymentsQuery->whereBetween('created_at', [$startDate, $endDate]);
+                $paymentsQuery->whereDate('created_at', '>=', $startDate)
+                                ->whereDate('created_at', '<=', $endDate);
+            }
+    
+            // Fetch the data
+            $receipts = $receiptsQuery->get();
+            $payments = $paymentsQuery->get();
+    
+            // Group receipts by transaction name
+            $groupedReceipts = $receipts->groupBy('transaction_name')->map(function ($group) {
+                return [
+                    'transaction_name' => $group->first()->transaction_name,
+                    'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+                    'amounts' => $group->pluck('total_amount')->filter()->implode(', '),
+                    'total_amount' => $group->sum('total_amount'),
+                ];
+            });
+    
+            // Group payments by transaction name
+            $groupedPayments = $payments->groupBy('transaction_name')->map(function ($group) {
+                return [
+                    'transaction_name' => $group->first()->transaction_name,
+                    'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+                    'total_amount' => $group->sum('total_amount'),
+                ];
+            });
+    
+            // Calculate totals for receipts and payments
+            $totalReceipts = $groupedReceipts->sum('total_amount');
+            $totalPayments = $groupedPayments->sum('total_amount');
+    
+            // Return view with data
+            return view('accounts.profit_loss_report', compact('groupedReceipts', 'groupedPayments', 'totalReceipts', 'totalPayments', 'startDate', 'endDate'));
+        }
+
+        if($request->isMethod('get')){
+            return view('accounts.profit_loss_report');
+        }
     }
 
 

@@ -41,7 +41,7 @@
                                     <tr>
                                         <td>
                                             {{-- <input type="text" class="form-control" name="expense_name[]" required> --}}
-                                            <select name="expense_name[]" id="select-role" class="form-select" required>
+                                            <select name="expense_name[]" class="form-select" id="single-select-clear-field" data-placeholder="Choose one thing" required>
                                                 <option value selected disabled>Select a Expance Type</option>
                                                 @foreach($expense_categorys as $expense_category)
                                                 <option value="{{ $expense_category->id }}">
@@ -118,7 +118,7 @@
                
 				
 			// cell1.innerHTML = '<input type="text" class="form-control" name="expense_name[]" required>';
-            cell1.innerHTML = '<select class="form-select" name="expense_name[]" required><option value selected disabled>Select a Expance Type</option><?php foreach($expense_categorys as $type){?><option value="<?= $type->id;?>"><?= $type->name;?></option><?php }?></select>'
+            cell1.innerHTML = '<select class="form-select" name="expense_name[]" id="single-select-clear-field" data-placeholder="Choose one thing" required><option value selected disabled>Select a Expance Type</option><?php foreach($expense_categorys as $type){?><option value="<?= $type->id;?>"><?= $type->name;?></option><?php }?></select>'
 				
 			cell2.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
 

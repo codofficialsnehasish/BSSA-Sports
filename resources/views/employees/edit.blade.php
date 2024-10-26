@@ -96,7 +96,7 @@
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" data-bs-toggle="pill" href="#primary-pills-sallary" role="tab" aria-selected="false">
                                             <div class="d-flex align-items-center">
-                                                <div class="tab-icon"><i class='bi bi-headset me-1 fs-6'></i></div>
+                                                <div class="tab-icon"><i class='bi bi-cash me-1 fs-6'></i></div>
                                                 <div class="tab-title">Sallary Details</div>
                                             </div>
                                         </a>
@@ -104,7 +104,7 @@
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" data-bs-toggle="pill" href="#primary-pills-contact" role="tab" aria-selected="false">
                                             <div class="d-flex align-items-center">
-                                                <div class="tab-icon"><i class='bi bi-headset me-1 fs-6'></i></div>
+                                                <div class="tab-icon"><i class='bi bi-bank me-1 fs-6'></i></div>
                                                 <div class="tab-title">Bank Details</div>
                                             </div>
                                         </a>

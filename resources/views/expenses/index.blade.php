@@ -23,11 +23,13 @@
                     </ol>
                 </nav>
             </div>
+            @can('Create Expense') 
             <div class="ms-auto">
                 <a href="{{ route('expenses.create') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
+            @endcan
         </div>
         <!--end breadcrumb-->
 

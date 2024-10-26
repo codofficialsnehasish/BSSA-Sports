@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
-class DesignationController extends Controller
+class DesignationController extends Controller implements HasMiddleware
 {
-   
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Designation', only: ['destroy']),
+            new Middleware('permission:Edit Designation', only: ['edit','update']),
+            new Middleware('permission:Create Designation', only: ['create','store']),
+            new Middleware('permission:View Designation', only: ['index','show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

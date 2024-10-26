@@ -245,9 +245,9 @@
                                 <h5 class="mb-4">Members Entry</h5>
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-12 mb-3">
                                     <label for="aadhaarInput" class="form-label">Aadhaar Card File</label>
-                                    <div class="input-group">
+                                    {{-- <div class="input-group">
                                         <input type="file" class="form-control" name="aadhar_proof" id="aadhaarInput"
                                             placeholder="Aadhaar Card File" >
                                         <div class="invalid-feedback">
@@ -256,12 +256,25 @@
                                         <img class="rounded me-2" alt="" width="200"
                                             src="{{ isset($data->aadhar_proof_media) ? asset('storage/' . $data->aadhar_proof_media->file_path) : '' }}"
                                             id="aadhaarPreview" data-holder-rendered="true">
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        {{-- <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true"> --}}
+                                            <img class="img-thumbnail rounded me-2" alt="" width="200"
+                                            src="{{ isset($data->aadhar_proof_media) ? asset('storage/' . $data->aadhar_proof_media->file_path) : '' }}"
+                                            id="aadhaarPreview" data-holder-rendered="true">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input type="file" class="form-control" name="aadhar_proof" id="aadhaarInput"
+                                            placeholder="Aadhaar Card File" >
+                                        <div class="invalid-feedback">
+                                            Please choose a file
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="profileInput" class="form-label">Profile Image</label>
-                                    <div class="input-group">
+                                    {{-- <div class="input-group">
                                         <input type="file" class="form-control" name="profile_image"
                                             id="profileInput" placeholder="Profile Image" >
                                         <div class="invalid-feedback">
@@ -270,6 +283,18 @@
                                         <img class="rounded me-2" alt="" width="200"
                                             src="{{ isset($data->profile_image_media) ? asset('storage/' . $data->profile_image_media->file_path) : '' }}"
                                             id="profilePreview">
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        {{-- <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true"> --}}
+                                        <img class="img-thumbnail rounded me-2" alt="" width="200"
+                                        src="{{ isset($data->profile_image_media) ? asset('storage/' . $data->profile_image_media->file_path) : '' }}"
+                                        id="profilePreview">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input type="file" class="form-control" name="profile_image" id="profileInput" placeholder="Profile Image" >
+                                        <div class="invalid-feedback">
+                                            Please choose a file
+                                        </div>
                                     </div>
                                 </div>
 

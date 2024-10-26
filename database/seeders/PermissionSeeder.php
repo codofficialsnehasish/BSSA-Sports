@@ -24,10 +24,6 @@ class PermissionSeeder extends Seeder
                     'Edit Permission',
                     'Delete Permission',
                     'Asign Permission',
-                    'Create User',
-                    'View User',
-                    'Edit User',
-                    'Delete User',
                 ];
         
                 // Create the permissions

@@ -44,7 +44,7 @@
                                     <th>Amount</th>
                                     <th>Remarks</th>
                                     <th>Created At</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,14 +59,15 @@
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ $item->remarks }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
-                                            {{-- <td>
-                                                <a href="{{ route('expenses.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
+                                            <td>
+                                                {{-- <a href="{{ route('expenses.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
                                                 <form action="{{ route('expenses.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
-                                                </form>
-                                            </td> --}}
+                                                </form> --}}
+                                                <a href="{{ route('expenses.invoice', $item->id) }}"> Invoice</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

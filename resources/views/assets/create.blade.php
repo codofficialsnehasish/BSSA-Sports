@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('title', 'Assets')
+@section('title', 'Income')
 @section('content')
 
     <div class="main-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Dashboard</div>
+            <div class="breadcrumb-title pe-3">Income</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Add Asset</li>
+                        <li class="breadcrumb-item active" aria-current="page">Create Income</li>
                     </ol>
                 </nav>
             </div>
@@ -37,7 +37,7 @@
                                         {{-- <input type="text" class="form-control" id="asset_name" placeholder="Enter Asset"
                                             name="asset_name" value="" required> --}}
 
-                                        <select name="asset_name" id="asset_name" class="form-select" required>
+                                        <select name="asset_name" id="single-select-clear-field" data-placeholder="Choose one thing" class="form-select" required>
                                             <option value selected disabled>Select a Expance Type</option>
                                             @foreach($assets_categorys as $assets_category)
                                             <option value="{{ $assets_category->id }}">

@@ -6,13 +6,24 @@ use App\Models\FeeCategory;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
 
-class FeeCategoryController extends Controller
+class FeeCategoryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Fee Category', only: ['destroy']),
+            new Middleware('permission:Edit Fee Category', only: ['edit','update']),
+            new Middleware('permission:Create Fee Category', only: ['create','store']),
+            new Middleware('permission:View Fee Category', only: ['index','show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

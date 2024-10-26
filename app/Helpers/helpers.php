@@ -294,6 +294,8 @@ if (!function_exists('get_role')) {
                 ->first();
         if($roleName){
             return $roleName->name;
+        }else{
+            return '';
         }
     }
 }

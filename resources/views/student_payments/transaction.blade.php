@@ -55,7 +55,7 @@
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('admin.student.payment.transaction-invoice',[format_date_for_db($item->created_at),request()->segment(3)]) }}">View Invoice</a>
+                                                <a class="btn btn-primary" href="{{ route('admin.student.payment.transaction-invoice',$item->id) }}">View Invoice</a>
                                             </td>
                                         </tr>
                                     @endforeach

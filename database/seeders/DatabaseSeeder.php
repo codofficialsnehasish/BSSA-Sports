@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
         $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            RoleAssignmentSeeder::class,
             CountriesSeeder::class,
             StatesTableSeeder::class,
             CitiesTableOneSeeder::class,

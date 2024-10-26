@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class FeesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */

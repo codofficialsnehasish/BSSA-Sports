@@ -8,14 +8,27 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Categories;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Student;
 use App\Models\StudentTransaction;
 use App\Models\Transaction;
+use App\Models\StudentPaymentOrder;
 
 use Illuminate\Support\Facades\Validator;
 
-class StudentPaymentController extends Controller
+class StudentPaymentController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            // new Middleware('permission:Delete Student Payment', only: ['destroy']),
+            // new Middleware('permission:Edit Student Payment', only: ['edit','update']),
+            new Middleware('permission:Create Student Payment', only: ['create','store']),
+            new Middleware('permission:View Student Payment', only: ['index','show','show_transactions','student_transaction_invoice']),
+        ];
+    }
+
     public function index(){
         $students = Student::whereHas('student_transactions') // Only get students with transactions
                         ->with('student_transactions') // Eager load the transactions
@@ -98,6 +111,13 @@ class StudentPaymentController extends Controller
                 if($student->monthly_fees > $request->amount){
                     return redirect()->back()->withErrors(['error'=>'Monthly fee amount is '.$student->monthly_fees]);
                 }
+
+                $StudentPaymentOrder = new StudentPaymentOrder();
+                $StudentPaymentOrder->students_id = $student->id;
+                $StudentPaymentOrder->amount = $request->amount;
+                $StudentPaymentOrder->remarks = $request->remarks;
+                $StudentPaymentOrder->save();
+
                 // Retrieve the last paid monthly fee date
                 $last_payment = StudentTransaction::where('students_id', $request->student_id)
                                                 ->where('category_id', $request->category_id)
@@ -118,6 +138,7 @@ class StudentPaymentController extends Controller
                 while ($has_due && $next_payment_date->lessThanOrEqualTo($current_date) && $remaining_amount >= $monthly_fees) {
                     // Create a transaction for the due month
                     $student_transaction = new StudentTransaction();
+                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
                     $student_transaction->students_id = $request->student_id;
                     $student_transaction->category_id = $request->category_id;
                     $student_transaction->amount = $monthly_fees;
@@ -138,6 +159,7 @@ class StudentPaymentController extends Controller
                 // After paying due months, pay in advance with the remaining amount
                 while ($remaining_amount >= $monthly_fees) {
                     $student_transaction = new StudentTransaction();
+                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
                     $student_transaction->students_id = $request->student_id;
                     $student_transaction->category_id = $request->category_id;
                     $student_transaction->amount = $monthly_fees;
@@ -159,13 +181,14 @@ class StudentPaymentController extends Controller
                 // }
 
                 Transaction::create([
-                    'transaction_table_name' => 'student_transactions',
-                    'table_id' => $student_transaction->id,
+                    'transaction_name' => $student->category->name,
                     'amount' => $request->amount,
-                    'remarks' => 'Monthly Fees Payment',
+                    'remarks' => $request->remarks,
+                    'transaction_type' => 'credit'
                 ]);
 
-                return redirect()->route('admin.student.payment.transaction-invoice',[format_date_for_db($student_transaction->created_at),$student->id ]);
+
+                return redirect()->route('admin.student.payment.transaction-invoice',$StudentPaymentOrder->id);
             }
         }else{
             $student = Student::find($request->student_id);
@@ -180,12 +203,19 @@ class StudentPaymentController extends Controller
                     return redirect()->back()->withErrors(['error' => 'Admission fee amount is ' . $student->monthly_fees]);
                 }
 
+                $StudentPaymentOrder = new StudentPaymentOrder();
+                $StudentPaymentOrder->students_id = $student->id;
+                $StudentPaymentOrder->amount = $request->amount;
+                $StudentPaymentOrder->remarks = $request->remarks;
+                $StudentPaymentOrder->save();
+
                 $three_month_fees = $monthly_fees * 3;
 
                 $admission_money = $admission_fees - $three_month_fees;
 
                 // Save admission fees transaction
                 $student_transaction = new StudentTransaction();
+                $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
                 $student_transaction->students_id = $request->student_id;
                 $student_transaction->category_id = $request->category_id;
                 $student_transaction->amount = $admission_money;
@@ -195,12 +225,11 @@ class StudentPaymentController extends Controller
                 $student_transaction->save();
 
                 Transaction::create([
-                    'transaction_table_name' => 'student_transactions',
-                    'table_id' => $student_transaction->id,
+                    'transaction_name' => $student->category->name,
                     'amount' => $request->amount,
-                    'remarks' => $student_transaction->remarks,
+                    'remarks' => $request->remarks,
+                    'transaction_type' => 'credit'
                 ]);
-
                 
 
                 // Calculate remaining amount after deducting admission money from the total amount
@@ -214,6 +243,7 @@ class StudentPaymentController extends Controller
                 // Loop to save monthly fee transactions
                 for ($i = 1; $i <= $months; $i++) {
                     $student_transaction = new StudentTransaction();
+                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
                     $student_transaction->students_id = $request->student_id;
                     $student_transaction->category_id = $request->category_id;
                     $student_transaction->amount = $monthly_fees;
@@ -232,7 +262,7 @@ class StudentPaymentController extends Controller
                 //     // Handle the case (you can save it as a partial payment or keep it as balance)
                 // }
 
-                return redirect()->route('admin.student.payment.transaction-invoice',[format_date_for_db($student_transaction->created_at),$student->id ]);
+                return redirect()->route('admin.student.payment.transaction-invoice',$StudentPaymentOrder->id);
             }
         }
     }
@@ -302,53 +332,58 @@ class StudentPaymentController extends Controller
     }
 
     public function show_transactions(string $id){
-        $transaction = Transaction::leftJoin('student_transactions','transactions.table_id','student_transactions.id')
-                    ->where('transactions.transaction_table_name','student_transactions')
-                    ->where('student_transactions.students_id',$id)
-                    ->orderBy('transactions.created_at','desc')
-                    ->get(['transactions.amount','transactions.created_at']);
+        // $transaction = Transaction::leftJoin('student_transactions','transactions.table_id','student_transactions.id')
+        //             ->where('transactions.transaction_table_name','student_transactions')
+        //             ->where('student_transactions.students_id',$id)
+        //             ->orderBy('transactions.created_at','desc')
+        //             ->get(['transactions.amount','transactions.created_at']);
+        $transaction = StudentPaymentOrder::all();
 
         return view('student_payments.transaction',compact('transaction'));
     }
 
-    public function student_transaction_invoice(string $date,string $id){
+    public function student_transaction_invoice(string $id){
         // return $date;
         // return $id;
-        $transaction = Transaction::leftJoin('student_transactions','transactions.table_id','student_transactions.id')
-                    ->where('transactions.transaction_table_name','student_transactions')
-                    ->where('student_transactions.students_id',$id)
-                    ->orderBy('transactions.created_at','desc')
-                    ->get(['transactions.amount','transactions.created_at']);
-        $student = Student::find($id);
-        $items = StudentTransaction::where('students_id',$id)->whereDate('created_at',$date)->get();
-
-        $last_payment = $student->student_transactions()
-                                ->where('category_id', $student->category_id) // Assuming this is available in your scope
-                                ->where('which_for', 'monthly_fees')
-                                ->orderBy('date', 'desc')
-                                ->first();
-
-        $due_amount = 0;
-
-        if ($last_payment) {
-            // Get the last payment date
-            $last_payment_date = Carbon::parse($last_payment->date);
-            if ($last_payment_date->isFuture()) {
-                $due_amount = 0;
-            }else{
-                // Calculate the number of months since the last payment
-                $months_since_last_payment = Carbon::now()->diffInMonths($last_payment_date);
-                $months_since_last_payment = (int) abs($months_since_last_payment);
-                // echo $months_since_last_payment;die;
-                // Calculate the total expected amount for these months
-                $due_amount = $months_since_last_payment * $student->monthly_fees;
+        // $transaction = Transaction::leftJoin('student_transactions','transactions.table_id','student_transactions.id')
+        //             ->where('transactions.transaction_table_name','student_transactions')
+        //             ->where('student_transactions.students_id',$id)
+        //             ->orderBy('transactions.created_at','desc')
+        //             ->get(['transactions.amount','transactions.created_at']);
+        $StudentPaymentOrder = StudentPaymentOrder::find($id);
+        if($StudentPaymentOrder){
+            $date = $StudentPaymentOrder->created_at;
+            $student = Student::find($StudentPaymentOrder->students_id);
+            $items = StudentTransaction::where('student_payment_orders_id',$id)->get();
+    
+            $last_payment = $student->student_transactions()
+                                    ->where('category_id', $student->category_id) // Assuming this is available in your scope
+                                    ->where('which_for', 'monthly_fees')
+                                    ->orderBy('date', 'desc')
+                                    ->first();
+    
+            $due_amount = 0;
+    
+            if ($last_payment) {
+                // Get the last payment date
+                $last_payment_date = Carbon::parse($last_payment->date);
+                if ($last_payment_date->isFuture()) {
+                    $due_amount = 0;
+                }else{
+                    // Calculate the number of months since the last payment
+                    $months_since_last_payment = Carbon::now()->diffInMonths($last_payment_date);
+                    $months_since_last_payment = (int) abs($months_since_last_payment);
+                    // echo $months_since_last_payment;die;
+                    // Calculate the total expected amount for these months
+                    $due_amount = $months_since_last_payment * $student->monthly_fees;
+                }
             }
+    
+            // Add calculated values to the student object
+            $student->due_amount = max($due_amount, 0);
+    
+            return view('student_payments.payment_invoice',compact('student','items','date'));
         }
-
-        // Add calculated values to the student object
-        $student->due_amount = max($due_amount, 0);
-
-        return view('student_payments.payment_invoice',compact('student','items','date'));
     }
 
     public function edit(string $id)

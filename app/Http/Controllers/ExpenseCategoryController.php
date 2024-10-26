@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExpenseCategory;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
 
-class ExpenseCategoryController extends Controller
+class ExpenseCategoryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Expense Category', only: ['destroy']),
+            new Middleware('permission:Edit Expense Category', only: ['edit','update']),
+            new Middleware('permission:Create Expense Category', only: ['create','store']),
+            new Middleware('permission:View Expense Category', only: ['index','show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

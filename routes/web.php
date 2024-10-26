@@ -28,6 +28,7 @@ use App\Http\Controllers\{
     AssetController,
     ExpenseCategoryController,
     AssetsCategoryController,
+    TournamentController,
 };
 
 Route::get('/',[AuthController::class,'login'])->name('login');
@@ -36,6 +37,9 @@ Route::prefix('admin')->group( function (){
     Route::post('/login',[AuthController::class,'process_login'])->name('login.process');
 
     Route::middleware('auth')->group( function (){
+        Route::get('/change-password',[AuthController::class,'change_password'])->name('change-password');
+        Route::post('/process-change-password',[AuthController::class,'process_change_password'])->name('admin.process-change-password');
+        
         Route::get('/logout',[AuthController::class,'logout'])->name('logout');
         Route::get('/dashboard',[Dashboard::class,'dashboard'])->name('dashboard');
 
@@ -58,27 +62,6 @@ Route::prefix('admin')->group( function (){
                 Route::get('/delete/{id}','delete')->name('employee.delete');
             });
         });
-
-        // Route::controller(RoleController::class)->group(function () {
-        //     Route::prefix('role')->group(function () {
-        //         Route::get("/",'roles')->name('roles');
-        //         Route::post("/create-role",'create_role')->name('role.create');
-        //         Route::post("{roleId}/update-role",'update_role')->name('role.update');
-        //         Route::put("/{roleId}/destroy-role",'destroy_role')->name('role.destroy');
-        //         Route::get("/{roleId}/add-permission-to-role",'addPermissionToRole')->name('role.addPermissionToRole');
-        //         Route::post("/{roleId}/give-permissions",'givePermissionToRole')->name('role.give-permissions');
-        //     });
-        // });
-
-        // Route::controller(PermissionController::class)->group(function () {
-        //     Route::prefix('permission')->group(function () {
-        //         Route::get("/",'permission')->name('permission');
-        //         Route::post("/create-permission",'create_permission')->name('permission.create');
-        //         Route::post("{permissionId}/update-permission",'update_permission')->name('permission.update');
-        //         Route::put("/{permissionId}/destroy-permission",'destroy_permission')->name('permission.destroy');
-          
-        //     });
-        // });
      
 
 
@@ -107,6 +90,8 @@ Route::prefix('admin')->group( function (){
 
                 Route::post('get-category-data','get_category_data')->name('admin.member.categorydata');
                 Route::post('make-payment','make_payment')->name('admin.members.payment');
+                Route::get('payment-transactions/{id?}','payment_transactions')->name('admin.members.payment-transactions');
+                Route::get('payment-invoice/{id}','payment_invoice')->name('admin.members.payment-invoice');
      
             });
         });
@@ -148,6 +133,7 @@ Route::prefix('admin')->group( function (){
                 Route::get('/print-form/{id}','details')->name('admin.student.admission.print_form');
 
                 Route::get('/id-card/{id}','id_card')->name('admin.student.id-card');
+                Route::get('/{id}/show','show')->name('admin.student.show');
      
             });
         });
@@ -162,7 +148,7 @@ Route::prefix('admin')->group( function (){
 
                 Route::get('/{id}/show','show')->name('admin.student.payment.show');
                 Route::get('/{id}/show-transactions','show_transactions')->name('admin.student.payment.show-transactions');
-                Route::get('/{date}/{id}/transaction-invoice','student_transaction_invoice')->name('admin.student.payment.transaction-invoice');
+                Route::get('/{id}/transaction-invoice','student_transaction_invoice')->name('admin.student.payment.transaction-invoice');
             });
         });
 
@@ -209,19 +195,23 @@ Route::prefix('admin')->group( function (){
         Route::get('create-fees-collection',[AdmissionController::class,'create_fees_collection'])->name('admission.create-fees-collection');
         Route::get('fees-collection-history',[AdmissionController::class,'fees_collection_history'])->name('admission.fees-collection-history');
 
-        Route::prefix('accounts')->group( function () {
-            Route::controller(AccountsController::class)->group( function () {
-                Route::get('profit-loss','showProfitLossReport')->name('accounts.profit-loss');
+        Route::prefix('accounts')->group(function () {
+            Route::controller(AccountsController::class)->group(function () {
+                Route::get('profit-loss', 'showProfitLossReport')->name('accounts.profit-loss');
+                Route::post('profit-loss', 'showProfitLossReport')->name('accounts.search-profit-loss-report');
             });
         });
 
         Route::resource('expenses',ExpensesController::class);
         Route::get('expenses/{date}/expenses-details',[ExpensesController::class,'details'])->name('expenses.details');
+        Route::get('expenses/{id}/invoice',[ExpensesController::class,'expenses_invoice'])->name('expenses.invoice');
 
         
         Route::resource('assets', AssetController::class);
+        Route::get('asset/{id}/invoice', [AssetController::class,'invoice'])->name('asset.invoice');
         Route::resource('expense-category', ExpenseCategoryController::class);
         Route::resource('assets-category', AssetsCategoryController::class);
+        Route::resource('tournament', TournamentController::class);
     });
     
     

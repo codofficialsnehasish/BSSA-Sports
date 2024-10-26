@@ -5,14 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\MemberCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
 
-class MemberCategoryController extends Controller
+class MemberCategoryController extends Controller implements HasMiddleware
 {
-    //
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Member Category', only: ['destroy']),
+            new Middleware('permission:Edit Member Category', only: ['edit','update']),
+            new Middleware('permission:Create Member Category', only: ['create','store']),
+            new Middleware('permission:View Member Category', only: ['index','show']),
+        ];
+    }
 
     public function index()
     {

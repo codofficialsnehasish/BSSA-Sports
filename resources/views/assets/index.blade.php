@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Assets')
+@section('title', 'Income')
 
 
 @section('css')
@@ -19,15 +19,17 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Assets</li>
+                        <li class="breadcrumb-item active" aria-current="page">Incomes</li>
                     </ol>
                 </nav>
             </div>
+            @can('Create Asset') 
             <div class="ms-auto">
                 <a href="{{ route('assets.create') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
+            @endcan
         </div>
         <!--end breadcrumb-->
 
@@ -44,7 +46,7 @@
                                         <th>Amount</th>
                                         <th>Remarks</th>
                                         <th>Date</th>
-                                        {{-- <th>Action</th> --}}
+                                        <th>Action</th>
                                     </tr>
                                 </tr>
                             </thead>
@@ -57,14 +59,15 @@
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ $item->remarks }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
-                                            {{-- <td>
-                                                <a href="{{ route('assets.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
-                                                <form action="{{ route('assets.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
+                                            <td>
+                                                {{-- <a href="{{ route('assets.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a> --}}
+                                                {{-- <form action="{{ route('assets.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
-                                                </form>
-                                            </td> --}}
+                                                </form> --}}
+                                                <a href="{{ route('asset.invoice', $item->id) }}"> Invoice</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

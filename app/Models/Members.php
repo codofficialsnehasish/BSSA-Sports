@@ -40,4 +40,13 @@ class Members extends Model
     {
         return $this->belongsTo(MemberCategory::class, 'member_cat_id', 'id');
     }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id');
+    }
+    public function special_interest()
+    {
+        return $this->belongsTo(SpecialInterest::class, 'category_id', 'id');
+    }
 }

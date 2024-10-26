@@ -13,4 +13,11 @@ class MemberTransaction extends Model
     {
         return $this->hasMany(Transaction::class, 'table_id', 'id');
     }
+
+    public function member()
+    {
+        return $this->belongsTo(Members::class, 'member_id', 'id');
+    }
+
+
 }

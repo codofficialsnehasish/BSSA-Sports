@@ -1,10 +1,10 @@
-<!doctype html>
+{{-- <!doctype html>
 <html lang="en" data-bs-theme="semi-dark">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Maxton | Bootstrap 5 Admin Dashboard Template</title>
+    <title>Login | BSSA</title>
     <!--favicon-->
     <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png">
     <!-- loader-->
@@ -38,9 +38,7 @@
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto">
                     <div class="card rounded-4 mb-0 border-top border-4 border-primary border-gradient-1">
                         <div class="card-body p-5">
-                            {{-- <img src="{{ asset('assets/images/logo1.png') }}" class="mb-4" width="145"
-                                alt=""> --}}
-                            {{-- <h4 class="fw-bold">Get Started Now</h4> --}}
+                            
                             <p class="mb-0">Enter your credentials to login your account</p>
 
                             <div class="form-body my-5">
@@ -67,9 +65,6 @@
                                             <label class="form-check-label" for="flexSwitchCheckChecked">Remember
                                                 Me</label>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 text-end"> <a href="auth-basic-forgot-password.html">Forgot
-                                            Password ?</a>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
@@ -98,6 +93,7 @@
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $("#show_hide_password a").on('click', function(event) {
@@ -112,23 +108,212 @@
                     $('#show_hide_password i').addClass("bi-eye-fill");
                 }
             });
+        });
 
-            @if (session('success'))
-                round_success_noti('{{ session('success') }}');
-            @endif
-
-
-            @if ($errors->any())
-            
-                @foreach ($errors->all() as $error)
+        </script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <script>
+                $(document).ready(function(){
                     round_error_noti('{{ $error }}');
-                @endforeach
-            @endif
+                });
+            </script>
+            @endforeach
+        @endif
+
+        @if(Session::has("error"))
+            <script>
+                $(document).ready(function(){
+                    round_error_noti('{{Session::get("error")}}');
+                });
+            </script>
+        @endif
+
+        @if(Session::has("success"))
+            <script>
+                $(document).ready(function(){
+                    round_success_noti('{{Session::get("success")}}');
+                });
+            </script>
+        @endif
+</body>
+
+</html> --}}
+
+
+
+
+
+
+<!doctype html>
+<html lang="en" data-bs-theme="semi-dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | BSSA</title>
+    <!--favicon-->
+    <link rel="icon" href="{{ asset('assets/images/bssa-logo1.png') }}" type="image/png">
+    <!-- loader-->
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+
+    <!--plugins-->
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/metisMenu.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/metismenu/mm-vertical.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
+
+    <!--bootstrap css-->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+    <!--main css-->
+    <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/dark-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/blue-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('sass/responsive.css') }}" rel="stylesheet">
+
+    <style>
+        .full-screen-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('{{ asset('assets/images/login-wallpaper2.jpg') }}') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+            /* Adjust opacity if needed */
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--authentication-->
+
+    <div class="section-authentication-cover">
+        <div class="full-screen-background"></div>
+        <div class="">
+            <div class="row g-0">
+
+                <div class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex border-end bg-transparent">
+
+                    {{-- <div class="card rounded-0 mb-0 border-0 shadow-none bg-transparent bg-none">
+                        <div class="card-body">
+                            <img src="{{ asset('assets/images/login-wallpaper.jpg') }}" class="img-fluid auth-img-cover-login" width="650" alt="">
+                        </div>
+                    </div> --}}
+
+                </div>
+
+                <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center border-top border-4 border-primary border-gradient-1">
+                    <div class="card rounded-0 m-1 mb-0 border-0 shadow-none bg-none">
+                        <div class="card-body p-sm-5">
+                            <img src="{{ asset('assets/images/bssa-logo1.png') }}" class="mb-4" width="145" style="display: block; margin: 0 auto;" alt="">
+                            <div class="text-center">
+                                <h4 class="fw-bold">Get Started Now</h4>
+                                <p class="mb-0">Enter your credentials to login your account</p>
+                            </div>
+
+                            <div class="form-body mt-4">
+                                <form class="row g-3" action="{{ route('login.process') }}" method="post">
+                                    @csrf
+                                    <div class="col-12">
+                                        <label for="inputEmailAddress" class="form-label">Email</label>
+                                        <input id="email" type="email" name="email" class="form-control"
+                                            id="email" placeholder="Enter Email" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="inputChoosePassword" class="form-label">Password</label>
+                                        <div class="input-group" id="show_hide_password">
+                                            <input type="password" class="form-control border-end-0"
+                                                id="inputChoosePassword" name="password" required
+                                                placeholder="Enter Password">
+                                            <a href="javascript:;" class="input-group-text bg-transparent"><i
+                                                    class="bi bi-eye-slash-fill"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">Remember
+                                                Me</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-grd btn-grd-info px-5">Login</button>
+                                        </div>
+                                    </div>
+                                
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+
+    <!--authentication-->
+
+    <!--plugins-->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+
+    <!--notification js -->
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bi-eye-slash-fill");
+                    $('#show_hide_password i').removeClass("bi-eye-fill");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bi-eye-slash-fill");
+                    $('#show_hide_password i').addClass("bi-eye-fill");
+                }
+            });
         });
     </script>
 
-    
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        <script>
+            $(document).ready(function(){
+                round_error_noti('{{ $error }}');
+            });
+        </script>
+        @endforeach
+    @endif
 
+    @if(Session::has("error"))
+    <script>
+        $(document).ready(function(){
+            round_error_noti('{{Session::get("error")}}');
+        });
+    </script>
+    @endif
+
+    @if(Session::has("success"))
+    <script>
+        $(document).ready(function(){
+            round_success_noti('{{Session::get("success")}}');
+        });
+    </script>
+    @endif
 </body>
 
 </html>

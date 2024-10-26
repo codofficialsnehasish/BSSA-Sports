@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\ExpensesTransaction;
 use App\Models\Transaction;
 use App\Models\ExpenseCategory;
 
 use Illuminate\Support\Facades\Validator;
 
-class ExpensesController extends Controller
+class ExpensesController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Expense', only: ['destroy']),
+            new Middleware('permission:Edit Expense', only: ['edit','update']),
+            new Middleware('permission:Create Expense', only: ['create','store']),
+            new Middleware('permission:View Expense', only: ['index','show','details','expenses_invoice']),
+        ];
+    }
+
     public function index()
     {
         $expenses = ExpensesTransaction::selectRaw('DATE(created_at) as date, SUM(amount) as amount')
@@ -76,6 +87,15 @@ class ExpensesController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function expenses_invoice(string $id){
+        $expense = ExpensesTransaction::find($id);
+        if($expense){
+            return view('expenses.invoice',compact('expense'));
+        }else{
+            return redirect()->back()->withError(['error'=>'Expenses Not Found.']);
+        }
     }
 
     public function edit(string $id)

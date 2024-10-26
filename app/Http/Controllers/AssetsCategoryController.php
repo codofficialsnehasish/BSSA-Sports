@@ -5,28 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\AssetsCategory;
 use Illuminate\Http\Request;
 
-class AssetsCategoryController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class AssetsCategoryController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Asset Category', only: ['destroy']),
+            new Middleware('permission:Edit Asset Category', only: ['edit','update']),
+            new Middleware('permission:Create Asset Category', only: ['create','store']),
+            new Middleware('permission:View Asset Category', only: ['index','show']),
+        ];
+    }
+
     public function index()
     {
         $assets_categorys = AssetsCategory::all();
         return view('assets-category.index',compact('assets_categorys'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('assets-category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $assets_category = new AssetsCategory();
@@ -41,26 +45,17 @@ class AssetsCategoryController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(AssetsCategory $assetsCategory)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $assets_category = AssetsCategory::find($id);
         return view('assets-category.edit',compact('assets_category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $assets_category = AssetsCategory::find($id);

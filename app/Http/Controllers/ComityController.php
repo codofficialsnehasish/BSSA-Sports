@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Comity;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
-class ComityController extends Controller
+class ComityController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Committee', only: ['destroy']),
+            new Middleware('permission:Edit Committee', only: ['edit','update']),
+            new Middleware('permission:Create Committee', only: ['create','store']),
+            new Middleware('permission:View Committee', only: ['index','show']),
+        ];
+    }
      /**
      * Display a listing of the resource.
      */

@@ -20,11 +20,13 @@
                         </ol>
                     </nav>
                 </div>
+                @can('Create Employee')
                 <div class="ms-auto">
                     <a href="{{ route('employee.add') }}">
                         <button type="button" class="btn btn-grd btn-grd-info px-5"><i class="bi bi-plus-lg me-2"></i>Add New Employee</button>
                     </a>
                 </div>
+                @endcan
             </div>
             <!--end breadcrumb-->
 
@@ -44,9 +46,9 @@
                                         <th>Mobile</th>
                                         <th>Email</th>
                                         <th>Status</th>
-                                        {{-- @canany(['Employee Edit','Employee Delete']) --}}
+                                        @canany(['Edit Employee','Delete Employee'])
                                         <th>Action</th>
-                                        {{-- @endcanany --}}
+                                        @endcanany
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,16 +63,16 @@
                                         <td>{{ $employee->phone }}</td>
                                         <td>{{ $employee->email }}</td>
                                         <td>{!! check_status($employee->status) !!}</td>
-                                        {{-- @canany(['Employee Edit','Employee Delete']) --}}
+                                        @canany(['Edit Employee','Delete Employee'])
                                         <td>
-                                            {{-- @can('Employee Edit') --}}
+                                            @can('Edit Employee')
                                             <a class="btn btn-primary" href="{{ route('employee.edit',$employee->id) }}" alt="edit">Edit</a>
-                                            {{-- @endcan --}}
-                                            {{-- @can('Employee Delete') --}}
+                                            @endcan
+                                            @can('Delete Employee')
                                             <a class="btn btn-danger" onclick="return confirm('Are You Sure?')" href="{{ route('employee.delete',$employee->id)}}">Delete</a>
-                                            {{-- @endcan --}}
+                                            @endcan
                                         </td>
-                                        {{-- @endcanany --}}
+                                        @endcanany
                                     </tr>
                                     @endforeach
                                 </tbody>

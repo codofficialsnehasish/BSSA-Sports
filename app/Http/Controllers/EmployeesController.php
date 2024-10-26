@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,16 +15,17 @@ use App\Models\SalaryConfiguration;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\File;
 
-class EmployeesController extends Controller
+class EmployeesController extends Controller implements HasMiddleware
 {
-    // public function __construct(){
-    //     $this->view_path = 'admin.employees.';
-
-    //     $this->middleware('role_or_permission:Employee Show', ['only' => ['index']]);
-    //     $this->middleware('role_or_permission:Employee Create', ['only' => ['add_new','process']]);
-    //     $this->middleware('role_or_permission:Employee Edit', ['only' => ['edit','update_process']]);
-    //     $this->middleware('role_or_permission:Employee Delete', ['only' => ['delete']]);
-    // }
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Employee', only: ['delete']),
+            new Middleware('permission:Edit Employee', only: ['edit','update_process']),
+            new Middleware('permission:Create Employee', only: ['add_new','process']),
+            new Middleware('permission:View Employee', only: ['index']),
+        ];
+    }
 
     public function index(){
         $employees = User::orderBy('id','desc')->get();

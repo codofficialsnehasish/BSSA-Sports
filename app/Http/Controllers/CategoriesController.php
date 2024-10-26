@@ -5,33 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
 
-class CategoriesController extends Controller
+class CategoriesController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Category', only: ['destroy']),
+            new Middleware('permission:Edit Category', only: ['edit','update']),
+            new Middleware('permission:Create Category', only: ['create','store']),
+            new Middleware('permission:View Category', only: ['index','show']),
+        ];
+    }
+
     public function index()
     {
         $categories = Categories::all();
         return view('category.index',compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if ($request->isMethod('post')){
@@ -68,17 +71,11 @@ class CategoriesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Categories $categories)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit( $id)
     {
         
@@ -87,9 +84,6 @@ class CategoriesController extends Controller
         return view('category.edit',compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
         if ($request->isMethod('post')){
@@ -123,9 +117,6 @@ class CategoriesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $catgory= Categories::find($id);

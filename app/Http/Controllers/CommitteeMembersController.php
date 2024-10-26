@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\Members;
 use App\Models\Designation;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\Rule;
-class CommitteeMembersController extends Controller
+class CommitteeMembersController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            // new Middleware('permission:Delete Comity', only: ['destroy']),
+            // new Middleware('permission:Edit Comity', only: ['edit','update']),
+            new Middleware('permission:Create Committee Members', only: ['create','store']),
+            new Middleware('permission:View Committee Members', only: ['index','show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

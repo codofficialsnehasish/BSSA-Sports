@@ -10,6 +10,10 @@ use App\Models\Student;
 use App\Models\Classes;
 use App\Models\FeeCategory;
 use App\Models\Media;
+
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -19,8 +23,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use App\Models\Subdivisions;
-class AdmissionController extends Controller
+class AdmissionController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Students', only: ['destroy']),
+            new Middleware('permission:Edit Students', only: ['edit','update']),
+            new Middleware('permission:Create Students', only: ['create','store']),
+            new Middleware('permission:View Students', only: ['index','show','id_card']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -176,6 +189,16 @@ class AdmissionController extends Controller
             } catch (\Exception $e) {
                 return redirect()->back()->withErrors($e->getMessage())->withInput();
             }
+        }
+    }
+
+    public function show(string $id)
+    {
+        $student = Student::find($id);
+        if($student){
+            return view('student.admission.show',compact('student'));
+        }else{
+            return redirect()->back()->withError(['error'=>'Student Not Found.']);
         }
     }
 

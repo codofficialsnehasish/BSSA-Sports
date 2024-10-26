@@ -7,12 +7,25 @@ use App\Models\Transaction;
 use App\Models\AssetsCategory;
 use Illuminate\Http\Request;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
 use Illuminate\Support\Facades\Validator;
 
-class AssetController extends Controller
+class AssetController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Asset', only: ['destroy']),
+            new Middleware('permission:Edit Asset', only: ['edit','update']),
+            new Middleware('permission:Create Asset', only: ['create','store']),
+            new Middleware('permission:View Asset', only: ['index','show','invoice']),
+        ];
+    }
+
     public function index(){
-        $assets = Asset::all();
+        $assets = Asset::orderBy('id','desc')->get();
         return view('assets.index',compact('assets'));
     }
 
@@ -54,6 +67,15 @@ class AssetController extends Controller
 
     public function show(Asset $asset){
         
+    }
+
+    public function invoice(string $id){
+        $asset = Asset::find($id);
+        if($asset){
+            return view('assets.invoice',compact('asset'));  
+        }else{
+            return redirect()->back()->withError(['error'=>'Asset Not Found.']);
+        }
     }
 
     public function edit(string $id){

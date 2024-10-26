@@ -19,18 +19,17 @@
                     </ol>
                 </nav>
             </div>
+            @can('Create Member')
             <div class="ms-auto">
                 <a href="{{ route('admin.members.create') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
+            @endcan
         </div>
         <!--end breadcrumb-->
 
         <div class="row">
-
-          
-
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -83,6 +82,7 @@
                                                 <a class="btn btn-success btn-sm" href="{{ route('admin.members.show', $item->id) }}">Details</a>
 
                                                 <a class="btn btn-info btn-sm" href="{{ route('admin.members.id-card', $item->id) }}">ID Card</a>
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.members.payment-transactions', $item->id) }}">Payments</a>
                                             </td>
                                         </tr>
                                     @endforeach

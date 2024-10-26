@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create Category')
+@section('title', 'Create Member')
 @section('content')
 
     <div class="main-content">
@@ -11,7 +11,7 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Members Category</li>
+                        <li class="breadcrumb-item active" aria-current="page">Create Member</li>
                     </ol>
                 </nav>
             </div>
@@ -204,9 +204,9 @@
                                 <h5 class="mb-4">Members Entry</h5>
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-12 mb-3">
                                     <label for="aadhaarInput" class="form-label">Aadhaar Card File</label>
-                                    <div class="input-group">
+                                    {{-- <div class="input-group">
                                         <input type="file" class="form-control" name="aadhar_proof" id="aadhaarInput"
                                             placeholder="Aadhaar Card File" required>
                                         <div class="invalid-feedback">
@@ -214,19 +214,37 @@
                                         </div>
                                         <img class="rounded me-2" alt="" width="200" src=""
                                             id="aadhaarPreview">
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        {{-- <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true"> --}}
+                                        <img class="img-thumbnail rounded me-2" alt="" width="200" src="" id="aadhaarPreview">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input type="file" class="form-control" name="aadhar_proof" id="aadhaarInput" placeholder="Aadhaar Card File" required>
+                                        <div class="invalid-feedback">
+                                            Please choose a file
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="profileInput" class="form-label">Profile Image</label>
-                                    <div class="input-group">
-                                        <input type="file" class="form-control" name="profile_image"
-                                            id="profileInput" placeholder="Profile Image" required>
+                                    {{-- <div class="input-group">
+                                        <input type="file" class="form-control" name="profile_image" id="profileInput" placeholder="Profile Image" required>
                                         <div class="invalid-feedback">
                                             Please choose a file
                                         </div>
-                                        <img class="rounded me-2" alt="" width="200" src=""
-                                            id="profilePreview">
+                                        <img class="rounded me-2" alt="" width="200" src="" id="profilePreview">
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        {{-- <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true"> --}}
+                                        <img class="rounded me-2" alt="" width="200" src="" id="profilePreview">
+                                    </div>
+                                    <div class="mb-0">
+                                        <input type="file" class="form-control" name="profile_image" id="profileInput" placeholder="Profile Image" required>
+                                        <div class="invalid-feedback">
+                                            Please choose a file
+                                        </div>
                                     </div>
                                 </div>
 

@@ -13,6 +13,8 @@ use App\Models\Media;
 use App\Models\MemberTransaction;
 use App\Models\Transaction;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
@@ -21,8 +23,18 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
-class MembersController extends Controller
+class MembersController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Delete Member', only: ['destroy']),
+            new Middleware('permission:Edit Member', only: ['edit','update']),
+            new Middleware('permission:Create Member', only: ['create','store','make_payment']),
+            new Middleware('permission:View Member', only: ['index','show','payment_invoice','id_card','payment_transactions']),
+        ];
+    }
+
     public function index()
     {
         $members = Members::all();
@@ -330,6 +342,7 @@ class MembersController extends Controller
 
             $member_transaction = new MemberTransaction();
             $member_transaction->member_id = $member->id;
+            $member_transaction->transaction_name = $transaction_category_name;
             $member_transaction->amount = $request->payment_amount;
             $member_transaction->payment_mode = $request->payment_mode;
             $member_transaction->transaction_id = $request->transaction_id;
@@ -369,5 +382,20 @@ class MembersController extends Controller
         }else{
             return redirect()->back()->withErrors(['error' => 'Member not found.']);
         }
+    }
+
+    public function payment_transactions($id = null){
+        if($id != null){
+            $member_transactions = MemberTransaction::where('member_id',$id)->orderBy('id','desc')->get();
+            return view('members.member.transactions',compact('member_transactions'));
+        }else{
+            $member_transactions = MemberTransaction::orderBy('id','desc')->get();
+            return view('members.member.transactions',compact('member_transactions'));
+        }
+    }
+
+    public function payment_invoice(string $id){
+        $member_transaction = MemberTransaction::find($id);
+        return view('members.member.invoice',compact('member_transaction'));
     }
 }

@@ -27,7 +27,7 @@
 
                 <div class="d-flex align-items-center gap-2 justify-content-lg-end">
 
-                    <a href="javascript:void(0)" onclick="popupCenter({ 
+                    {{-- <a href="javascript:void(0)" onclick="popupCenter({ 
                                                         url: '{{ route('admin.student.admission.print_form', $data->id) }}', 
                                                         title: 'Print Invoice', 
                                                         w: 800, 
@@ -35,7 +35,7 @@
                                                     });"
                         class="btn btn-outline-primary me-1 mb-1  float-end" aria-expanded="false">
                         <span class="ms-1" data-feather="printer" style="height:12.8px;width:12.8px;"></span>Print
-                    </a>
+                    </a> --}}
 
                 </div>
 
@@ -329,7 +329,7 @@
                                             id="aadhaarPreview" data-holder-rendered="true">
                                     </div>
                                     <div class="mb-0">
-                                        <input class="form-control" name="aadhar_proof" type="file" id="aadhaarInput" required>
+                                        <input class="form-control" name="aadhar_proof" type="file" id="aadhaarInput">
                                         <div class="invalid-feedback">
                                             Please choose a file
                                         </div>
@@ -359,7 +359,7 @@
                                             id="profilePreview">
                                     </div>
                                     <div class="mb-0">
-                                        <input class="form-control" name="profile_image" type="file" id="profileInput" required>
+                                        <input class="form-control" name="profile_image" type="file" id="profileInput">
                                         <div class="invalid-feedback">
                                             Please choose a file
                                         </div>

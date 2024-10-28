@@ -5,61 +5,85 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use Illuminate\Http\Request;
 
-class ClassesController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class ClassesController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Create Class', only: ['create','store']),
+            new Middleware('permission:View Class', only: ['index','show']),
+            new Middleware('permission:Edit Class', only: ['edit','update']),
+            new Middleware('permission:Delete Class', only: ['destroy']),
+        ];
+    }
+
+
     public function index()
     {
-        //
+        $classes = Classes::all();
+        return view('classes.index',compact('classes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('classes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $class = new Classes();
+        $class->name = $request->class_name;
+        $class->status = $request->status;
+        $res = $class->save();
+
+        if($res){
+            return back()->with(['success'=>'Class Created Successfully']);
+        }else{
+            return back()->withErrors(['error'=>'Class Not Created']);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Classes $classes)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Classes $classes)
+    public function edit(string $id)
     {
-        //
+        $class = Classes::find($id);
+        return view('classes.edit',compact('class'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Classes $classes)
+    public function update(Request $request, string $id)
     {
-        //
+        $class = Classes::find($id);
+        $class->name = $request->class_name;
+        $class->status = $request->status;
+        $res = $class->update();
+
+        if($res){
+            return back()->with(['success'=>'Class Updated Successfully']);
+        }else{
+            return back()->withErrors(['error'=>'Class Not Updated']);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Classes $classes)
     {
-        //
+        $class = Classes::find($id);
+        if($class){
+            $res = $class->delete();
+
+            if($res){
+                return back()->with(['success'=>'Class Deleted Successfully']);
+            }else{
+                return back()->withErrors(['error'=>'Class Not Deleted']);
+            }
+        }else{
+            return back()->withErrors(['error'=>'Class not found']);
+        }
     }
 }

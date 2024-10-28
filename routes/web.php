@@ -31,6 +31,9 @@ use App\Http\Controllers\{
     TournamentController,
     ClubRegistrationController,
     Sitecontroller,
+    ClassesController,
+    SpecialInterestController,
+    TournamentCategoryController,
 };
 
 Route::get('tournament/player-entry', [Sitecontroller::class,'player_entry_form']);
@@ -229,6 +232,9 @@ Route::prefix('admin')->group( function (){
         Route::post('tournaments/clubs/assign-club/process-assign-clubs', [TournamentController::class,'process_assign_clubs'])->name('tournaments.process-assign-clubs');
 
         Route::resource('club-registration', ClubRegistrationController::class);
+        Route::resource('class', ClassesController::class);
+        Route::resource('special-interest', SpecialInterestController::class);
+        Route::resource('tournament-category', TournamentCategoryController::class);
     });
     
     

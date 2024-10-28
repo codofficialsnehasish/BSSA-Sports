@@ -27,6 +27,9 @@
                 <a href="{{ route('tournaments.assign-clubs',request()->segment(3)) }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Assign Club</button>
                 </a>
+                <a href="{{ route('tournament.index') }}">
+                    <button type="button" class="btn btn-grd btn-grd-warning px-5">Back</button>
+                </a>
             </div>
         </div>
         <!--end breadcrumb-->

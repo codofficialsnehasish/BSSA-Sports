@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
     use HasFactory;
+
+    public function category()
+    {
+        return $this->belongsTo(TournamentCategory::class, 'tournament_category_id', 'id');
+    }
 }

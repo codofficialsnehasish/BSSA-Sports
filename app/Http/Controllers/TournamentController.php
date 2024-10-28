@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Tournament;
 use App\Models\ClubRegistration;
 use App\Models\ClubInTournamet;
+use App\Models\Categories;
+use App\Models\TournamentCategory;
+use App\Models\Transaction;
 use App\Models\PlayersInTournamentsClub;
 use Illuminate\Support\Facades\DB;
 
@@ -12,8 +15,21 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
 
-class TournamentController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class TournamentController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Create Tournament', only: ['create','store','process_assign_clubs']),
+            new Middleware('permission:View Tournament', only: ['index','show','clubs','player_list']),
+            new Middleware('permission:Edit Tournament', only: ['edit','update']),
+            new Middleware('permission:Delete Tournament', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $tournament = Tournament::all();
@@ -22,23 +38,27 @@ class TournamentController extends Controller
 
     public function create()
     {
-        return view('tournament.create');
+        $categories = Categories::where('is_visible',1)->get();  
+        $tournament_categorys = TournamentCategory::where('status',1)->get();
+        return view('tournament.create',compact('tournament_categorys'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'tournament_name' => 'required',
-            'tournament_date' => 'required|date',
-            'registration_start_date' => 'required|date|before:tournament_date',
-            'registration_end_date' => 'required|date|before_or_equal:tournament_date|after_or_equal:registration_start_date',
+            'tournament_category_id' => 'required|exists:tournament_categories,id',
+            // 'tournament_date' => 'required|date',
+            'registration_start_date' => 'required|date',
+            'registration_end_date' => 'required|date|after_or_equal:registration_start_date',
             'entry_fee' => 'required|numeric',
             'status' => 'required|in:1,0',
         ]);
 
         $tournament = new Tournament();
         $tournament->tournament_name = $request->tournament_name;
-        $tournament->tournament_date = $request->tournament_date;
+        $tournament->tournament_category_id = $request->tournament_category_id;
+        // $tournament->tournament_date = $request->tournament_date;
         $tournament->registration_start_date = $request->registration_start_date;
         $tournament->registration_end_date = $request->registration_end_date;
         $tournament->entry_fee = $request->entry_fee;
@@ -59,23 +79,27 @@ class TournamentController extends Controller
     public function edit(string $id)
     {
         $tournament = Tournament::find($id);
-        return view('tournament.edit',compact('tournament'));
+        $categories = Categories::where('is_visible',1)->get(); 
+        $tournament_categorys = TournamentCategory::where('status',1)->get();
+        return view('tournament.edit',compact('tournament','tournament_categorys'));
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
             'tournament_name' => 'required',
-            'tournament_date' => 'required|date',
-            'registration_start_date' => 'required|date|before:tournament_date',
-            'registration_end_date' => 'required|date|before_or_equal:tournament_date|after_or_equal:registration_start_date',
+            'tournament_category_id' => 'required|exists:tournament_categories,id',
+            // 'tournament_date' => 'required|date',
+            'registration_start_date' => 'required|date',
+            'registration_end_date' => 'required|date|after_or_equal:registration_start_date',
             'entry_fee' => 'required|numeric',
             'status' => 'required|in:1,0',
         ]);
 
         $tournament = Tournament::find($id);
         $tournament->tournament_name = $request->tournament_name;
-        $tournament->tournament_date = $request->tournament_date;
+        $tournament->tournament_category_id = $request->tournament_category_id;
+        // $tournament->tournament_date = $request->tournament_date;
         $tournament->registration_start_date = $request->registration_start_date;
         $tournament->registration_end_date = $request->registration_end_date;
         $tournament->entry_fee = $request->entry_fee;
@@ -150,6 +174,17 @@ class TournamentController extends Controller
             $club_in_tournamet->paid_amount = $request->fee_amount;
             $club_in_tournamet->payment_mode = $request->payment_mode;
             $res = $club_in_tournamet->save();
+
+            if($res){
+                $tournament = Tournament::find($request->tournament_id);
+                Transaction::create([
+                    'transaction_name' => $tournament->category->name,
+                    'transaction_category_name' => 'Entry Fee',
+                    'amount' => $club_in_tournamet->paid_amount,
+                    'remarks' => 'by '.$club_in_tournamet->payment_mode,
+                    'transaction_type' => 'credit'
+                ]);
+            }
     
             if($res){
                 return back()->with('success','Club Added to Tournament Successfully');

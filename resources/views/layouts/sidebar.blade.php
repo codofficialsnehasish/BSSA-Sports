@@ -71,7 +71,7 @@
             </li>
             @endcanany
             
-            @canany(['Create Category', 'View Category', 'Create Fee Category', 'View Fee Category', 'Create Member Category','View Member Category','Create Expense Category','View Expense Category','Create Asset Category','View Asset Category'])
+            @canany(['View Tournament Category', 'Create Tournament Category', 'Create Special Interest', 'View Special Interest', 'Create Class', 'View Class', 'Create Category', 'View Category', 'Create Fee Category', 'View Fee Category', 'Create Member Category','View Member Category','Create Expense Category','View Expense Category','Create Asset Category','View Asset Category'])
             <!-- categories -->
             <li>
                 <a href="javascript:;" class="has-arrow">
@@ -190,6 +190,73 @@
                         </ul>
                     </li>
                     @endcanany
+
+                    @canany(['Create Class', 'View Class'])
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="parent-icon">
+                                <i class="material-icons-outlined">arrow_right</i>
+                            </div>
+                            <div class="menu-title">Class Master</div>
+                        </a>
+                        <ul>
+                            @can('Create Class')
+                            <li><a href="{{ route('class.create') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>Add</a>
+                            </li>
+                            @endcan
+                            @can('CView Class')
+                            <li><a href="{{ route('class.index') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>List</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcanany
+
+                    @canany(['Create Special Interest', 'View Special Interest'])
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="parent-icon"><i class="material-icons-outlined">arrow_right</i>
+                            </div>
+                            <div class="menu-title">Special Interest</div>
+                        </a>
+                        <ul>
+                            @can('Create Special Interest')
+                            <li><a href="{{ route('special-interest.create') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>Add</a>
+                            </li>
+                            @endcan
+                            @can('View Special Interest')
+                            <li><a href="{{ route('special-interest.index') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>List</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcanany
+
+                    @canany(['Create Tournament Category', 'View Tournament Category'])
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="parent-icon"><i class="material-icons-outlined">arrow_right</i>
+                            </div>
+                            <div class="menu-title">Tournament Category</div>
+                        </a>
+                        <ul>
+                            @can('Create Tournament Category')
+                            <li><a href="{{ route('tournament-category.create') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>Add</a>
+                            </li>
+                            @endcan
+                            @can('View Tournament Category')
+                            <li><a href="{{ route('tournament-category.index') }}"><i
+                                        class="material-icons-outlined">arrow_right</i>List</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcanany
                 </ul>
             </li>
             @endcanany
@@ -301,6 +368,7 @@
             </li>
             @endcanany
 
+            @canany(['Create Tournament', 'View Tournament'])
             <li>
                 <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"><i class="material-icons-outlined">sports_football</i>
@@ -308,17 +376,23 @@
                     <div class="menu-title">Tournament</div>
                 </a>
                 <ul>
+                    @can('Create Tournament')
                     <li><a href="{{ route('tournament.create') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Create</a>
                     </li>
+                    @endcan
+                    @can('View Tournament')
                     <li>
                         <a href="{{ route('tournament.index') }}">
                             <i class="material-icons-outlined">arrow_right</i> View List
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </li>
+            @endcanany
 
+            @canany(['Create Club', 'View Club'])
             <li>
                 <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"><i class="material-icons-outlined">sports_football</i>
@@ -326,16 +400,21 @@
                     <div class="menu-title">Club Registration</div>
                 </a>
                 <ul>
+                    @can('View Club')
                     <li><a href="{{ route('club-registration.create') }}"><i
                                 class="material-icons-outlined">arrow_right</i>Create</a>
                     </li>
+                    @endcan
+                    @can('View Club')
                     <li>
                         <a href="{{ route('club-registration.index') }}">
                             <i class="material-icons-outlined">arrow_right</i> View List
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </li>
+            @endcanany
 
             @canany(['View Designation', 'Create Designation'])
             <li>

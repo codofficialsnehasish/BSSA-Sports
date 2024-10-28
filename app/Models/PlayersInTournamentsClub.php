@@ -27,4 +27,14 @@ class PlayersInTournamentsClub extends Model
     {
         return $this->belongsTo(ClubInTournamet::class, 'club_registrations_id', 'id');
     }
+
+    public function profile_image_media()
+    {
+        return $this->belongsTo(Media::class, 'profile_image', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id');
+    }
 }

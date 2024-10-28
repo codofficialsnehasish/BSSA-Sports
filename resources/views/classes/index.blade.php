@@ -1,12 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tournament')
-
-
-@section('css')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"> 
-@endsection
-
-
+@section('title', 'Classes')
 
 @section('content')
 
@@ -17,14 +10,15 @@
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        <li class="breadcrumb-item">
+                            <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tournament</li>
+                        <li class="breadcrumb-item active" aria-current="page">Classes</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('tournament.create') }}">
+                <a href="{{ route('class.create') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
@@ -40,42 +34,34 @@
                                 <tr>
                                     <tr>
                                         <th>Sl. No.</th>
-                                        <th>Tournament Name</th>
-                                        <th>Tournament Category</th>
-                                        <th>Registration Start Date</th>
-                                        <th>Registration End Date</th>
-                                        {{-- <th>Tournament Date</th> --}}
-                                        <th>Entry Fee</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($tournament->isNotEmpty())
-                                    @foreach ($tournament as $item)
+                                @if ($classes->isNotEmpty())
+                                    @foreach ($classes as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->tournament_name }}</td>
-                                            <td>{{ $item->category ? $item->category->name : '' }}</td>
-                                            <td>{{ format_date($item->registration_start_date) }}</td>
-                                            <td>{{ format_date($item->registration_end_date) }}</td>
-                                            {{-- <td>{{ format_date($item->tournament_date) }}</td> --}}
-                                            <td>{{ $item->entry_fee }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{!! check_status($item->status) !!}</td>
+                                            <td>{{ format_datetime($item->created_at) }}</td>
                                             <td>
-                                                <a href="{{ route('tournament.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
-                                                <form action="{{ route('tournament.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
+                                                <a href="{{ route('class.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
+                                                <form action="{{ route('class.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
                                                 </form>
-
-                                                <a class="btn btn-info btn-sm" href="{{ route('tournaments.clubs', $item->id) }}">Clubs</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" class="text-center">No transactions found.</td>
+                                        <td colspan="5" class="text-center">No classes found.</td>
                                     </tr>
                                 @endif
                             </tbody>

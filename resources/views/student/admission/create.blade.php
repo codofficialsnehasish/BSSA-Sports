@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control datepicker" id="dob" name="dob" placeholder="Choose Date Of Birth" value="{{ old('dob') }}" required>
+                                    <input type="date" class="form-control" id="dob" name="dob" placeholder="Choose Date Of Birth" value="{{ old('dob') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your date of birth
                                     </div>
@@ -133,8 +133,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="school_portal_id" class="form-label">School Portal Id</label>
                                     <input type="text" class="form-control" id="school_portal_id"
-                                        name="school_portal_id" placeholder="Height(cm)" value="{{ old('age') }}"
-                                        required>
+                                        name="school_portal_id" value="{{ old('age') }}">
                                     <div class="invalid-feedback">
                                         Please enter your school portal id
                                     </div>
@@ -211,12 +210,10 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">District</label>
                                     <select class="form-select" id="district_id" name="district_id" required>
-                                        <option value="" disabled {{ old('district_id') ? '' : 'selected' }}>
-                                            Choose
-                                            District</option>
+                                        <option value selected disabled>Choose District</option>
                                         @foreach ($districts as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ old('district_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->id == 13 ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
@@ -228,10 +225,10 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">Subdivisions </label>
                                     <select class="form-select" id="subdivision_id" name="subdivision_id" required>
-                                        <option value="" disabled {{ old('subdivision_id') ? '' : 'selected' }}>
-                                            Choose
-                                            Subdivisions</option>
-    
+                                        <option value disabled selected>Choose Subdivisions</option>
+                                        @foreach($subdivisions as $subdivision)
+                                            <option value="{{ $subdivision->id }}">{{ $subdivision->name }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback">
                                         Please choose subdivisions
@@ -460,6 +457,7 @@
             $('#district_id').on('change', function() {
                 var district_id = $(this).val();
                 var $selected_subdivision = $('#subdivision_id');
+                $selected_subdivision.html('');
 
                 if (district_id) {
                     $.ajax({

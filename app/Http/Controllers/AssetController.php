@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use App\Models\Transaction;
 use App\Models\AssetsCategory;
+use App\Models\Categories;
+use App\Models\TournamentCategory;
 use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -30,8 +32,10 @@ class AssetController extends Controller implements HasMiddleware
     }
 
     public function create(){
+        $categories = Categories::where('is_visible',1)->get();  
+        $tournament_categorys = TournamentCategory::where('status',1)->get();
         $assets_categorys = AssetsCategory::where('visiblity',1)->get();
-        return view('assets.create',compact('assets_categorys'));    
+        return view('assets.create',compact('assets_categorys','tournament_categorys'));    
     }
 
     public function store(Request $request){
@@ -51,12 +55,25 @@ class AssetController extends Controller implements HasMiddleware
         $asset->remarks = $request->remarks;
         $res = $asset->save();
 
-        Transaction::create([
-            'transaction_name' => $asset->category->name,
-            'amount' => $asset->amount,
-            'remarks' => $asset->remarks,
-            'transaction_type' => 'credit'
-        ]);
+        if(!empty($request->tournament_category_id)){
+            $tournament_category = TournamentCategory::find($request->tournament_category_id);
+            if($tournament_category){
+                Transaction::create([
+                    'transaction_name' => $tournament_category->name,
+                    'transaction_category_name' => $asset->category->name,
+                    'amount' => $asset->amount,
+                    'remarks' => $asset->remarks,
+                    'transaction_type' => 'credit'
+                ]);
+            }
+        }else{
+            Transaction::create([
+                'transaction_name' => $asset->category->name,
+                'amount' => $asset->amount,
+                'remarks' => $asset->remarks,
+                'transaction_type' => 'credit'
+            ]);
+        }
 
         if($res){
             return redirect()->back()->with('success', 'Asset Added Successfully.');

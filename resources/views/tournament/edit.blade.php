@@ -42,6 +42,21 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <label for="tournament_category_id" class="form-label">Tournament Category</label>
+                                    <select class="form-select" id="tournament_category_id" name="tournament_category_id" required>
+                                        <option value="" disabled {{ $tournament->tournament_category_id ? '' : 'selected' }}>Choose Category</option>
+                                        @foreach ($tournament_categorys as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $tournament->tournament_category_id == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose category
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-6 mb-3">
                                     <label for="tournament_date" class="form-label">Tournament Date</label>
                                     <div class="input-group">
                                         <input type="date" class="form-control" id="tournament_date" placeholder="Enter Tournament Date" name="tournament_date" value="{{ $tournament->tournament_date }}" required>
@@ -49,7 +64,7 @@
                                             Please enter tournament date
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mb-3">
                                     <label for="registration_start_date" class="form-label">Registration Start Date</label>
                                     <div class="input-group">

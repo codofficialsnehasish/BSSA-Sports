@@ -8,8 +8,22 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
 
-class ClubRegistrationController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class ClubRegistrationController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Create Club', only: ['create','store']),
+            new Middleware('permission:View Club', only: ['index','show']),
+            new Middleware('permission:Edit Club', only: ['edit','update']),
+            new Middleware('permission:Delete Club', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $club_registrations = ClubRegistration::all();

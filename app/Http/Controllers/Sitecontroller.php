@@ -89,7 +89,7 @@ class Sitecontroller extends Controller
         $players_in_tournaments_club->tournaments_id = $request->tournament_id;
         $players_in_tournaments_club->player_name = $request->player_name;
         $players_in_tournaments_club->father_name = $request->player_father_name;
-        $players_in_tournaments_club->phone_number = $request->player_phone;
+        $players_in_tournaments_club->phone_number = $request->phone_number;
         $players_in_tournaments_club->whatsapp_number = $request->whatsapp_number;
         $players_in_tournaments_club->date_of_birth = $request->dob;
         $players_in_tournaments_club->age = $request->age;

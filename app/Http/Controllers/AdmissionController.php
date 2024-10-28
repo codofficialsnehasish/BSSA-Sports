@@ -67,8 +67,9 @@ class AdmissionController extends Controller implements HasMiddleware
         $categories = Categories::where('is_visible',1)->get();
         $special_interest =SpecialInterest::where('status',1)->get();
         $classes =Classes::where('status',1)->get();
+        $subdivisions = Subdivisions::where('district_id', 13)->get(['id', 'name']);
 
-        return view('student.admission.create',compact('categories','districts','special_interest','classes'));
+        return view('student.admission.create',compact('categories','districts','special_interest','classes','subdivisions'));
     }
 
     public function getSubdivisions($district_id)

@@ -42,7 +42,7 @@
                                     <th class="text-wrap">Address</th>
                                     <th class="text-wrap">District</th>
                                     <th class="text-wrap">Created At</th>
-                                    <th class="text-wrap">Action</th>
+                                    {{-- <th class="text-wrap">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,25 +61,25 @@
                                             <td>{{ $item->father_name }}</td>
                                             <td>{{ $item->phone_number }}</td>
                                             <td>{{ $item->whatsapp_number }}</td>
-                                            <td>{{ $item->date_of_birth }}</td>
+                                            <td>{{ format_date($item->date_of_birth) }}</td>
                                             <td>{{ $item->age }}</td>
                                             <td>{{ $item->aadhar_number }}</td>
                                             <td>{{ $item->address }}</td>
-                                            <td>{{ $item->district_id }}</td>
+                                            <td>{{ $item->district->name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y h:i A') }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ route('admin.members.edit', $item->id) }}">
                                                     <i class="text-primary" data-feather="edit"></i></a>
 
                                                 <a class="delete-member"
                                                     href="{{ route('admin.members.delete', $item->id) }}"><i
                                                         class="text-danger" data-feather="trash-2"></i></a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" class="text-center">No data found.</td>
+                                        <td colspan="11" class="text-center">No data found.</td>
                                     </tr>
                                 @endif
 

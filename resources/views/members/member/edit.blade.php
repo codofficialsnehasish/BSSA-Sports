@@ -113,7 +113,7 @@
                                 <label for="input35" class="col-sm-3 col-form-label">Enter
                                     Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="email" name="email"
+                                    <input type="email" class="form-control" id="email" name="email"
                                         placeholder="Email" value="{{ old('email', $data->email) }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your email
@@ -124,7 +124,7 @@
                                 <label for="input35" class="col-sm-3 col-form-label">Enter
                                     Mobile No.</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="mobile_number" name="mobile_number"
+                                    <input type="number" class="form-control" id="mobile_number" name="mobile_number"
                                         placeholder="Phone" value="{{ old('mobile_number', $data->mobile_number) }}"
                                         required>
                                     <div class="invalid-feedback">
@@ -136,7 +136,7 @@
                                 <label for="input35" class="col-sm-3 col-form-label">Enter
                                     Whatsapp No.</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number"
+                                    <input type="number" class="form-control" id="whatsapp_number" name="whatsapp_number"
                                         placeholder="Phone" value="{{ old('whatsapp_number',$data->whatsapp_number) }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your whatsapp number
@@ -159,7 +159,7 @@
                                 <label for="input35" class="col-sm-3 col-form-label">Enter
                                     Age</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="age" name="age"
+                                    <input type="number" class="form-control" id="age" name="age"
                                         placeholder="Age" value="{{ old('age', $data->age) }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your age
@@ -170,7 +170,7 @@
                                 <label for="input35" class="col-sm-3 col-form-label">Enter
                                     Aadhaar Card No</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="input13" name="aadhar_card_no"
+                                    <input type="number" class="form-control" id="input13" name="aadhar_card_no"
                                         value="{{ old('aadhar_card_no', $data->aadhar_card_no) }}"
                                         placeholder="Aadhaar Card No" required>
                                     <div class="invalid-feedback">

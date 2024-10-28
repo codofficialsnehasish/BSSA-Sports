@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tournament')
+@section('title', 'Club Registration')
 
 
 @section('css')
@@ -19,12 +19,12 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tournament</li>
+                        <li class="breadcrumb-item active" aria-current="page">Club Registration</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('tournament.create') }}">
+                <a href="{{ route('club-registration.create') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Add New</button>
                 </a>
             </div>
@@ -40,40 +40,36 @@
                                 <tr>
                                     <tr>
                                         <th>Sl. No.</th>
-                                        <th>Tournament Name</th>
-                                        <th>Registration Start Date</th>
-                                        <th>Registration End Date</th>
-                                        <th>Tournament Date</th>
-                                        <th>Entry Fee</th>
+                                        <th>Club Name</th>
+                                        <th>Contact No.</th>
+                                        <th>Address</th>
+                                        <th>Destrict</th>
                                         <th>Action</th>
                                     </tr>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($tournament->isNotEmpty())
-                                    @foreach ($tournament as $item)
+                                @if ($club_registrations->isNotEmpty())
+                                    @foreach ($club_registrations as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->tournament_name }}</td>
-                                            <td>{{ format_date($item->registration_start_date) }}</td>
-                                            <td>{{ format_date($item->registration_end_date) }}</td>
-                                            <td>{{ format_date($item->tournament_date) }}</td>
-                                            <td>{{ $item->entry_fee }}</td>
+                                            <td>{{ $item->club_name }}</td>
+                                            <td>{{ $item->club_address }}</td>
+                                            <td>{{ $item->contact_no }}</td>
+                                            <td>{{ $item->district->name }}</td>
                                             <td>
-                                                <a href="{{ route('tournament.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
-                                                <form action="{{ route('tournament.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
+                                                <a href="{{ route('club-registration.edit', $item->id) }}"> <i class="text-primary" data-feather="edit"></i></a>
+                                                <form action="{{ route('club-registration.destroy', $item->id) }}" onsubmit="return confirm('Are you sure?')" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn" type="submit"><i class="text-danger" data-feather="trash-2"></i></button>
                                                 </form>
-
-                                                <a class="btn btn-info btn-sm" href="{{ route('tournaments.clubs', $item->id) }}">Clubs</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" class="text-center">No transactions found.</td>
+                                        <td colspan="6" class="text-center">No clubs found.</td>
                                     </tr>
                                 @endif
                             </tbody>

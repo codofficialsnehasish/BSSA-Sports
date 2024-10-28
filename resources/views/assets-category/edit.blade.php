@@ -33,7 +33,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <label for="expense_name" class="form-label">Expense Name</label>
+                                    <label for="expense_name" class="form-label">Asset Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="expense_name" placeholder="Enter Name"
                                             name="name" value="{{ $assets_category->name }}" required>

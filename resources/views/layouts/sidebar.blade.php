@@ -319,6 +319,24 @@
                 </ul>
             </li>
 
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="material-icons-outlined">sports_football</i>
+                    </div>
+                    <div class="menu-title">Club Registration</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('club-registration.create') }}"><i
+                                class="material-icons-outlined">arrow_right</i>Create</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('club-registration.index') }}">
+                            <i class="material-icons-outlined">arrow_right</i> View List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             @canany(['View Designation', 'Create Designation'])
             <li>
                 <a class="has-arrow" href="javascript:;">

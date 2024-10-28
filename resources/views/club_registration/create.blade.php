@@ -1,22 +1,22 @@
 @extends('layouts.app')
-@section('title', 'Tournament')
+@section('title', 'Club Registration')
 @section('content')
 
     <div class="main-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Tournament</div>
+            <div class="breadcrumb-title pe-3">Club Registration</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Create Tournament</li>
+                        <li class="breadcrumb-item active" aria-current="page">Create Club</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('tournament.index') }}">
+                <a href="{{ route('club-registration.index') }}">
                     <button type="button" class="btn btn-grd btn-grd-info px-5">Back</button>
                 </a>
             </div>
@@ -24,7 +24,7 @@
         <!--end breadcrumb-->
 
         <div class="row">
-            <form class="row g-3 needs-validation" novalidate action="{{ route('tournament.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="row g-3 needs-validation" novalidate action="{{ route('club-registration.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-9 col-xl-9">
                     <div class="card">
@@ -32,47 +32,46 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="tournament_name" class="form-label">Tournament Name</label>
+                                    <label for="club_name" class="form-label">Club Name</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="tournament_name" placeholder="Enter Tournament Name" name="tournament_name" value="{{ old('tournament_name') }}" required>
+                                        <input type="text" class="form-control" id="club_name" placeholder="Enter Club Name" name="club_name" value="{{ old('club_name') }}" required>
                                         <div class="invalid-feedback">
-                                            Please enter tournament name
+                                            Please enter club name
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="tournament_date" class="form-label">Tournament Date</label>
+                                    <label for="contact_no" class="form-label">Contact No.</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" id="tournament_date" placeholder="Enter Tournament Date" name="tournament_date" value="{{ old('tournament_date') }}" required>
+                                        <input type="number" class="form-control" id="contact_no" placeholder="Enter Contact Number" name="contact_no" value="{{ old('contact_no') }}" required>
                                         <div class="invalid-feedback">
-                                            Please enter tournament date
+                                            Please enter contact number
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="registration_start_date" class="form-label">Registration Start Date</label>
+                                    <label for="club_address" class="form-label">Address</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" id="registration_start_date" placeholder="Enter Registration Start Date" name="registration_start_date" value="{{ old('registration_start_date') }}" required>
+                                        <textarea type="date" class="form-control" id="club_address" placeholder="Enter Club Address" name="club_address">{{ old('club_address') }}</textarea>
                                         <div class="invalid-feedback">
-                                            Please enter registration start date
+                                            Please enter address
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="registration_end_date" class="form-label">Registration End Date</label>
+                                    <label for="district_id" class="form-label">Destrict</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" id="registration_end_date" placeholder="Enter Registration End Date" name="registration_end_date" value="{{ old('registration_end_date') }}" required>
+                                        <select class="form-select" id="district_id" name="district_id" required>
+                                            <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>Choose District</option>
+                                            @foreach ($districts as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ old('district_id') == $item->id ? 'selected' : '' }}>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         <div class="invalid-feedback">
-                                            Please enter registration end date
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="entry_fee" class="form-label">Entry Fee</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="entry_fee" placeholder="Enter Entry Fee" name="entry_fee" value="{{ old('entry_fee') }}" required step="0.01">
-                                        <div class="invalid-feedback">
-                                            Please enter entry fee
+                                            Please choose a district
                                         </div>
                                     </div>
                                 </div>

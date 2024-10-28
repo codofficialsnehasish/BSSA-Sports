@@ -29,9 +29,18 @@ use App\Http\Controllers\{
     ExpenseCategoryController,
     AssetsCategoryController,
     TournamentController,
+    ClubRegistrationController,
+    Sitecontroller,
 };
 
+Route::get('tournament/player-entry', [Sitecontroller::class,'player_entry_form']);
+Route::post('tournament/player-entry/get-tournaments-by-club-id', [Sitecontroller::class,'get_tournaments_by_club_id'])->name('get-tournaments-by-club-id');
+Route::post('tournament/player-entry/process-player-entry-form', [Sitecontroller::class,'process_player_entry_form'])->name('process-player-entry-form');
+
+
+
 Route::get('/',[AuthController::class,'login'])->name('login');
+
 Route::prefix('admin')->group( function (){
 
     Route::post('/login',[AuthController::class,'process_login'])->name('login.process');
@@ -211,7 +220,15 @@ Route::prefix('admin')->group( function (){
         Route::get('asset/{id}/invoice', [AssetController::class,'invoice'])->name('asset.invoice');
         Route::resource('expense-category', ExpenseCategoryController::class);
         Route::resource('assets-category', AssetsCategoryController::class);
+
         Route::resource('tournament', TournamentController::class);
+        Route::get('tournaments/{id}/clubs', [TournamentController::class,'clubs'])->name('tournaments.clubs');
+        Route::get('tournaments/{club_registration_id}/{tournamet_id}/player-list', [TournamentController::class,'player_list'])->name('tournaments.player-list');
+        
+        Route::get('tournaments/clubs/{id}/assign-club', [TournamentController::class,'assign_clubs'])->name('tournaments.assign-clubs');
+        Route::post('tournaments/clubs/assign-club/process-assign-clubs', [TournamentController::class,'process_assign_clubs'])->name('tournaments.process-assign-clubs');
+
+        Route::resource('club-registration', ClubRegistrationController::class);
     });
     
     

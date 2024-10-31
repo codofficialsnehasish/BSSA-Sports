@@ -38,7 +38,10 @@
 						<div class="invoice-container">
 							<div class="invoice-content-wrap" id="download_section">
 								<!--Header start here -->
-								<header class="student-header" id="invo_header">
+								<header class="student-header" id="invo_header" style="display: flex;align-items: center;justify-content:center;">
+									<div class="">
+                                        <img src="{{ asset('assets/images/bssa-logo1.png') }}" width="100" class="logo-img" alt="">
+                                    </div>
 									<div style="text-align: center;color:black;">
 										<p><strong>BISHNUPUR SUB-DIVISIONAL SPORTS ASSOCIATION</strong></p>
 										<p><strong>(B.S.S.A)</strong></p>

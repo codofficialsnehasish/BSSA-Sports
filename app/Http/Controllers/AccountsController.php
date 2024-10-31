@@ -111,6 +111,7 @@ class AccountsController extends Controller implements HasMiddleware
                 return [
                     'transaction_name' => $group->first()->transaction_name,
                     'transaction_category_name' => $group->pluck('transaction_category_name')->filter()->unique()->implode(', '),
+                    'amounts' => $group->pluck('total_amount')->filter()->implode(', '),
                     'total_amount' => $group->sum('total_amount'),
                 ];
             });

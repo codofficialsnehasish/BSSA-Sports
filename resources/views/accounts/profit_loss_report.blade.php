@@ -188,7 +188,7 @@
                                             @endforeach
                                         </td>
                                         @endif
-                                        <td>{{ $receipt['total_amount'] }}</td>
+                                        <td>{{ $payments['total_amount'] }}</td>
                                     </tr>
                                     @endforeach
                         

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use App\Models\ExpensesTransaction;
 use App\Models\Transaction;
 use App\Models\ExpenseCategory;
+use App\Models\TournamentCategory;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -45,7 +46,8 @@ class ExpensesController extends Controller implements HasMiddleware
     public function create()
     {
         $expense_categorys = ExpenseCategory::where('visiblity',1)->get();
-        return view('expenses.create',compact('expense_categorys'));
+        $tournament_categorys = TournamentCategory::where('status',1)->get();
+        return view('expenses.create',compact('expense_categorys','tournament_categorys'));
     }
 
     public function store(Request $request)
@@ -70,11 +72,29 @@ class ExpensesController extends Controller implements HasMiddleware
             $expenses->remarks = $request->remarks[$key];
             $res = $expenses->save();
 
-            Transaction::create([
-                'transaction_name' => $expenses->category->name,
-                'amount' => $expenses->amount,
-                'remarks' => $expenses->remarks
-            ]);
+            // Transaction::create([
+            //     'transaction_name' => $expenses->category->name,
+            //     'amount' => $expenses->amount,
+            //     'remarks' => $expenses->remarks
+            // ]);
+
+            if(!empty($request->tournament_category_id[$key])){
+                $tournament_category = TournamentCategory::find($request->tournament_category_id[$key]);
+                if($tournament_category){
+                    Transaction::create([
+                        'transaction_name' => $tournament_category->name,
+                        'transaction_category_name' => $expenses->category->name,
+                        'amount' => $expenses->amount,
+                        'remarks' => $expenses->remarks
+                    ]);
+                }
+            }else{
+                Transaction::create([
+                    'transaction_name' => $expenses->category->name,
+                    'amount' => $expenses->amount,
+                    'remarks' => $expenses->remarks
+                ]);
+            }
         }
 
         if($res){

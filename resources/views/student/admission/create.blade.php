@@ -51,51 +51,51 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <label for="fullname" class="form-label">Full Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="full_name" value="{{ old('full_name') }}" required>
                                     <div class="invalid-feedback">Please enter your full name</div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="guardian_name" class="form-label">Father / Guardian's Name</label>
+                                    <label for="guardian_name" class="form-label">Father / Guardian's Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="guardian_name" placeholder="Enter Father / Guardian's Name" name="guardian_name" value="{{ old('guardian_name') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your full name
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email ID" value="{{ old('email') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your email
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input15" class="form-label">Phone</label>
+                                    <label for="input15" class="form-label">Phone <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Enter Phone Number" value="{{ old('mobile_number') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your mobile number
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input15" class="form-label">Whatsapp Number</label>
+                                    <label for="input15" class="form-label">Whatsapp Number <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number" placeholder="Enter Whatsapp Number" value="{{ old('whatsapp_number') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your whatsapp number
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="dob" class="form-label">Date of Birth</label>
+                                    <label for="dob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" id="dob" name="dob" placeholder="Choose Date Of Birth" value="{{ old('dob') }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your date of birth
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="age" class="form-label">Age</label>
+                                    <label for="age" class="form-label">Age <span id="age-show"></span></label>
                                     <input type="text" class="form-control" id="age" name="age" placeholder="Age" value="{{ old('age') }}" required readonly>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input13" class="form-label">Sex</label>
+                                    <label for="input13" class="form-label">Sex <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="sex" id="sex1"
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="height" class="form-label">Height(cm)</label>
+                                    <label for="height" class="form-label">Height(cm) <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" id="height" name="height"
                                         placeholder="Height(cm)" value="{{ old('height') }}" required step="any" min="0">
                                     <div class="invalid-feedback">
@@ -123,7 +123,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="weight" class="form-label">Weight (kg)</label>
+                                    <label for="weight" class="form-label">Weight (kg) <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" id="weight" name="weight"
                                         placeholder="Weight (kg)" value="{{ old('weight') }}" required step="any" min="0">
                                     <div class="invalid-feedback">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="aadhaar" class="form-label">Aadhaar Card No</label>
+                                    <label for="aadhaar" class="form-label">Aadhaar Card No <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="aadhaar" name="aadhar_card_no"
                                         value="{{ old('aadhar_card_no') }}" placeholder="Aadhaar Card No" required>
                                     <div class="invalid-feedback">
@@ -147,7 +147,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input30" class="form-label">Class</label>
+                                    <label for="input30" class="form-label">Class <span class="text-danger">*</span></label>
                                     <select class="form-select" id="class_id" name="class_id" required>
                                         <option value="" disabled {{ old('class_id') ? '' : 'selected' }}>
                                             Choose
@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input30" class="form-label">Sports Category</label>
+                                    <label for="input30" class="form-label">Sports Category <span class="text-danger">*</span></label>
                                     <select class="form-select" id="category_id" name="category_id" required>
                                         <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>
                                             Choose
@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input33" class="form-label">Special Interest </label>
+                                    <label for="input33" class="form-label">Special Interest <span class="text-danger">*</span></label>
                                     <select class="form-select" id="interest_id" name="interest_id" required>
                                         <option value="" disabled {{ old('interest_id') ? '' : 'selected' }}>
                                             Choose
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input33" class="form-label">District</label>
+                                    <label for="input33" class="form-label">District <span class="text-danger">*</span></label>
                                     <select class="form-select" id="district_id" name="district_id" required>
                                         <option value selected disabled>Choose District</option>
                                         @foreach ($districts as $item)
@@ -223,7 +223,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input33" class="form-label">Subdivisions </label>
+                                    <label for="input33" class="form-label">Subdivisions <span class="text-danger">*</span></label>
                                     <select class="form-select" id="subdivision_id" name="subdivision_id" required>
                                         <option value disabled selected>Choose Subdivisions</option>
                                         @foreach($subdivisions as $subdivision)
@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="residential_address" class="form-label"> Residential Address</label>
+                                    <label for="residential_address" class="form-label"> Residential Address <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="residential_address"
                                         name="residential_address" placeholder="Residential Address" required
                                         value="{{ old('residential_address') }}">
@@ -244,7 +244,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input32" class="form-label">Permanent Address</label>
+                                    <label for="input32" class="form-label">Permanent Address <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="permanent_address"
                                         name="permanent_address"placeholder="Permanent Address" required
                                         value="{{ old('permanent_address') }}">
@@ -265,7 +265,7 @@
 
 
                                 <div class="col-md-12 mb-3">
-                                    <label for="aadhaarInput" class="form-label">Aadhaar Card File</label>
+                                    <label for="aadhaarInput" class="form-label">Aadhaar Card File <span class="text-danger">*</span></label>
                                     <div class="mb-3">
                                         <img class="img-thumbnail rounded me-2" id="aadhaarPreview" alt="" width="200" src="" data-holder-rendered="true">
                                     </div>
@@ -278,7 +278,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="profileInput" class="form-label">Profile Image</label>
+                                    <label for="profileInput" class="form-label">Profile Image <span class="text-danger">*</span></label>
                                     <div class="mb-3">
                                         <img class="img-thumbnail rounded me-2" id="profilePreview" alt="" width="200" src="" data-holder-rendered="true">
                                     </div>
@@ -412,25 +412,50 @@
         $(document).ready(function() {
             $('#dob, #category_id').on('change', function() {
                 // Get the selected date of birth and category
-                const dob = new Date($('#dob').val());
+                //const dob = new Date($('#dob').val());
                 const category_id = $('#category_id').val();
-                const today = new Date();
+                //const today = new Date();
 
                 // Calculate age
-                let age = today.getFullYear() - dob.getFullYear();
-                const monthDifference = today.getMonth() - dob.getMonth();
+                //let age = today.getFullYear() - dob.getFullYear();
+                //const monthDifference = today.getMonth() - dob.getMonth();
 
-                if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
-                    age--;
-                }
+                //if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+                  //  age--;
+                //}
 
                 // Set the calculated age in the age input field
-                $('#age').val(age);
+                //$('#age').val(age);
+
+                const dob = new Date($('#dob').val());
+                const today = new Date();
+
+                // Calculate differences
+                let years = today.getFullYear() - dob.getFullYear();
+                let months = today.getMonth() - dob.getMonth();
+                let days = today.getDate() - dob.getDate();
+
+                // Adjust for negative values
+                if (days < 0) {
+                    months--;
+                    days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Get last month days
+                }
+
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                // Set the calculated age in the age input field in "Y M D" format
+                // $('#age').val(`${years} years, ${months} months, ${days} days`);
+                $('#age').val(years);
+                $('#age-show').text(`(${years} years, ${months} months, ${days} days)`);
+
 
                 // Call the server to get the admission fee based on age and category
-                if (!isNaN(age) && category_id) {
+                if (!isNaN(years) && category_id) {
                     $.ajax({
-                        url: `{{ url('admin/student-admission/get-fee-by-age') }}/${age}/${category_id}`,
+                        url: `{{ url('admin/student-admission/get-fee-by-age') }}/${years}/${category_id}`,
                         type: 'GET',
                         success: function(response) {
                             console.log(response);

@@ -109,13 +109,13 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="input29" class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control datepicker" id="dob" name="dob" placeholder="DOB" value="{{ old('dob', $data->dob) }}" required>
+                                    <input type="date" class="form-control" id="dob" name="dob" placeholder="DOB" value="{{ old('dob', $data->dob) }}" required>
                                     <div class="invalid-feedback">
                                         Please enter your date of birth
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="input29" class="form-label">Age</label>
+                                    <label for="input29" class="form-label">Age <span id="age-show"></span></label>
                                     <input type="text" class="form-control" id="age" name="age" placeholder="Age" value="{{ old('age', $data->age) }}" required readonly>
                                     <div class="invalid-feedback">
                                         Please enter your date of birth
@@ -478,27 +478,70 @@
 
     <script>
         $(document).ready(function() {
+            const dob = new Date($('#dob').val());
+            const today = new Date();
+
+            // Calculate differences
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            // Adjust for negative values
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Get last month days
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            $('#age-show').text(`(${years} years, ${months} months, ${days} days)`);
+
+
             $('#dob, #category_id').on('change', function() {
                 // Get the selected date of birth and category
-                const dob = new Date($('#dob').val());
+                // const dob = new Date($('#dob').val());
                 const category_id = $('#category_id').val();
+                // const today = new Date();
+
+                // // Calculate age
+                // let age = today.getFullYear() - dob.getFullYear();
+                // const monthDifference = today.getMonth() - dob.getMonth();
+
+                // if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+                //     age--;
+                // }
+
+                // // Set the calculated age in the age input field
+                // $('#age').val(age);
+
+                const dob = new Date($('#dob').val());
                 const today = new Date();
 
-                // Calculate age
-                let age = today.getFullYear() - dob.getFullYear();
-                const monthDifference = today.getMonth() - dob.getMonth();
+                // Calculate differences
+                let years = today.getFullYear() - dob.getFullYear();
+                let months = today.getMonth() - dob.getMonth();
+                let days = today.getDate() - dob.getDate();
 
-                if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
-                    age--;
+                // Adjust for negative values
+                if (days < 0) {
+                    months--;
+                    days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Get last month days
                 }
 
-                // Set the calculated age in the age input field
-                $('#age').val(age);
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                $('#age').val(years);
+                $('#age-show').text(`(${years} years, ${months} months, ${days} days)`);
 
                 // Call the server to get the admission fee based on age and category
-                if (!isNaN(age) && category_id) {
+                if (!isNaN(years) && category_id) {
                     $.ajax({
-                        url: `{{ url('admin/student-admission/get-fee-by-age') }}/${age}/${category_id}`,
+                        url: `{{ url('admin/student-admission/get-fee-by-age') }}/${years}/${category_id}`,
                         type: 'GET',
                         success: function(response) {
                             console.log(response);

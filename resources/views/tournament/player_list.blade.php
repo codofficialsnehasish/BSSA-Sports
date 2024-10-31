@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('title', 'Players List')
-
+@section('css')
+<style>
+    td {
+        padding: 0; /* Removes cell padding */
+        margin: 0; /* Removes any margin (if any) */
+        text-align: left;
+    }
+</style>
+@endsection
 @section('content')
 
     <div class="main-content">
@@ -24,7 +32,7 @@
         </div>
         <!--end breadcrumb-->
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -42,7 +50,7 @@
                                     <th class="text-wrap">Address</th>
                                     <th class="text-wrap">District</th>
                                     <th class="text-wrap">Created At</th>
-                                    {{-- <th class="text-wrap">Action</th> --}}
+                                    <th class="text-wrap">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,14 +75,14 @@
                                             <td>{{ $item->address }}</td>
                                             <td>{{ $item->district->name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y h:i A') }}</td>
-                                            {{-- <td>
+                                            <td>
                                                 <a href="{{ route('admin.members.edit', $item->id) }}">
                                                     <i class="text-primary" data-feather="edit"></i></a>
 
                                                 <a class="delete-member"
                                                     href="{{ route('admin.members.delete', $item->id) }}"><i
                                                         class="text-danger" data-feather="trash-2"></i></a>
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -85,26 +93,69 @@
 
 
                             </tbody>
-                            <!-- <tfoot>
-                                <tr>
-                                    <th>Sl. No.</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Contact No.</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-
-                                </tr>
-                            </tfoot> -->
                         </table>
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="row">
+            @if ($playersInTournamentsClub->isNotEmpty())
+                @foreach ($playersInTournamentsClub as $item)
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Srl.</strong></td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td rowspan="9" class="no-border"><img src="{{ isset($item->profile_image_media) ? asset('storage/' . $item->profile_image_media->file_path) : '' }}" alt="Player Image" style="width:100%; height:auto;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Player</strong></td>
+                                            <td>{{ $item->player_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Father's Name</strong></td>
+                                            <td>{{ $item->father_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Phone & Whatsapp</strong></td>
+                                            <td>{{ $item->phone_number }} / {{ $item->whatsapp_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Age</strong></td>
+                                            <td>{{ $item->age }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Aadhaar Number</strong></td>
+                                            <td>{{ $item->aadhar_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Address</strong></td>
+                                            <td>{{ $item->address }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>District</strong></td>
+                                            <td>{{ $item->district->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Date of Birth</strong></td>
+                                            <td>{{ format_date($item->date_of_birth) }}</td>
+                                        </tr>    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="9" class="text-center">No data found.</td>
+                </tr>
+            @endif
         </div>
-
-
-
     </div>
 @endsection
 
@@ -119,61 +170,6 @@
 
             table.buttons().container()
                 .appendTo('#example2_wrapper .col-md-6:eq(0)');
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Add click event handler to delete buttons with class 'delete-brand'
-            $('.delete-member').on('click', function(e) {
-                e.preventDefault();
-                var deleteUrl = $(this).attr('href');
-                var actionText = "Member";
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Do you really want to delete this ' + actionText + '?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, do it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: deleteUrl,
-                                type: 'GET',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
-                                },
-                                success: function(response) {
-                                    Swal.fire({
-                                        title: 'Deleted!',
-                                        text: response.success,
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(() => {
-                                        location.reload();
-                                    });
-                                },
-                                error: function(xhr) {
-
-                                    var errorMsg = xhr.responseJSON?.error ||
-                                        'There was an error deleting the ' + actionText + '';
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: errorMsg,
-                                        icon: 'error',
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-
-            
-
         });
     </script>
 

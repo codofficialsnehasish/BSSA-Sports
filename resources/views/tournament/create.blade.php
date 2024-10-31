@@ -91,6 +91,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row mt-3">
+                                    <h3 class="text-center">Fees Structure</h3>
+                                    <table width="100%" cellpadding="5" cellspacing="5" id="table_repeter">
+                                        <tr>
+                                            <th width="20%">Fees Name</th>
+                                            <th width="20%">Fees Amount</th>
+                                            <th width="4%">&nbsp;</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" name="fees_name[]" required>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" name="amount[]" required step="0.01">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div  id="more1"><a class="btn btn-success btn-sm float-end" href="javascript:;" onClick="showMore_edit('field_1');"><i class="fa fa-plus"></i>Add More</a></div>
+                                    <p>&nbsp;</p>
+                                    <input type="hidden" name="cont" id="cont" value="1" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -130,4 +151,51 @@
 
 
     </div>
+@endsection
+
+@section('scripts')
+
+    <script>
+		function showMore_edit(id){
+            var idd = id.split("_");
+            var idty = parseInt(idd[1]);
+            idty = idty + 1;
+            var table = document.getElementById("table_repeter");
+            console.log(table);
+            var rowCount = table.rows.length;
+            console.log(rowCount);
+            
+            var row = table.insertRow(rowCount);
+            var cell0 = row.insertCell(0);
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+            console.log(cell0,cell1, cell2, cell3);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            document.getElementById("cont").value = idty;
+               
+				
+			// cell1.innerHTML = '<input type="text" class="form-control" name="expense_name[]" required>';
+            cell1.innerHTML = '<input type="text" class="form-control" name="fees_name[]" required>'
+				
+			cell2.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
+            
+            cell3.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
+                 
+
+				  
+			document.getElementById("more1").innerHTML = "<a class=\"btn btn-success btn-sm float-end\" href=\"javascript:;\" onClick=\"showMore_edit('field_" + idty + "');\"><i class=\"fa fa-plus\"></i>Add More</a>";
+                
+                
+        }
+
+        function deleteRow(btn) {
+            if (confirm("Are You Sure?") == true) {
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            } else { }
+		}
+    </script>
+
 @endsection

@@ -225,7 +225,10 @@ Route::prefix('admin')->group( function (){
         Route::resource('assets-category', AssetsCategoryController::class);
 
         Route::resource('tournament', TournamentController::class);
+        
+        Route::get('tournaments/{id}/delete-fees-structure', [TournamentController::class,'delete_fees_structure'])->name('tournaments.delete-fees-structure');
         Route::get('tournaments/{id}/clubs', [TournamentController::class,'clubs'])->name('tournaments.clubs');
+        Route::get('tournaments/{club_registration_id}/{tournamet_id}/invoice', [TournamentController::class,'invoice'])->name('tournaments.invoice');
         Route::get('tournaments/{club_registration_id}/{tournamet_id}/player-list', [TournamentController::class,'player_list'])->name('tournaments.player-list');
         
         Route::get('tournaments/clubs/{id}/assign-club', [TournamentController::class,'assign_clubs'])->name('tournaments.assign-clubs');

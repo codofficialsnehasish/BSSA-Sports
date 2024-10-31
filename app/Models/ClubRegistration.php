@@ -13,4 +13,9 @@ class ClubRegistration extends Model
     {
         return $this->belongsTo(District::class, 'district_id', 'id');
     }
+
+    public function club()
+    {
+        return $this->hasMany(ClubRegistration::class, 'club_registrations_id', 'id');
+    }
 }

@@ -58,6 +58,7 @@
                                             <td>{{ $item->total_players }}</td>
                                             <td>
                                                 <a class="btn btn-success" href="{{ route('tournaments.player-list',[$item->club_registrations_id,request()->segment(3)]) }}">Players List</a>
+                                                <a class="btn btn-success" href="{{ route('tournaments.invoice',[$item->club_registrations_id,request()->segment(3)]) }}">Invoice</a>
                                             </td>
                                         </tr>
                                     @endforeach

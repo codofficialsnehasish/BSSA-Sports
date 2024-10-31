@@ -9,6 +9,7 @@ use App\Models\Categories;
 use App\Models\TournamentCategory;
 use App\Models\Transaction;
 use App\Models\PlayersInTournamentsClub;
+use App\Models\EntryFeesStructure;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -64,6 +65,15 @@ class TournamentController extends Controller implements HasMiddleware
         $tournament->entry_fee = $request->entry_fee;
         $tournament->status = $request->status;
         $res = $tournament->save();
+
+        foreach($request->fees_name as $key => $value){
+            $entry_fees_structure = new EntryFeesStructure();
+            $entry_fees_structure->tournaments_id = $tournament->id;
+            $entry_fees_structure->name = $value;
+            $entry_fees_structure->amount = $request->amount[$key];
+            $entry_fees_structure->save();
+        }
+        // EntryFeesStructure
         if($res){
             return back()->with('success','Tournament Added Successfully');
         }else{
@@ -81,7 +91,22 @@ class TournamentController extends Controller implements HasMiddleware
         $tournament = Tournament::find($id);
         $categories = Categories::where('is_visible',1)->get(); 
         $tournament_categorys = TournamentCategory::where('status',1)->get();
-        return view('tournament.edit',compact('tournament','tournament_categorys'));
+        $entry_fees_structures = EntryFeesStructure::where('tournaments_id',$tournament->id)->get();
+        return view('tournament.edit',compact('tournament','tournament_categorys','entry_fees_structures'));
+    }
+
+    public function delete_fees_structure(string $id){
+        $entry_fees_structures = EntryFeesStructure::find($id);
+        if($entry_fees_structures){
+            $res = $entry_fees_structures->delete();
+            if($res){
+                return back()->with('success','Fees Structure Deleted Successfully');
+            }else{
+                return back()->withErrors(['error'=>'Fees Structure Not Deleted']);
+            }
+        }else{
+            return back()->withErrors(['error'=>'Fees Structure Not Found']);
+        }
     }
 
     public function update(Request $request, string $id)
@@ -105,6 +130,15 @@ class TournamentController extends Controller implements HasMiddleware
         $tournament->entry_fee = $request->entry_fee;
         $tournament->status = $request->status;
         $res = $tournament->update();
+
+        foreach($request->fees_name as $key => $value){
+            $entry_fees_structure = new EntryFeesStructure();
+            $entry_fees_structure->tournaments_id = $tournament->id;
+            $entry_fees_structure->name = $value;
+            $entry_fees_structure->amount = $request->amount[$key];
+            $entry_fees_structure->save();
+        }
+
         if($res){
             return back()->with('success','Tournament Updated Successfully');
         }else{
@@ -157,6 +191,13 @@ class TournamentController extends Controller implements HasMiddleware
         $clubs = ClubRegistration::all();
         $tournament = Tournament::find($id);
         return view('tournament.assign_club',compact('clubs','tournament'));
+    }
+
+    public function invoice(string $club_registration_id, string $tournamet_id){
+        $data = ClubInTournamet::where('tournaments_id',$tournamet_id)->where('club_registrations_id',$club_registration_id)->first();
+        $entry_fees_structures = EntryFeesStructure::where('tournaments_id',$tournamet_id)->get();
+        // d($data);
+        return view('tournament.invoice',compact('data','entry_fees_structures'));
     }
 
     public function process_assign_clubs(Request $request){

@@ -42,7 +42,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-wrap">Sl. No.</th>
-                                    <th>Memo No.</th>
+                                    <th>Receipt No.</th>
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>Action</th>

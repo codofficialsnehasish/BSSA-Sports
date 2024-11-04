@@ -51,13 +51,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    <label for="memo_no" class="form-label">Memo No.</label>
+                                    <label for="memo_no" class="form-label">Receipt No.</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="memo_no" placeholder="Enter Memo No."
+                                        <input type="text" class="form-control" id="memo_no" placeholder="Enter Receipt No."
                                             name="memo_no" value="{{ old('memo_no') }}" required>
     
                                         <div class="invalid-feedback">
-                                            Please enter memo no.
+                                            Please enter receipt no.
                                         </div>
                                     </div>
                                 </div>

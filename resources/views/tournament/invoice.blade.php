@@ -130,7 +130,7 @@
 				
 												<p><strong>Received with thanks from {{ $data->club->club_name }}</strong></p>
 												<p><strong>Date - {{ format_date($data->created_at) }}</strong></p>
-												<p><strong>Memo No. - {{ $data->memo_no }}</strong></p>
+												<p><strong>Receipt No. - {{ $data->memo_no }}</strong></p>
 											</div>
 										</div>
 										<!--Student billing details end -->

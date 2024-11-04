@@ -130,7 +130,7 @@
 				
 												<p><strong>Received with thanks from {{ $student->full_name }}</strong></p>
 												<p><strong>Date - {{ format_date($date) }}</strong></p>
-												<p><strong>Memo No. - {{ $StudentPaymentOrder->memo_no }}</strong></p>
+												<p><strong>Receipt No. - {{ $StudentPaymentOrder->memo_no }}</strong></p>
 											</div>
 										</div>
 										<!--Student billing details end -->

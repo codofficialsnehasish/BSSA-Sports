@@ -168,11 +168,20 @@ class TournamentController extends Controller implements HasMiddleware
         //         ->groupBy('club_in_tournamets.id', 'club_in_tournamets.club_registrations_id')
         //         ->get();
 
-        $club_in_tournamets = ClubInTournamet::leftJoin('players_in_tournaments_clubs', 'club_in_tournamets.club_registrations_id', '=', 'players_in_tournaments_clubs.club_registrations_id')
-                ->select('club_in_tournamets.club_registrations_id', DB::raw('COUNT(players_in_tournaments_clubs.id) AS total_players'))
-                ->where('club_in_tournamets.tournaments_id', $id)
-                ->groupBy('club_in_tournamets.id', 'club_in_tournamets.club_registrations_id')
-                ->get();
+        // $club_in_tournamets = ClubInTournamet::leftJoin('players_in_tournaments_clubs', 'club_in_tournamets.club_registrations_id', '=', 'players_in_tournaments_clubs.club_registrations_id')
+        //         ->select('club_in_tournamets.club_registrations_id', DB::raw('COUNT(players_in_tournaments_clubs.id) AS total_players'))
+        //         ->where('club_in_tournamets.tournaments_id', $id)
+        //         ->groupBy('club_in_tournamets.id', 'club_in_tournamets.club_registrations_id')
+        //         ->get();
+        $club_in_tournamets = ClubInTournamet::leftJoin('players_in_tournaments_clubs', function($join) use ($id) {
+            $join->on('club_in_tournamets.club_registrations_id', '=', 'players_in_tournaments_clubs.club_registrations_id')
+                    ->where('players_in_tournaments_clubs.tournaments_id', '=', $id);
+        })
+        ->select('club_in_tournamets.club_registrations_id', DB::raw('COUNT(players_in_tournaments_clubs.id) AS total_players'))
+        ->where('club_in_tournamets.tournaments_id', $id)
+        ->groupBy('club_in_tournamets.id', 'club_in_tournamets.club_registrations_id')
+        ->get();
+
 
 
         // $club_in_tournamets = ClubInTournamet::where('tournaments_id',$id)

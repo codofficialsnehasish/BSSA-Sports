@@ -35,7 +35,7 @@
                                     <tr>
                                         <th width="20%">Expense Name</th>
                                         <th width="20%">Main A/C Category</th>
-                                        <th width="20%">Memo No.</th>
+                                        <th width="20%">Receipt No.</th>
                                         <th width="20%">Amount</th>
                                         <th width="16%">Remarks (Optional)</th>
                                         <th width="4%">&nbsp;</th>
@@ -61,7 +61,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" placeholder="Enter Memo No." name="memo_no[]" required>
+                                            <input type="text" class="form-control" placeholder="Enter Receipt No." name="memo_no[]" required>
                                         </td>
                                         <td>
                                             <input type="number" class="form-control" name="amount[]" required step="0.01">
@@ -137,7 +137,7 @@
 
             cell2.innerHTML = '<select class="form-select" name="tournament_category_id[]" id="single-select-clear-field" data-placeholder="Choose one thing"><option value selected disabled>Choose Category</option><?php foreach($tournament_categorys as $item){?><option value="<?= $item->id;?>"><?= $item->name;?></option><?php }?></select>'
 				
-			cell3.innerHTML = '<input type="text" class="form-control" placeholder="Enter Memo No." name="memo_no[]" required>';
+			cell3.innerHTML = '<input type="text" class="form-control" placeholder="Enter Receipt No." name="memo_no[]" required>';
 			
             cell4.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
 

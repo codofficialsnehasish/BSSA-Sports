@@ -120,62 +120,72 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->remarks = $request->remarks;
                 $StudentPaymentOrder->save();
 
+                $student_transaction = new StudentTransaction();
+                $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
+                $student_transaction->students_id = $student->id;
+                $student_transaction->category_id = $request->category_id;
+                $student_transaction->amount = $monthly_fees;
+                $student_transaction->which_for = "monthly_fees";
+                $student_transaction->date = $request->payment_date;
+                $student_transaction->remarks = $request->remarks;
+                $student_transaction->save();
+
                 // Retrieve the last paid monthly fee date
-                $last_payment = StudentTransaction::where('students_id', $request->student_id)
-                                                ->where('category_id', $request->category_id)
-                                                ->where('which_for', 'monthly_fees')
-                                                ->orderBy('date', 'desc')
-                                                ->first();
+                // $last_payment = StudentTransaction::where('students_id', $request->student_id)
+                //                                 ->where('category_id', $request->category_id)
+                //                                 ->where('which_for', 'monthly_fees')
+                //                                 ->orderBy('date', 'desc')
+                //                                 ->first();
                 
-                // If there's no last payment, assume the first month is due
-                $last_payment_date = $last_payment ? Carbon::parse($last_payment->date) : Carbon::now()->subMonth();
-                // Calculate the next payment date
-                $next_payment_date = $last_payment_date->copy()->addMonth();
-                // echo $next_payment_date;die;
+                // // If there's no last payment, assume the first month is due
+                // $last_payment_date = $last_payment ? Carbon::parse($last_payment->date) : Carbon::now()->subMonth();
+                // // Calculate the next payment date
+                // $next_payment_date = $last_payment_date->copy()->addMonth();
+                // // echo $next_payment_date;die;
 
-                // Pay due months first
-                $current_date = Carbon::now();
-                $has_due = $next_payment_date->lessThanOrEqualTo($current_date);
+                // // Pay due months first
+                // $current_date = Carbon::now();
+                // $has_due = $next_payment_date->lessThanOrEqualTo($current_date);
                 
-                while ($has_due && $next_payment_date->lessThanOrEqualTo($current_date) && $remaining_amount >= $monthly_fees) {
-                    // Create a transaction for the due month
-                    $student_transaction = new StudentTransaction();
-                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
-                    $student_transaction->students_id = $request->student_id;
-                    $student_transaction->category_id = $request->category_id;
-                    $student_transaction->amount = $monthly_fees;
-                    $student_transaction->which_for = "monthly_fees";
-                    $student_transaction->date = $next_payment_date;
-                    $student_transaction->remarks = $request->remarks;
-                    $student_transaction->save();
+                // while ($has_due && $next_payment_date->lessThanOrEqualTo($current_date) && $remaining_amount >= $monthly_fees) {
+                //     // Create a transaction for the due month
+                //     $student_transaction = new StudentTransaction();
+                //     $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
+                //     $student_transaction->students_id = $request->student_id;
+                //     $student_transaction->category_id = $request->category_id;
+                //     $student_transaction->amount = $monthly_fees;
+                //     $student_transaction->which_for = "monthly_fees";
+                //     $student_transaction->date = $next_payment_date;
+                //     $student_transaction->remarks = $request->remarks;
+                //     $student_transaction->save();
 
-                    // Deduct from the remaining amount
-                    $remaining_amount -= $monthly_fees;
+                //     // Deduct from the remaining amount
+                //     $remaining_amount -= $monthly_fees;
 
-                    // Move to the next month's due date
-                    $next_payment_date = $next_payment_date->addMonth();
+                //     // Move to the next month's due date
+                //     $next_payment_date = $next_payment_date->addMonth();
 
-                    $has_due = $next_payment_date->lessThanOrEqualTo($current_date);
-                }
-                // echo $monthly_fees;die;
-                // After paying due months, pay in advance with the remaining amount
-                while ($remaining_amount >= $monthly_fees) {
-                    $student_transaction = new StudentTransaction();
-                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
-                    $student_transaction->students_id = $request->student_id;
-                    $student_transaction->category_id = $request->category_id;
-                    $student_transaction->amount = $monthly_fees;
-                    $student_transaction->which_for = "monthly_fees";
-                    $student_transaction->date = $next_payment_date;
-                    $student_transaction->remarks = $request->remarks;
-                    $student_transaction->save();
+                //     $has_due = $next_payment_date->lessThanOrEqualTo($current_date);
+                // }
+                // // echo $monthly_fees;die;
+                // // After paying due months, pay in advance with the remaining amount
+                // while ($remaining_amount >= $monthly_fees) {
+                //     $student_transaction = new StudentTransaction();
+                //     $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
+                //     $student_transaction->students_id = $request->student_id;
+                //     $student_transaction->category_id = $request->category_id;
+                //     $student_transaction->amount = $monthly_fees;
+                //     $student_transaction->which_for = "monthly_fees";
+                //     $student_transaction->date = $next_payment_date;
+                //     $student_transaction->remarks = $request->remarks;
+                //     $student_transaction->save();
 
-                    // Deduct from the remaining amount
-                    $remaining_amount -= $monthly_fees;
+                //     // Deduct from the remaining amount
+                //     $remaining_amount -= $monthly_fees;
 
-                    // Move to the next month's date
-                    $next_payment_date = $next_payment_date->addMonth();
-                }
+                //     // Move to the next month's date
+                //     $next_payment_date = $next_payment_date->addMonth();
+                // }
 
                 // // If there's any leftover amount that isn't enough for a full month's fee
                 // if ($remaining_amount > 0) {
@@ -223,7 +233,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $student_transaction->category_id = $request->category_id;
                 $student_transaction->amount = $admission_money;
                 $student_transaction->which_for = "admission_fees";
-                $student_transaction->date = date('Y-m-d');
+                // $student_transaction->date = date('Y-m-d');
+                $student_transaction->date = $student->admission_date;
                 $student_transaction->remarks = $request->remarks;
                 $student_transaction->save();
 
@@ -241,7 +252,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 // Calculate how many months can be covered with the remaining amount
                 $months = floor($remaining_amount / $monthly_fees);
 
-                $next_payment_date = date('Y-m-d');  // First monthly payment date
+                // $next_payment_date = date('Y-m-d');  // First monthly payment date
+                $next_payment_date = $student->admission_date;  // First monthly payment date
 
                 // Loop to save monthly fee transactions
                 for ($i = 1; $i <= $months; $i++) {
@@ -274,7 +286,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
     {
         $student = Student::find($id);
         if($student){
-            $registrationDate = StudentTransaction::where('students_id',$student->id)->where('which_for','admission_fees')->value('date');
+            // $registrationDate = StudentTransaction::where('students_id',$student->id)->where('which_for','admission_fees')->value('date');
+            $registrationDate = $student->admission_date;
             $registrationDate = Carbon::parse($registrationDate); // Get registration date
             $currentDate = Carbon::now(); // Get current date
     
@@ -290,7 +303,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
     
             // Set the end date to the greater of the current date or last payment date
             $endDate = $currentDate->greaterThan($lastPaymentDate) ? $currentDate : $lastPaymentDate;
-    
+            // return $registrationDate->year;die;
             // Prepare the result
             $result = [];
             // echo $registrationDate; die;

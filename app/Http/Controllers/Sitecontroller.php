@@ -27,11 +27,11 @@ class Sitecontroller extends Controller
     }
 
     public function get_tournaments_by_club_id(Request $request){
-        $tournaments = ClubInTournamet::leftjoin('tournaments','club_in_tournamets.tournaments_id','tournaments.id')
-                                    ->whereDate('tournaments.registration_start_date', '<=', Carbon::today())
-                                    ->whereDate('tournaments.registration_end_date', '>=', Carbon::today())
-                                    ->where('club_registrations_id',$request->club_id)
-                                    ->get();
+        $tournaments = Tournament::join('club_in_tournamets','tournaments.id','=','club_in_tournamets.tournaments_id')
+                                        ->whereDate('tournaments.registration_start_date', '<=', date('Y-m-d'))
+                                        ->whereDate('tournaments.registration_end_date', '>=', date('Y-m-d'))
+                                        ->where('club_in_tournamets.club_registrations_id', $request->club_id)
+                                        ->get();
         return response()->json($tournaments);
     }
 

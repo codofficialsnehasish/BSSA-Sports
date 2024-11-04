@@ -51,6 +51,13 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label for="date_of_admission" class="form-label">Date of Admission <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="date_of_admission" name="date_of_admission" placeholder="Choose Date Of admission" value="{{ old('date_of_admission') }}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a date
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <label for="fullname" class="form-label">Full Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name" name="full_name" value="{{ old('full_name') }}" required>
                                     <div class="invalid-feedback">Please enter your full name</div>
@@ -63,8 +70,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email ID" value="{{ old('email') }}" required>
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email ID" value="{{ old('email') }}">
                                     <div class="invalid-feedback">
                                         Please enter your email
                                     </div>
@@ -133,7 +140,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="school_portal_id" class="form-label">School Portal Id</label>
                                     <input type="text" class="form-control" id="school_portal_id"
-                                        name="school_portal_id" value="{{ old('age') }}">
+                                        name="school_portal_id" value="{{ old('school_portal_id') }}">
                                     <div class="invalid-feedback">
                                         Please enter your school portal id
                                     </div>

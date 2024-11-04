@@ -73,6 +73,13 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label for="date_of_admission" class="form-label">Date of Admission <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="date_of_admission" name="date_of_admission" placeholder="Choose Date Of admission" value="{{ $data->admission_date }}" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a date
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <label for="input25" class="form-label">Full Name</label>
                                     <input type="text" class="form-control" id="input25" placeholder="Full Name" name="full_name" value="{{ old('full_name', $data->full_name) }}" required>
                                     <div class="invalid-feedback">
@@ -88,7 +95,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="input27" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email', $data->email) }}" required>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email', $data->email) }}">
                                     <div class="invalid-feedback">
                                         Please enter your email
                                     </div>
@@ -161,7 +168,7 @@
                                     <label for="input18" class="form-label">School Portal Id</label>
                                     <input type="text" class="form-control" id="school_portal_id"
                                         name="school_portal_id" placeholder="School Portal Id"
-                                        value="{{ old('school_portal_id', $data->school_portal_id) }}" required>
+                                        value="{{ old('school_portal_id', $data->school_portal_id) }}">
                                     <div class="invalid-feedback">
                                         Please enter your school portal id
                                     </div>

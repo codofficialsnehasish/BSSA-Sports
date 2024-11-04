@@ -67,6 +67,7 @@ class ExpensesController extends Controller implements HasMiddleware
 
         foreach($request->expense_name as $key => $value){
             $expenses = new ExpensesTransaction();
+            $expenses->memo_no = $request->memo_no[$key];
             $expenses->expenses_category_id = $request->expense_name[$key];
             $expenses->amount = $request->amount[$key];
             $expenses->remarks = $request->remarks[$key];

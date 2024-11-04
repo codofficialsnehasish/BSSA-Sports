@@ -35,8 +35,9 @@
                                     <tr>
                                         <th width="20%">Expense Name</th>
                                         <th width="20%">Tournament Category</th>
-                                        <th width="10%">Amount</th>
-                                        <th width="20%">Remarks (Optional)</th>
+                                        <th width="20%">Memo No.</th>
+                                        <th width="20%">Amount</th>
+                                        <th width="16%">Remarks (Optional)</th>
                                         <th width="4%">&nbsp;</th>
                                     </tr>
                                     <tr>
@@ -52,12 +53,15 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-select" id="single-select-clear-field" data-placeholder="Choose one thing" name="tournament_category_id[]" required>
+                                            <select class="form-select" id="single-select-clear-field" data-placeholder="Choose one thing" name="tournament_category_id[]">
                                                 <option value selected disabled>Choose Category</option>
                                                 @foreach ($tournament_categorys as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                             </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Enter Memo No." name="memo_no[]" required>
                                         </td>
                                         <td>
                                             <input type="number" class="form-control" name="amount[]" required step="0.01">
@@ -124,19 +128,22 @@
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
             document.getElementById("cont").value = idty;
                
 				
 			// cell1.innerHTML = '<input type="text" class="form-control" name="expense_name[]" required>';
             cell1.innerHTML = '<select class="form-select" name="expense_name[]" id="single-select-clear-field" data-placeholder="Choose one thing" required><option value selected disabled>Select a Expance Type</option><?php foreach($expense_categorys as $type){?><option value="<?= $type->id;?>"><?= $type->name;?></option><?php }?></select>'
 
-            cell2.innerHTML = '<select class="form-select" name="tournament_category_id[]" id="single-select-clear-field" data-placeholder="Choose one thing" required><option value selected disabled>Choose Category</option><?php foreach($tournament_categorys as $item){?><option value="<?= $item->id;?>"><?= $item->name;?></option><?php }?></select>'
+            cell2.innerHTML = '<select class="form-select" name="tournament_category_id[]" id="single-select-clear-field" data-placeholder="Choose one thing"><option value selected disabled>Choose Category</option><?php foreach($tournament_categorys as $item){?><option value="<?= $item->id;?>"><?= $item->name;?></option><?php }?></select>'
 				
-			cell3.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
+			cell3.innerHTML = '<input type="text" class="form-control" placeholder="Enter Memo No." name="memo_no[]" required>';
+			
+            cell4.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
 
-            cell4.innerHTML = '<textarea type="text" class="form-control" name="remarks[]"></textarea>';
+            cell5.innerHTML = '<textarea type="text" class="form-control" name="remarks[]"></textarea>';
             
-            cell5.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
+            cell6.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
                  
 
 				  

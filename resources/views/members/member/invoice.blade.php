@@ -70,6 +70,7 @@
 				
 												<p><strong>Received with thanks from {{ $member_transaction->member->full_name }}</strong></p>
 												<p><strong>Date - {{ format_date($member_transaction->created_at) }}</strong></p>
+												<p><strong>Memo No. - {{ $member_transaction->memo_no }}</strong></p>
 											</div>
 										</div>
 										<!--Student billing details end -->

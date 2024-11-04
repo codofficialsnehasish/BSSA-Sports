@@ -356,6 +356,17 @@
                     <input type="hidden" name="member_id" value="{{$data->id}}">
                     <div class="modal-body">
                         <div class="position-relative mb-3">
+                            <label for="memo_no" class="form-label">Memo No.</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="memo_no" placeholder="Enter Memo No."
+                                    name="memo_no" value="" required>
+
+                                <div class="invalid-feedback">
+                                    Please enter memo no.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-relative mb-3">
                             <label for="payment_amount" class="form-label">Payment Amount</label>
                             <input type="number" name="payment_amount" class="form-control" id="payment_amount" readonly step="0.01">
                             <div class="valid-tooltip">

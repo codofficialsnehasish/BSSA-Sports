@@ -90,6 +90,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
+            'memo_no' => 'required',
             'student_id' => 'required|numeric|exists:students,id',
             'category_id' => 'required|numeric|exists:categories,id',
             'amount' => 'required|numeric',
@@ -113,6 +114,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 }
 
                 $StudentPaymentOrder = new StudentPaymentOrder();
+                $StudentPaymentOrder->memo_no = $request->memo_no;
                 $StudentPaymentOrder->students_id = $student->id;
                 $StudentPaymentOrder->amount = $request->amount;
                 $StudentPaymentOrder->remarks = $request->remarks;
@@ -204,6 +206,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 }
 
                 $StudentPaymentOrder = new StudentPaymentOrder();
+                $StudentPaymentOrder->memo_no = $request->memo_no;
                 $StudentPaymentOrder->students_id = $student->id;
                 $StudentPaymentOrder->amount = $request->amount;
                 $StudentPaymentOrder->remarks = $request->remarks;
@@ -382,7 +385,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
             // Add calculated values to the student object
             $student->due_amount = max($due_amount, 0);
     
-            return view('student_payments.payment_invoice',compact('student','items','date'));
+            return view('student_payments.payment_invoice',compact('student','items','date','StudentPaymentOrder'));
         }
     }
 

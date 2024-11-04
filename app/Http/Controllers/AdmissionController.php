@@ -108,14 +108,15 @@ class AdmissionController extends Controller implements HasMiddleware
              
 
                 $validator = Validator::make($request->all(), [
+                    'date_of_admission' => 'required',
                     'full_name' => 'required|string',
                     'guardian_name' => 'required|string',
-                    'email' => 'required|email',
+                    'email' => 'nullable|email',
                     'mobile_number' => 'required|digits:10', 
                     'whatsapp_number' => 'nullable|digits:10',
                     'dob' => 'required|date',
                     'aadhar_card_no' => 'required|digits:12',
-                    'school_portal_id' => 'required|string',
+                    'school_portal_id' => 'nullable|string',
                     'class_id' => 'required|integer',
                     'category_id' => 'required|exists:categories,id',
                     'district_id' => 'required|integer',
@@ -137,6 +138,7 @@ class AdmissionController extends Controller implements HasMiddleware
                 // d($rollNo);
 
                 $data = [
+                    'admission_date' => $request->date_of_admission,
                     'application_id'=>$applicationId,
                     'roll_no'=>$rollNo,
                     'full_name' => $request->full_name,
@@ -230,12 +232,12 @@ class AdmissionController extends Controller implements HasMiddleware
                 $validator = Validator::make($request->all(), [
                     'full_name' => 'required|string',
                     'guardian_name' => 'required|string',
-                    'email' => 'required|email',
+                    'email' => 'nullable|email',
                     'mobile_number' => 'required|digits:10', 
                     'whatsapp_number' => 'nullable|digits:10',
                     'dob' => 'required|date',
                     'aadhar_card_no' => 'required|digits:12',
-                    'school_portal_id' => 'required|string',
+                    'school_portal_id' => 'nullable|string',
                     'class_id' => 'required|integer',
                     'category_id' => 'required|exists:categories,id',
                     'district_id' => 'required|integer',
@@ -253,6 +255,7 @@ class AdmissionController extends Controller implements HasMiddleware
 
                 $rollNo = $this->generateRollNumber($request->category_id);
                 // Update student data
+                $student->admission_date = $request->date_of_admission;
                 $student->full_name = $request->full_name;
                 $student->roll_no = $rollNo;
                 $student->guardian_name = $request->guardian_name;

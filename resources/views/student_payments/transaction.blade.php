@@ -42,6 +42,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-wrap">Sl. No.</th>
+                                    <th>Memo No.</th>
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>Action</th>
@@ -52,6 +53,7 @@
                                     @foreach ($transaction as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->memo_no }}</td>
                                             <td>{{ $item->amount }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
                                             <td>

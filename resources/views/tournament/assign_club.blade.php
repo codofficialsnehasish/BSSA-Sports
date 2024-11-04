@@ -50,7 +50,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-3 mb-3">
+                                    <label for="memo_no" class="form-label">Memo No.</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="memo_no" placeholder="Enter Memo No."
+                                            name="memo_no" value="{{ old('memo_no') }}" required>
+    
+                                        <div class="invalid-feedback">
+                                            Please enter memo no.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
                                     <label for="fee_amount" class="form-label">Fee Amount</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="fee_amount" name="fee_amount" value="{{ $tournament->entry_fee }}" readonly>

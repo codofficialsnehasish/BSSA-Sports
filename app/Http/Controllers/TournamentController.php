@@ -210,6 +210,7 @@ class TournamentController extends Controller implements HasMiddleware
 
         if(!ClubInTournamet::where('tournaments_id',$request->tournament_id)->where('club_registrations_id',$request->club_id)->exists()){
             $club_in_tournamet = new ClubInTournamet();
+            $club_in_tournamet->memo_no = $request->memo_no;
             $club_in_tournamet->tournaments_id = $request->tournament_id;
             $club_in_tournamet->club_registrations_id = $request->club_id;
             $club_in_tournamet->paid_amount = $request->fee_amount;

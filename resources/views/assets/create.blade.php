@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="tournament_category_id" class="form-label">Tournament Category</label>
-                                    <select class="form-select" id="tournament_category_id" name="tournament_category_id" required>
+                                    <select class="form-select" id="tournament_category_id" name="tournament_category_id">
                                         <option value="" disabled {{ old('tournament_category_id') ? '' : 'selected' }}>Choose Category</option>
                                         @foreach ($tournament_categorys as $item)
                                             <option value="{{ $item->id }}"
@@ -66,7 +66,18 @@
                                         Please choose category
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-3 mb-3">
+                                   <label for="memo_no" class="form-label">Memo No.</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="memo_no" placeholder="Enter Memo No."
+                                            name="memo_no" value="{{ old('memo_no') }}" required>
+    
+                                        <div class="invalid-feedback">
+                                            Please enter memo no.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
                                     <label for="amount" class="form-label">Amount</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="amount" placeholder="Enter Amount"

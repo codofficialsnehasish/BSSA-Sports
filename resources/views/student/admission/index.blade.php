@@ -38,7 +38,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example2" class="table table-striped table-bordered">
+                        <table id="datatable-search" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Sl. No.</th>
@@ -47,7 +47,7 @@
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
+                                    <th>Admission Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -69,7 +69,7 @@
                                             <td>
                                                 {!! getStatus($item->status) !!}
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y h:i A') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->admission_date)->format('M d, Y') }}</td>
                                             <td>
                                                 <a href="{{ route('admin.student.admission.edit', $item->id) }}">
                                                     <i class="text-primary" data-feather="edit"></i></a>
@@ -126,6 +126,43 @@
                 .appendTo('#example2_wrapper .col-md-6:eq(0)');
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#datatable-search').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print'],
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function (index) {
+
+                            if (index !== 4) { return; }
+
+                            let column = this;
+                            let select = document.createElement('select');
+                            select.add(new Option(''));
+                            column.header().replaceChildren(select);
+                            select.addEventListener('change', function () {
+                                column
+                                    .search(select.value, {exact: true})
+                                    .draw();
+                            });
+                
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {    
+                                    select.add(new Option(d));
+                                });
+                        });
+                }
+            });
+            table.buttons().container().appendTo('#datatable-search_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             // Add click event handler to delete buttons with class 'delete-brand'

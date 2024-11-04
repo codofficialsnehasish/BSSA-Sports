@@ -50,6 +50,7 @@ class AssetController extends Controller implements HasMiddleware
         }
 
         $asset = new Asset();
+        $asset->memo_no = $request->memo_no;
         $asset->assets_category_id = $request->asset_name;
         $asset->amount = $request->amount;
         $asset->remarks = $request->remarks;

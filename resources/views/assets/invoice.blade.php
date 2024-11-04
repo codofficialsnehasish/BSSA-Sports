@@ -59,6 +59,7 @@
 				
 												{{-- <p><strong>Received with thanks from </strong></p> --}}
 												<p><strong>Date - {{ format_date($asset->created_at) }}</strong></p>
+												<p><strong>Memo No. - {{ $asset->memo_no }}</strong></p>
 											</div>
 										</div>
 										<!--Student billing details end -->

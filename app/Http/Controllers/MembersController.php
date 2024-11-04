@@ -341,6 +341,7 @@ class MembersController extends Controller implements HasMiddleware
             }
 
             $member_transaction = new MemberTransaction();
+            $member_transaction->memo_no = $request->memo_no;
             $member_transaction->member_id = $member->id;
             $member_transaction->transaction_name = $transaction_category_name;
             $member_transaction->amount = $request->payment_amount;

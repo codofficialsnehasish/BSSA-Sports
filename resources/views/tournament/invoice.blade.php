@@ -22,7 +22,7 @@
 			</nav>
 		</div>
 		<div class="ms-auto">
-			<a href="{{ route('admin.student.payment.index') }}">
+			<a href="{{ route('tournaments.clubs',request()->segment(4)) }}">
 				<button type="button" class="btn btn-grd btn-grd-info px-5">Back</button>
 			</a>
 		</div>
@@ -130,6 +130,7 @@
 				
 												<p><strong>Received with thanks from {{ $data->club->club_name }}</strong></p>
 												<p><strong>Date - {{ format_date($data->created_at) }}</strong></p>
+												<p><strong>Memo No. - {{ $data->memo_no }}</strong></p>
 											</div>
 										</div>
 										<!--Student billing details end -->

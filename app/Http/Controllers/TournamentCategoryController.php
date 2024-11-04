@@ -40,9 +40,9 @@ class TournamentCategoryController extends Controller implements HasMiddleware
         $res = $tournament_category->save();
 
         if($res){
-            return back()->with(['success'=>'Tournament Category Created Successfully']);
+            return back()->with(['success'=>'Main A/C Category Created Successfully']);
         }else{
-            return back()->withErrors(['error'=>'Tournament Category Not Created']);
+            return back()->withErrors(['error'=>'Main A/C Category Not Created']);
         }
     }
 
@@ -65,9 +65,9 @@ class TournamentCategoryController extends Controller implements HasMiddleware
         $res = $tournament_category->update();
 
         if($res){
-            return back()->with(['success'=>'Tournament Category Updated Successfully']);
+            return back()->with(['success'=>'Main A/C Category Updated Successfully']);
         }else{
-            return back()->withErrors(['error'=>'Tournament Category Not Updated']);
+            return back()->withErrors(['error'=>'Main A/C Category Not Updated']);
         }
     }
 
@@ -78,12 +78,12 @@ class TournamentCategoryController extends Controller implements HasMiddleware
             $res = $tournament_category->delete();
 
             if($res){
-                return back()->with(['success'=>'Tournament Category Deleted Successfully']);
+                return back()->with(['success'=>'Main A/C Category Deleted Successfully']);
             }else{
-                return back()->withErrors(['error'=>'Tournament Category Not Deleted']);
+                return back()->withErrors(['error'=>'Main A/C Category Not Deleted']);
             }
         }else{
-            return back()->withErrors(['error'=>'Tournament Category not found']);
+            return back()->withErrors(['error'=>'Main A/C Category not found']);
         }
     }
 }

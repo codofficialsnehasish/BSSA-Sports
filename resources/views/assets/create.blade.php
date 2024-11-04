@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="tournament_category_id" class="form-label">Tournament Category</label>
+                                    <label for="tournament_category_id" class="form-label">Main A/C Category</label>
                                     <select class="form-select" id="tournament_category_id" name="tournament_category_id">
                                         <option value="" disabled {{ old('tournament_category_id') ? '' : 'selected' }}>Choose Category</option>
                                         @foreach ($tournament_categorys as $item)

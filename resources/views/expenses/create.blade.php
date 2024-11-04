@@ -34,7 +34,7 @@
                                 <table width="100%" cellpadding="5" cellspacing="5" id="table_repeter">
                                     <tr>
                                         <th width="20%">Expense Name</th>
-                                        <th width="20%">Tournament Category</th>
+                                        <th width="20%">Main A/C Category</th>
                                         <th width="20%">Memo No.</th>
                                         <th width="20%">Amount</th>
                                         <th width="16%">Remarks (Optional)</th>

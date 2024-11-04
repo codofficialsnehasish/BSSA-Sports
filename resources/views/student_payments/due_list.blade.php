@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Student Payment List')
+@section('title', 'Student Due List')
 
 
 @section('css')
@@ -19,32 +19,19 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Student Payments</li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Due List</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('admin.student.payment.create') }}">
-                    <button type="button" class="btn btn-grd btn-grd-info px-5">Make New Payments</button>
+                <a href="{{ route('admin.student.payment.index') }}">
+                    <button type="button" class="btn btn-grd btn-grd-info px-5">Back</button>
                 </a>
             </div>
         </div>
         <!--end breadcrumb-->
 
         <div class="row">
-
-            <div class="card">
-                <div class="card-body">
-                    <div class="row justify-content-center">
-                        {{-- <div class="col-md-2">
-                            <a href="" class="btn btn-grd btn-grd-success">Payment List</a>
-                        </div> --}}
-                        <div class="col-md-2">
-                            <a href="{{ route('admin.student.payment.due-list') }}" class="btn btn-grd btn-grd-danger">Due List</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="card">
                 <div class="card-body">
@@ -56,24 +43,22 @@
                                     <th>Roll No</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Total Payment</th>
                                     <th>Total Due</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($students->isNotEmpty())
-                                    @foreach ($students as $item)
+                                @if (!empty($dueList))
+                                    @foreach ($dueList as $due)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->roll_no }}</td>
-                                            <td>{{ $item->full_name }}</td>
-                                            <td>{{ $item->category->name }}</td>
-                                            <td>{{ $item->total_transaction_amount }}</td>
-                                            <td>{{ $item->due_amount }}</td>
+                                            <td>{{ $due['roll_no'] }}</td>
+                                            <td>{{ $due['student_name'] }}</td>
+                                            <td>{{ $due['category_name'] }}</td>
+                                            <td>{{ $due['total_due'] }}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('admin.student.payment.show', $item->id) }}">Details</a>
-                                                <a class="btn btn-info" href="{{ route('admin.student.payment.show-transactions', $item->id) }}">Transactions</a>
+                                                <a class="btn btn-primary" href="{{ route('admin.student.payment.show', $due['id']) }}">Details</a>
+                                                <a class="btn btn-info" href="{{ route('admin.student.payment.show-transactions', $due['id']) }}">Transactions</a>
                                             </td>
                                         </tr>
                                     @endforeach

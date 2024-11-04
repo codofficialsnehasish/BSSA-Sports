@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('title', 'Tournament Category')
+@section('title', 'Main A/C Category')
 @section('content')
 
     <div class="main-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Tournament Category</div>
+            <div class="breadcrumb-title pe-3">Main A/C Category</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Update Tournament Category</li>
+                        <li class="breadcrumb-item active" aria-current="page">Update Main A/C Category</li>
                     </ol>
                 </nav>
             </div>
@@ -33,7 +33,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <label for="class_name" class="form-label">Tournament Category Name</label>
+                                    <label for="class_name" class="form-label">Main A/C Category Name</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="class_name" placeholder="Enter Name" value="{{ $tournament_category->name }}"
                                             name="tournament_category_name" required>

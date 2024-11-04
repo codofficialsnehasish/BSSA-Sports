@@ -241,7 +241,7 @@
                         <a class="has-arrow" href="javascript:;">
                             <div class="parent-icon"><i class="material-icons-outlined">arrow_right</i>
                             </div>
-                            <div class="menu-title">Tournament Category</div>
+                            <div class="menu-title">Main A/C Category</div>
                         </a>
                         <ul>
                             @can('Create Tournament Category')

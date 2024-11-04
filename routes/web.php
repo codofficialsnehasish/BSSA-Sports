@@ -161,6 +161,8 @@ Route::prefix('admin')->group( function (){
                 Route::get('/{id}/show','show')->name('admin.student.payment.show');
                 Route::get('/{id}/show-transactions','show_transactions')->name('admin.student.payment.show-transactions');
                 Route::get('/{id}/transaction-invoice','student_transaction_invoice')->name('admin.student.payment.transaction-invoice');
+                
+                Route::get('/due-list','dueList')->name('admin.student.payment.due-list');
             });
         });
 

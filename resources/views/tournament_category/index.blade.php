@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tournament Category')
+@section('title', 'Main A/C Category')
 
 @section('content')
 
@@ -13,7 +13,7 @@
                         <li class="breadcrumb-item">
                             <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tournament Category</li>
+                        <li class="breadcrumb-item active" aria-current="page">Main A/C Category</li>
                     </ol>
                 </nav>
             </div>
@@ -61,7 +61,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" class="text-center">No tournament category found.</td>
+                                        <td colspan="5" class="text-center">No Main A/C category found.</td>
                                     </tr>
                                 @endif
                             </tbody>

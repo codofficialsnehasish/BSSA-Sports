@@ -403,4 +403,63 @@ class StudentPaymentController extends Controller implements HasMiddleware
     {
         //
     }
+
+    public function dueList()
+    {
+        $students = Student::all(); // Fetch all students
+        $dueList = [];
+
+        foreach ($students as $student) {
+            // Get the student's registration date for admission fees
+            $registrationDate = StudentTransaction::where('students_id', $student->id)
+                ->where('which_for', 'admission_fees')
+                ->value('date');
+            if (!$registrationDate) {
+                continue; // Skip students without admission date
+            }
+            
+            $registrationDate = Carbon::parse($registrationDate)->startOfMonth(); // Start from registration month
+            $currentDate = Carbon::now()->startOfMonth(); // Up to the current month
+            $transactions = StudentTransaction::selectRaw('YEAR(date) as year, MONTH(date) as month, SUM(amount) as total_amount')
+            ->where('students_id', $student->id)
+            ->groupBy('year', 'month')
+            ->orderBy('date', 'asc')
+            ->get();
+            // return $transactions;die;
+
+            $dueAmount = 0;
+            // Loop from the registration date to the current month
+            $period = Carbon::parse($registrationDate);
+            while ($period <= $currentDate) {
+                $year = $period->year;
+                $month = $period->month;
+
+                // Check if there's a transaction for the current month and year
+                $transaction = $transactions->firstWhere(function ($t) use ($year, $month) {
+                    return $t->year == $year && $t->month == $month;
+                });
+
+                // Add to due amount if no payment was found for the month
+                if (!$transaction) {
+                    $dueAmount += $student->monthly_fees; // Adjust to your actual monthly fee
+                }
+
+                $period->addMonth(); // Move to the next month
+            }
+
+            // Add student to due list if they have a due amount
+            if ($dueAmount > 0) {
+                $dueList[] = [
+                    'id' => $student->id,
+                    'roll_no' => $student->roll_no,
+                    'student_name' => $student->full_name,
+                    'category_name' => $student->category->name,
+                    'total_due' => $dueAmount,
+                ];
+            }
+        }
+
+        return view('student_payments.due_list', compact('dueList'));
+    }
+
 }

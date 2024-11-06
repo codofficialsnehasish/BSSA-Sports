@@ -333,3 +333,31 @@ if (!function_exists('check_status')){
         return $str;
     }
 }
+
+if (!function_exists('calculateAgestring')) {
+    function calculateAgestring($dob)
+    {
+        // Create DateTime objects for the date of birth and the current date
+        $dob = new DateTime($dob);
+        $now = new DateTime();
+
+        // Calculate the difference between the current date and the date of birth
+        $diff = $dob->diff($now);
+
+        // Get the difference in years, months, and days
+        $years = $diff->y;  // Full years
+        $months = $diff->m;  // Full months
+        $days = $diff->d;    // Days remaining after full months
+
+        // Check if current date has passed the birthdate in this year
+        if ($now->format('m-d') < $dob->format('m-d')) {
+            // If not, subtract 1 year and adjust months and days
+            $years--;
+            $months = 12 - $months; // Adjust months
+            $days = $dob->diff($now)->days; // Get the total difference in days
+        }
+
+        // Return the result in "Y years, M months, D days" format
+        return "{$years} years, {$months} months, {$days} days";
+    }
+}

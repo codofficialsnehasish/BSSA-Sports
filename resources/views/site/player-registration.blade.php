@@ -65,8 +65,8 @@
 
                 <!-- Age -->
                 <div class="col-md-6 mb-3">
-                    <label for="playerAge" class="form-label">Age</label>
-                    <input type="number" class="form-control" id="playerAge" name="age" placeholder="Enter age" required>
+                    <label for="playerAge" class="form-label">Age <span id="age-show"></span></label>
+                    <input type="number" class="form-control" id="playerAge" name="age" placeholder="Enter age" required readonly>
                 </div>
 
                 <!-- Aadhar Number -->
@@ -206,5 +206,49 @@
         });
 
     </script>
+
+<script>
+    $(document).ready(function() {
+        $('#dob').on('change', function() {
+            //const dob = new Date($('#dob').val());
+            //const today = new Date();
+
+            // Calculate age
+            //let age = today.getFullYear() - dob.getFullYear();
+            //const monthDifference = today.getMonth() - dob.getMonth();
+
+            //if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+              //  age--;
+            //}
+
+            // Set the calculated age in the age input field
+            //$('#age').val(age);
+
+            const dob = new Date($('#dob').val());
+            const today = new Date();
+
+            // Calculate differences
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            // Adjust for negative values
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Get last month days
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Set the calculated age in the age input field in "Y M D" format
+            // $('#age').val(`${years} years, ${months} months, ${days} days`);
+            $('#playerAge').val(years);
+            $('#age-show').text(`(${years} years, ${months} months, ${days} days)`);
+        });
+    });
+</script>
 </body>
 </html>

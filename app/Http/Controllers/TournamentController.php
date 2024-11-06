@@ -192,8 +192,9 @@ class TournamentController extends Controller implements HasMiddleware
     }
 
     public function player_list($club_registration_id, $tournamet_id){
+        $ClubRegistration = ClubRegistration::find($club_registration_id);
         $playersInTournamentsClub  = PlayersInTournamentsClub::where('club_registrations_id',$club_registration_id)->where('tournaments_id',$tournamet_id)->get();
-        return view('tournament.player_list',compact('playersInTournamentsClub'));
+        return view('tournament.player_list',compact('playersInTournamentsClub','ClubRegistration'));
     }
 
     public function assign_clubs(string $id){

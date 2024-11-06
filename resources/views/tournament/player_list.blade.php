@@ -101,6 +101,17 @@
 
         <div class="row">
             @if ($playersInTournamentsClub->isNotEmpty())
+            <div class="row">
+                <div class="col-md-2">
+                    <a id="btn_print" type="button" value="print" class="btn btn-success mt-3 mb-3" onclick="">Print</a>
+                </div>
+            </div>
+            <div id="printableArea" class="table-responsive">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <strong>Club Name - {{ $ClubRegistration->club_name }}</strong> 
+                    </div>
+                </div>
                 @foreach ($playersInTournamentsClub as $item)
                     <div class="card">
                         <div class="card-body">
@@ -110,7 +121,7 @@
                                         <tr>
                                             <td><strong>Srl.</strong></td>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td rowspan="9" class="no-border"><img src="{{ isset($item->profile_image_media) ? asset('storage/' . $item->profile_image_media->file_path) : '' }}" alt="Player Image" style="width:100%; height:auto;"></td>
+                                            <td rowspan="9" class="no-border"><img src="{{ isset($item->profile_image_media) ? asset('storage/' . $item->profile_image_media->file_path) : '' }}" alt="Player Image" style="width: 200px;height: 200px;"></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Player</strong></td>
@@ -126,7 +137,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Age</strong></td>
-                                            <td>{{ $item->age }}</td>
+                                            <td>{{ $item->age }} ({{ calculateAgestring($item->date_of_birth) }}) </td>
                                         </tr>
                                         <tr>
                                             <td><strong>Aadhaar Number</strong></td>
@@ -150,6 +161,7 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
             @else
                 <tr>
                     <td colspan="9" class="text-center">No data found.</td>
@@ -172,5 +184,17 @@
                 .appendTo('#example2_wrapper .col-md-6:eq(0)');
         });
     </script>
+    <script>
+		$(document).ready(function() {
+			$('#btn_print').click(function() {
+				var printContents = $('#printableArea').html();
+				var originalContents = $('body').html();
+	
+				$('body').html(printContents);
+				window.print();
+				$('body').html(originalContents);
+			});
+		});
+	</script>
 
 @endsection

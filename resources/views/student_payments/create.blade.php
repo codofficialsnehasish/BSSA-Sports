@@ -31,11 +31,15 @@
                         <div class="card-body p-4">
 
                             <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label for="payment_date" class="form-label">Payment Date</label>
+                                <div class="col-md-4 mb-3">
+                                    <label for="payment_date" class="form-label">Payment Start Date</label>
                                     <input type="date" name="payment_date" value="{{ date('Y-m-d') }}" id="payment_date" class="form-control">
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label for="payment_end_date" class="form-label">Payment End Date</label>
+                                    <input type="date" name="payment_end_date" value="{{ date('Y-m-d') }}" id="payment_end_date" class="form-control">
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="category_id" class="form-label">Category</label>
                                     <select class="form-select" id="category_id" name="category_id" required>
                                         <option value selected disabled>Choose Category</option>

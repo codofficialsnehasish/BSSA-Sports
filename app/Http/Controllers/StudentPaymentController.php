@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Categories;
@@ -113,6 +114,30 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     return redirect()->back()->withErrors(['error'=>'Monthly fee amount is '.$student->monthly_fees]);
                 }
 
+                $startDate = new DateTime($request->payment_date);
+                $endDate = new DateTime($request->payment_end_date);
+
+
+                if ($startDate->format('Y-m') === $endDate->format('Y-m')) {
+                    $monthsCount = 1;
+                } else {
+                    $interval = $startDate->diff($endDate);
+                    $monthsCount = ($interval->y * 12) + $interval->m + 1;
+                }
+                // $interval = $startDate->diff($endDate);
+                // $monthsCount = ($interval->y * 12) + $interval->m;
+                // echo $monthsCount;
+                // echo "<br>";
+                // echo ($monthsCount * $monthly_fees) < $total_amount ? 'true' : 'false';
+                // echo "<br>";
+                // echo ($monthsCount * $monthly_fees) > $total_amount ? 'true' : 'false';
+                // echo "<br>";
+                // die;
+
+                if((($monthsCount * $monthly_fees) < $total_amount) || (($monthsCount * $monthly_fees) > $total_amount)){
+                    return redirect()->back()->withErrors(['error'=>'Wrong month and amount, please check the amount and date']);
+                }
+
                 $StudentPaymentOrder = new StudentPaymentOrder();
                 $StudentPaymentOrder->memo_no = $request->memo_no;
                 $StudentPaymentOrder->students_id = $student->id;
@@ -120,15 +145,21 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->remarks = $request->remarks;
                 $StudentPaymentOrder->save();
 
-                $student_transaction = new StudentTransaction();
-                $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
-                $student_transaction->students_id = $student->id;
-                $student_transaction->category_id = $request->category_id;
-                $student_transaction->amount = $monthly_fees;
-                $student_transaction->which_for = "monthly_fees";
-                $student_transaction->date = $request->payment_date;
-                $student_transaction->remarks = $request->remarks;
-                $student_transaction->save();
+                
+
+                while ($startDate <= $endDate) {
+                    $student_transaction = new StudentTransaction();
+                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
+                    $student_transaction->students_id = $student->id;
+                    $student_transaction->category_id = $request->category_id;
+                    $student_transaction->amount = $monthly_fees;
+                    $student_transaction->which_for = "monthly_fees";
+                    $student_transaction->date = $startDate->format('Y-m-d');
+                    $student_transaction->remarks = $request->remarks;
+                    $student_transaction->save();
+
+                    $startDate->modify('+1 month');
+                }
 
                 // Retrieve the last paid monthly fee date
                 // $last_payment = StudentTransaction::where('students_id', $request->student_id)
@@ -353,7 +384,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
         //             ->where('student_transactions.students_id',$id)
         //             ->orderBy('transactions.created_at','desc')
         //             ->get(['transactions.amount','transactions.created_at']);
-        $transaction = StudentPaymentOrder::all();
+        $transaction = StudentPaymentOrder::where('students_id',$id)->get();
 
         return view('student_payments.transaction',compact('transaction'));
     }

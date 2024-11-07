@@ -94,9 +94,9 @@
                                     <div class="col-md-3">
                                         <label for="dob" class="form-label">Sports Category : {{ $student->category->name }}</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    {{-- <div class="col-md-3">
                                         <label for="dob" class="form-label">Special Interest : {{ $student->special_interest->name }}</label>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-3">
                                         <label for="dob" class="form-label">Height(cm) : {{ $student->height }}</label>
                                     </div>
@@ -118,10 +118,10 @@
                                 </div>
         
                                 <div class="row mb-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <label for="dob" class="form-label">District : {{ $student->district->name }}</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <label for="dob" class="form-label">Subdivisions : {{ $student->subdivision->name }}</label>
                                     </div>
                                 </div>

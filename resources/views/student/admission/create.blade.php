@@ -196,7 +196,7 @@
                                         Please choose category
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                {{-- <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">Special Interest <span class="text-danger">*</span></label>
                                     <select class="form-select" id="interest_id" name="interest_id" required>
                                         <option value="" disabled {{ old('interest_id') ? '' : 'selected' }}>
@@ -213,7 +213,7 @@
                                     <div class="invalid-feedback">
                                         Please choose interest
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mb-3">
                                     <label for="input33" class="form-label">District <span class="text-danger">*</span></label>
                                     <select class="form-select" id="district_id" name="district_id" required>

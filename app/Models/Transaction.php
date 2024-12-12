@@ -15,6 +15,7 @@ class Transaction extends Model
         'amount',
         'remarks',
         'transaction_type',
+        'created_at'
     ];
 
     public function member_transaction()

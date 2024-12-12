@@ -9,6 +9,7 @@ use App\Models\ExpensesTransaction;
 use App\Models\Transaction;
 use App\Models\ExpenseCategory;
 use App\Models\TournamentCategory;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -71,6 +72,7 @@ class ExpensesController extends Controller implements HasMiddleware
             $expenses->expenses_category_id = $request->expense_name[$key];
             $expenses->amount = $request->amount[$key];
             $expenses->remarks = $request->remarks[$key];
+            $expenses->created_at = Carbon::parse($request->date[$key])->format('Y-m-d H:i:s');
             $res = $expenses->save();
 
             // Transaction::create([
@@ -86,14 +88,16 @@ class ExpensesController extends Controller implements HasMiddleware
                         'transaction_name' => $tournament_category->name,
                         'transaction_category_name' => $expenses->category->name,
                         'amount' => $expenses->amount,
-                        'remarks' => $expenses->remarks
+                        'remarks' => $expenses->remarks,
+                        'created_at'=>$expenses->created_at
                     ]);
                 }
             }else{
                 Transaction::create([
                     'transaction_name' => $expenses->category->name,
                     'amount' => $expenses->amount,
-                    'remarks' => $expenses->remarks
+                    'remarks' => $expenses->remarks,
+                    'created_at' => $expenses->created_at
                 ]);
             }
         }

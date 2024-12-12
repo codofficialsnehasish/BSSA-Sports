@@ -33,7 +33,7 @@
                             <div class="row">
                                 <input type="hidden" name="tournament_id" value="{{ $tournament->id }}">
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="club_id" class="form-label">Clubs</label>
                                     <div class="input-group">
                                         <select class="form-select" id="club_id" name="club_id" required>
@@ -50,7 +50,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label for="memo_no" class="form-label">Date</label>
+                                     <div class="input-group">
+                                         <input type="date" class="form-control" id="memo_no" placeholder="Enter Date"
+                                             name="date" value="{{ date('Y-m-d') }}" required>
+     
+                                         <div class="invalid-feedback">
+                                             Please enter date.
+                                         </div>
+                                     </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="memo_no" class="form-label">Receipt No.</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="memo_no" placeholder="Enter Receipt No."
@@ -61,7 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="fee_amount" class="form-label">Fee Amount</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="fee_amount" name="fee_amount" value="{{ $tournament->entry_fee }}" readonly>

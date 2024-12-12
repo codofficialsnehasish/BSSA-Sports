@@ -8,6 +8,7 @@ use App\Models\AssetsCategory;
 use App\Models\Categories;
 use App\Models\TournamentCategory;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -43,6 +44,7 @@ class AssetController extends Controller implements HasMiddleware
             'asset_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:1',
             'remarks' => 'nullable|string|max:255',
+            'date' => 'required|date',
         ]);
 
         if ($validator->fails()) {
@@ -54,6 +56,7 @@ class AssetController extends Controller implements HasMiddleware
         $asset->assets_category_id = $request->asset_name;
         $asset->amount = $request->amount;
         $asset->remarks = $request->remarks;
+        $asset->created_at = Carbon::parse($request->date)->format('Y-m-d H:i:s');
         $res = $asset->save();
 
         if(!empty($request->tournament_category_id)){
@@ -64,7 +67,8 @@ class AssetController extends Controller implements HasMiddleware
                     'transaction_category_name' => $asset->category->name,
                     'amount' => $asset->amount,
                     'remarks' => $asset->remarks,
-                    'transaction_type' => 'credit'
+                    'transaction_type' => 'credit',
+                    'created_at' => $asset->created_at
                 ]);
             }
         }else{
@@ -72,7 +76,8 @@ class AssetController extends Controller implements HasMiddleware
                 'transaction_name' => $asset->category->name,
                 'amount' => $asset->amount,
                 'remarks' => $asset->remarks,
-                'transaction_type' => 'credit'
+                'transaction_type' => 'credit',
+                'created_at' => $asset->created_at
             ]);
         }
 

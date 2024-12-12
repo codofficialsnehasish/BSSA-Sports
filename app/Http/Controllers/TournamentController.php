@@ -11,7 +11,7 @@ use App\Models\Transaction;
 use App\Models\PlayersInTournamentsClub;
 use App\Models\EntryFeesStructure;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
@@ -216,6 +216,7 @@ class TournamentController extends Controller implements HasMiddleware
             'club_id' => 'required|exists:club_registrations,id',
             'payment_mode' => 'required',
             'fee_amount' => 'required|numeric',
+            'date' => 'required|date',
         ]);
 
         if(!ClubInTournamet::where('tournaments_id',$request->tournament_id)->where('club_registrations_id',$request->club_id)->exists()){
@@ -225,6 +226,7 @@ class TournamentController extends Controller implements HasMiddleware
             $club_in_tournamet->club_registrations_id = $request->club_id;
             $club_in_tournamet->paid_amount = $request->fee_amount;
             $club_in_tournamet->payment_mode = $request->payment_mode;
+            $club_in_tournamet->created_at = Carbon::parse($request->date)->format('Y-m-d H:i:s');
             $res = $club_in_tournamet->save();
 
             if($res){
@@ -234,7 +236,8 @@ class TournamentController extends Controller implements HasMiddleware
                     'transaction_category_name' => 'Entry Fee',
                     'amount' => $club_in_tournamet->paid_amount,
                     'remarks' => 'by '.$club_in_tournamet->payment_mode,
-                    'transaction_type' => 'credit'
+                    'transaction_type' => 'credit',
+                    'created_at' => $club_in_tournamet->created_at
                 ]);
             }
     

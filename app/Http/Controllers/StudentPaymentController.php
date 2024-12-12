@@ -105,6 +105,9 @@ class StudentPaymentController extends Controller implements HasMiddleware
             // student already paid admission fees
             $student = Student::find($request->student_id);
             // print_r($student);die;
+            $startDate = new DateTime($request->payment_date);
+            $endDate = new DateTime($request->payment_end_date);
+
             if($student){
                 $total_amount = $request->amount;
                 $remaining_amount = $total_amount;
@@ -113,9 +116,6 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 if($student->monthly_fees > $request->amount){
                     return redirect()->back()->withErrors(['error'=>'Monthly fee amount is '.$student->monthly_fees]);
                 }
-
-                $startDate = new DateTime($request->payment_date);
-                $endDate = new DateTime($request->payment_end_date);
 
 
                 if ($startDate->format('Y-m') === $endDate->format('Y-m')) {
@@ -143,6 +143,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->students_id = $student->id;
                 $StudentPaymentOrder->amount = $request->amount;
                 $StudentPaymentOrder->remarks = $request->remarks;
+                $StudentPaymentOrder->created_at = Carbon::parse($request->payment_date)->format('Y-m-d H:i:s');
                 $StudentPaymentOrder->save();
 
                 
@@ -227,7 +228,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     'transaction_name' => $student->category->name,
                     'amount' => $request->amount,
                     'remarks' => $request->remarks,
-                    'transaction_type' => 'credit'
+                    'transaction_type' => 'credit',
+                    'created_at' => Carbon::parse($request->payment_date)->format('Y-m-d H:i:s')
                 ]);
 
 
@@ -251,6 +253,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->students_id = $student->id;
                 $StudentPaymentOrder->amount = $request->amount;
                 $StudentPaymentOrder->remarks = $request->remarks;
+                $StudentPaymentOrder->created_at = Carbon::parse($request->payment_date)->format('Y-m-d H:i:s');
                 $StudentPaymentOrder->save();
 
                 $three_month_fees = $monthly_fees * 3;
@@ -273,7 +276,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     'transaction_name' => $student->category->name,
                     'amount' => $request->amount,
                     'remarks' => $request->remarks,
-                    'transaction_type' => 'credit'
+                    'transaction_type' => 'credit',
+                    'created_at' => Carbon::parse($request->payment_date)->format('Y-m-d H:i:s')
                 ]);
                 
 

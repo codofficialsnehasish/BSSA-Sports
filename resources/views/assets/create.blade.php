@@ -31,7 +31,18 @@
                         <div class="card-body p-4">
 
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label for="memo_no" class="form-label">Date</label>
+                                     <div class="input-group">
+                                         <input type="date" class="form-control" id="memo_no" placeholder="Enter Date"
+                                             name="date" value="{{ date('Y-m-d') }}" required>
+     
+                                         <div class="invalid-feedback">
+                                             Please enter date.
+                                         </div>
+                                     </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="asset_name" class="form-label">Asset Name</label>
                                     <div class="input-group">
                                         {{-- <input type="text" class="form-control" id="asset_name" placeholder="Enter Asset"
@@ -51,7 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="tournament_category_id" class="form-label">Main A/C Category</label>
                                     <select class="form-select" id="tournament_category_id" name="tournament_category_id">
                                         <option value="" disabled {{ old('tournament_category_id') ? '' : 'selected' }}>Choose Category</option>

@@ -143,10 +143,11 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->students_id = $student->id;
                 $StudentPaymentOrder->amount = $request->amount;
                 $StudentPaymentOrder->remarks = $request->remarks;
-                $StudentPaymentOrder->created_at = Carbon::parse($request->invoice_date)->format('Y-m-d H:i:s');
+                $StudentPaymentOrder->created_at = Carbon::parse($request->payment_date)->format('Y-m-d H:i:s');
                 $StudentPaymentOrder->save();
 
-            
+                
+
                 while ($startDate <= $endDate) {
                     $student_transaction = new StudentTransaction();
                     $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
@@ -155,7 +156,6 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     $student_transaction->amount = $monthly_fees;
                     $student_transaction->which_for = "monthly_fees";
                     $student_transaction->date = $startDate->format('Y-m-d');
-                    $student_transaction->created_at = Carbon::parse($request->invoice_date)->format('Y-m-d H:i:s');
                     $student_transaction->remarks = $request->remarks;
                     $student_transaction->save();
 
@@ -229,7 +229,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     'amount' => $request->amount,
                     'remarks' => $request->remarks,
                     'transaction_type' => 'credit',
-                    'created_at' => Carbon::parse($request->invoice_date)->format('Y-m-d H:i:s')
+                    'created_at' => Carbon::parse($request->payment_date)->format('Y-m-d H:i:s')
                 ]);
 
 
@@ -237,7 +237,7 @@ class StudentPaymentController extends Controller implements HasMiddleware
             }
         }else{
             $student = Student::find($request->student_id);
-            /*if($student){
+            if($student){
                 // print_r($student);die;
                 $total_amount = $request->amount;
                 $admission_fees = $student->admission_fees;
@@ -256,16 +256,8 @@ class StudentPaymentController extends Controller implements HasMiddleware
                 $StudentPaymentOrder->created_at = Carbon::parse($request->payment_date)->format('Y-m-d H:i:s');
                 $StudentPaymentOrder->save();
 
-                
-                // if(in_array($request->category_id,[10])){
-                // return $request->category_id;
-                if($request->category_id==8){
-                    $three_month_fees = $monthly_fees * 1;
-                    
-                }else{
-                    $three_month_fees = $monthly_fees * 3;
-                }
-                // return $three_month_fees;
+                $three_month_fees = $monthly_fees * 3;
+
                 $admission_money = $admission_fees - $three_month_fees;
 
                 // Save admission fees transaction
@@ -311,100 +303,6 @@ class StudentPaymentController extends Controller implements HasMiddleware
                     $student_transaction->save();
 
                     $remaining_amount -= $monthly_fees;
-
-                    // Update the payment date for the next month
-                    $next_payment_date = date('Y-m-d', strtotime($next_payment_date . ' +1 month'));
-                }
-
-                // if ($remaining_amount > 0) {
-                //     // Handle the case (you can save it as a partial payment or keep it as balance)
-                // }
-
-                return redirect()->route('admin.student.payment.transaction-invoice',$StudentPaymentOrder->id);
-            }*/
-
-            if($student){
-                // print_r($student);die;
-                $total_amount = $request->amount;
-                $admission_fees = $request->admission_amount;
-                $monthly_fees = $request->monthly_amount;
-                // echo $admission_fees;die;
-
-                // if($student->admission_fees > $request->amount){
-                //     return redirect()->back()->withErrors(['error' => 'Admission fee amount is ' . $student->monthly_fees]);
-                // }
-
-                $StudentPaymentOrder = new StudentPaymentOrder();
-                $StudentPaymentOrder->memo_no = $request->memo_no;
-                $StudentPaymentOrder->students_id = $student->id;
-                $StudentPaymentOrder->amount = $request->amount;
-                $StudentPaymentOrder->remarks = $request->remarks;
-                $StudentPaymentOrder->created_at = Carbon::parse($request->payment_date)->format('Y-m-d H:i:s');
-                $StudentPaymentOrder->save();
-
-                
-                // if(in_array($request->category_id,[10])){
-                // return $request->category_id;
-                
-                $three_month_fees = $monthly_fees * $request->month;
-                // return $three_month_fees;
-                // $admission_money = $admission_fees - $three_month_fees;
-
-                // Save admission fees transaction
-                $student_transaction = new StudentTransaction();
-                $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
-                $student_transaction->students_id = $request->student_id;
-                $student_transaction->category_id = $request->category_id;
-                $student_transaction->amount = $admission_fees;
-                $student_transaction->which_for = "admission_fees";
-                // $student_transaction->date = date('Y-m-d');
-                $student_transaction->date = $student->admission_date;
-                $student_transaction->remarks = $request->remarks;
-                $student_transaction->save();
-
-                Transaction::create([
-                    'transaction_name' => $student->category->name,
-                    'amount' => $request->amount,
-                    'remarks' => $request->remarks,
-                    'transaction_type' => 'credit',
-                    'created_at' => Carbon::parse($request->payment_date)->format('Y-m-d H:i:s')
-                ]);
-                
-
-                // Calculate remaining amount after deducting admission money from the total amount
-                // $remaining_amount = $total_amount - $admission_money;
-                // echo $admission_money;die;
-                // Calculate how many months can be covered with the remaining amount
-                $months = $request->month;
-
-                // $next_payment_date = date('Y-m-d');  // First monthly payment date
-                $next_payment_date = $student->admission_date;  // First monthly payment date
-
-                $admissionDate = Carbon::parse($student->admission_date);
-
-                if ($admissionDate->day >= 20) {
-                    // If admission date is 20th or later, set the next payment date to the 1st of the next month
-                    $nextPaymentDate = $admissionDate->copy()->addMonth()->startOfMonth();
-                } else {
-                    // Otherwise, keep the same date in the current month
-                    $nextPaymentDate = $admissionDate->copy();
-                }
-
-                $next_payment_date = $nextPaymentDate->toDateString(); 
-
-                // Loop to save monthly fee transactions
-                for ($i = 1; $i <= $months; $i++) {
-                    $student_transaction = new StudentTransaction();
-                    $student_transaction->student_payment_orders_id = $StudentPaymentOrder->id;
-                    $student_transaction->students_id = $request->student_id;
-                    $student_transaction->category_id = $request->category_id;
-                    $student_transaction->amount = $monthly_fees;
-                    $student_transaction->which_for = "monthly_fees";
-                    $student_transaction->date = $next_payment_date;
-                    $student_transaction->remarks = $request->remarks;
-                    $student_transaction->save();
-
-                    // $remaining_amount -= $monthly_fees;
 
                     // Update the payment date for the next month
                     $next_payment_date = date('Y-m-d', strtotime($next_payment_date . ' +1 month'));

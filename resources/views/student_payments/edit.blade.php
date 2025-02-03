@@ -216,7 +216,7 @@
                                         <span class="input-group-text"><i
                                                 class="material-icons-outlined fs-5">event</i></span>
                                         <input type="number" class="form-control" id="height" name="height"
-                                            placeholder="Height(cm)" value="{{ old('height', $data->height) }}" required
+                                            placeholder="Height(cm)" value="{{ old('height', $data->height) }}"
                                             step="any" min="0">
                                         <div class="invalid-feedback">
                                             Please enter your height
@@ -229,7 +229,7 @@
                                         <span class="input-group-text"><i
                                                 class="material-icons-outlined fs-5">event</i></span>
                                         <input type="number" class="form-control" id="weight" name="weight"
-                                            placeholder="Weight (kg)" value="{{ old('weight', $data->weight) }}" required
+                                            placeholder="Weight (kg)" value="{{ old('weight', $data->weight) }}"
                                             step="any" min="0">
                                         <div class="invalid-feedback">
                                             Please enter your Weight

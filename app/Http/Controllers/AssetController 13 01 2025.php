@@ -44,7 +44,6 @@ class AssetController extends Controller implements HasMiddleware
             'asset_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:1',
             'remarks' => 'nullable|string|max:255',
-            'desc' => 'nullable|string|max:255',
             'date' => 'required|date',
         ]);
 
@@ -57,7 +56,6 @@ class AssetController extends Controller implements HasMiddleware
         $asset->assets_category_id = $request->asset_name;
         $asset->amount = $request->amount;
         $asset->remarks = $request->remarks;
-        $asset->desc = $request->desc;
         $asset->created_at = Carbon::parse($request->date)->format('Y-m-d H:i:s');
         $res = $asset->save();
 

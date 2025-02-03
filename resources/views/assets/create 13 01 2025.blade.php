@@ -105,12 +105,6 @@
                                         <textarea type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter Remarks"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="remarks" class="form-label">Descriptions (Optional)</label>
-                                    <div class="">
-                                        <input type="text" class="form-control" id="desc" name="desc" placeholder="Enter Descriptions">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

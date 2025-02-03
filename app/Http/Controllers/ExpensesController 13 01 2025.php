@@ -72,8 +72,6 @@ class ExpensesController extends Controller implements HasMiddleware
             $expenses->expenses_category_id = $request->expense_name[$key];
             $expenses->amount = $request->amount[$key];
             $expenses->remarks = $request->remarks[$key];
-            $expenses->desc = $request->desc[$key];
-
             $expenses->created_at = Carbon::parse($request->date[$key])->format('Y-m-d H:i:s');
             $res = $expenses->save();
 

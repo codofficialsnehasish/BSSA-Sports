@@ -122,17 +122,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="height" class="form-label">Height(cm) <span class="text-danger">*</span></label>
+                                    <label for="height" class="form-label">Height(cm) <span class="text-danger"></span></label>
                                     <input type="number" class="form-control" id="height" name="height"
-                                        placeholder="Height(cm)" value="{{ old('height') }}" required step="any" min="0">
+                                        placeholder="Height(cm)" value="{{ old('height') }}" step="any" min="0">
                                     <div class="invalid-feedback">
                                         Please enter your height
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="weight" class="form-label">Weight (kg) <span class="text-danger">*</span></label>
+                                    <label for="weight" class="form-label">Weight (kg) <span class="text-danger"></span></label>
                                     <input type="number" class="form-control" id="weight" name="weight"
-                                        placeholder="Weight (kg)" value="{{ old('weight') }}" required step="any" min="0">
+                                        placeholder="Weight (kg)" value="{{ old('weight') }}" step="any" min="0">
                                     <div class="invalid-feedback">
                                         Please enter your Weight
                                     </div>

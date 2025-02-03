@@ -57,7 +57,8 @@
 											<div class="booking-content-wrap" style="text-align: center;color:black;">
 												
 				
-												{{-- <p><strong>Received with thanks from </strong></p> --}}
+												
+												<p><strong>{{ $asset->desc }}</strong></p>
 												<p><strong>Date - {{ format_date($asset->created_at) }}</strong></p>
 												<p><strong>Receipt No. - {{ $asset->memo_no }}</strong></p>
 											</div>
@@ -123,7 +124,25 @@
 											</div>
 										</div>
 										<!--Invoice additional info end here -->
-										<p style="text-align: left;color:black;">Rupees {{ numberToWords($asset->amount) }} only</p>
+					
+
+										<div class="d-flex " style="justify-content: space-between">
+											<p style="text-align: left;color:black; position:relative">Rupees {{ numberToWords($asset->amount) }} only</p>
+
+											<p style="text-align: right;color:black;">
+												............................................................</p>
+
+										</div>
+										<div class="col-lg-12 d-flex">
+											<div class="col-lg-6">
+											</div>
+											<div class="col-lg-6">
+												<p
+													style="text-align: right;color:black;text-align:center; padding-left:100PX;">
+													Authorized
+													signature</p>
+											</div>
+										</div>
 									</div>
 								</section>
 								<!--Invoice content end here -->

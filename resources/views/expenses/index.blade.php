@@ -55,7 +55,7 @@
                                     @foreach ($expenses as $item)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td><a href="{{ route('expenses.details', $item->date) }}">{{ $item->date }}</a></td>
+                                            <td><a href="{{ route('expenses.details', $item->date) }}">{{ format_date($item->date) }}</a></td>
                                             <td>{{ $item->amount }}</td>
                                             <td>
                                                 <a href="{{ route('expenses.details', $item->date) }}"> Details</a>

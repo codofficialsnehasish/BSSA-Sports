@@ -39,6 +39,8 @@
                                         <th width="10%">Receipt No.</th>
                                         <th width="20%">Amount</th>
                                         <th width="16%">Remarks (Optional)</th>
+                                        <th width="16%">Descriptions (Optional)</th>
+
                                         <th width="4%">&nbsp;</th>
                                     </tr>
                                     <tr>
@@ -72,6 +74,9 @@
                                         </td>
                                         <td>
                                             <textarea type="text" class="form-control" name="remarks[]"></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="test" class="form-control" name="desc[]" >
                                         </td>
                                     </tr>
                                 </table>
@@ -138,6 +143,7 @@
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
             var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
             document.getElementById("cont").value = idty;
                
 				
@@ -153,8 +159,9 @@
             cell5.innerHTML = '<input type="number" class="form-control" name="amount[]" required step="0.01">';
 
             cell6.innerHTML = '<textarea type="text" class="form-control" name="remarks[]"></textarea>';
+            cell7.innerHTML = '<input type="text" class="form-control" name="desc[]">';
             
-            cell7.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
+            cell8.innerHTML = "<a  href=\"javascript:;\" class=\"btn btn-danger btn-sm\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Remove this Item\" onClick=\"deleteRow(this)\"><i class=\"text-danger\" data-feather=\"trash-2\"></i>Del</a>";
                  
 
 				  

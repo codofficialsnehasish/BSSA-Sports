@@ -32,6 +32,10 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
+                                    <label for="payment_date" class="form-label">Invoice Date</label>
+                                    <input type="date" name="invoice_date" value="{{ date('Y-m-d') }}" id="payment_date" class="form-control">
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="payment_date" class="form-label">Payment Start Date</label>
                                     <input type="date" name="payment_date" value="{{ date('Y-m-d') }}" id="payment_date" class="form-control">
                                 </div>
@@ -48,13 +52,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="student_id" class="form-label">Students</label>
                                     <select class="form-select" id="student_id" name="student_id" required>
                                         <option value selected disabled>Please Select Category</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="memo_no" class="form-label">Memo No.</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="memo_no" placeholder="Enter Memo No."
@@ -65,11 +69,65 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                {{-- old data --}}
+                                {{-- <div class="col-md-4 mb-3">
                                     <label for="amount" class="form-label">Amount</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="amount" placeholder="Enter Amount"
                                             name="amount" value="{{ old('amount') }}" required step="0.01">
+    
+                                        <div class="invalid-feedback">
+                                            Please enter amount
+                                        </div>
+                                        <div class="text-danger" id="custom-error" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="admission_amount" class="form-label">Admission Fees</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="admission_amount" placeholder="Enter Amount"
+                                            name="admission_amount" value="{{ old('admission_amount') }}" required step="0.01" onkeyup="calculate_amount()">
+    
+                                        <div class="invalid-feedback">
+                                            Please enter amount
+                                        </div>
+                                        <div class="text-danger" id="custom-error" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="monthly_amount" class="form-label">Monthly Fees</label>
+                                    <div class="input-group">
+                                        <input type="number" id="monthly_amount" class="form-control" placeholder="Enter Amount"
+                                            name="monthly_amount" value="{{ old('monthly_amount') }}" required step="0.01" readonly>
+    
+                                        <div class="invalid-feedback">
+                                            Please enter amount
+                                        </div>
+                                        <div class="text-danger" id="custom-error" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="month" class="form-label">Month</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="month" placeholder="Enter Month"
+                                            name="month" value="{{ old('month') }}" required onkeyup="calculate_amount()">
+    
+                                        <div class="invalid-feedback">
+                                            Please enter amount
+                                        </div>
+                                        <div class="text-danger" id="custom-error" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="amount" class="form-label">Total Amount</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="amount" placeholder="Enter Amount"
+                                            name="amount" value="{{ old('amount') }}" required step="0.01" readonly>
     
                                         <div class="invalid-feedback">
                                             Please enter amount
@@ -192,9 +250,16 @@
                     admissionFees = parseFloat(resp.admission_fees);
                     monthlyFees = parseFloat(resp.monthly_fees);
                     if(resp.is_paid_admission_fees == false){
+                        three_month_fee = monthlyFees*3;
+                        $('#admission_amount').val(admissionFees-three_month_fee);
+                        $('#monthly_amount').val(monthlyFees);
+                        $('#month').val(3);
                         $('#amount').val(resp.admission_fees);
                         $('#remarks').val('Admission Fees');
                     }else{
+                        $('#admission_amount').attr('readonly', true).removeAttr('required');
+                        $('#monthly_amount').val(resp.monthly_fees);
+                        $('#month').val(1);
                         $('#amount').val(resp.monthly_fees);
                         $('#remarks').val('Monthly Fees');
                     }
@@ -251,6 +316,18 @@
                 }
             }
         });
+
+        function calculate_amount(){
+            let admission_amount = parseFloat($('#admission_amount').val()) || 0;
+            let monthly_amount = parseFloat($('#monthly_amount').val()) || 0;
+            let month = parseInt($('#month').val()) || 0;
+
+            // Perform the mathematical calculation
+            let total_amount = admission_amount + (monthly_amount * month);
+
+            // Update the amount field with the calculated value
+            $('#amount').val(total_amount.toFixed(2));
+        }
     </script>
 
 @endsection

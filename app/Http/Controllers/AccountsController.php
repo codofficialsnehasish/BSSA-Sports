@@ -8,6 +8,8 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 use App\Models\Transaction;
+use App\Models\Asset;
+use App\Models\AssetsCategory;
 use Illuminate\Support\Facades\DB;
 
 class AccountsController extends Controller implements HasMiddleware
@@ -129,5 +131,37 @@ class AccountsController extends Controller implements HasMiddleware
         }
     }
 
+    public function accountReport(Request $request,$id = null){
+        $items = [];
+        $startDate = null;
+        $endDate = null;
+        if($request->isMethod('post')){
+            if ($request->has('date_range') && !empty($request->input('date_range'))) {
+                $dateRange = explode(' to ', $request->input('date_range'));
+    
+                // Check if both start and end dates are provided
+                if (count($dateRange) !== 2 || empty($dateRange[0]) || empty($dateRange[1])) {
+                    return redirect()->back()->withErrors(['date_range' => 'Please provide both start and end dates in the correct format.']);
+                }
+                $startDate = $dateRange[0];
+                $endDate = $dateRange[1];
+                if($request->has('asset_name')){
+                    $items = Asset::where('assets_category_id',$request->asset_name)
+                                ->whereDate('created_at', '>=', $startDate)
+                                ->whereDate('created_at', '<=', $endDate)->get();
+                }else{
+                    $items = Asset::whereDate('created_at', '>=', $startDate)
+                                ->whereDate('created_at', '<=', $endDate)->get();
+                }
+            }else{
+                $items = Asset::where('assets_category_id',$request->asset_name)->get();
+            }
+        }
+        if($id != null){
+            $items = Asset::where('assets_category_id',$id)->get();
+        }
+        $assets_categorys = AssetsCategory::all();
+        return view('accounts.accounts_report',compact('assets_categorys','items','startDate','endDate'));
+    }
 
 }

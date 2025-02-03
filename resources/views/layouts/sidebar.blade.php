@@ -525,12 +525,12 @@
                     </li>
                     @endcan
 
-                    {{-- <li>
-                        <a href="javascript:void(0)" class="collapsible-header">
+                    <li>
+                        <a href="{{ route('accounts.account-report') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
-                            <span class="hide-menu"> Purches</span>
+                            <span class="hide-menu"> Accounts</span>
                         </a>
-                    </li> --}}
+                    </li>
                     {{-- <li>
                         <a href="javascript:void(0)" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>

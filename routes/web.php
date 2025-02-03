@@ -213,6 +213,9 @@ Route::prefix('admin')->group( function (){
             Route::controller(AccountsController::class)->group(function () {
                 Route::get('profit-loss', 'showProfitLossReport')->name('accounts.profit-loss');
                 Route::post('profit-loss', 'showProfitLossReport')->name('accounts.search-profit-loss-report');
+
+                Route::get('/ac/{id?}', 'accountReport')->name('accounts.account-report');
+                Route::post('/ac', 'accountReport')->name('accounts.generate-account-report');
             });
         });
 

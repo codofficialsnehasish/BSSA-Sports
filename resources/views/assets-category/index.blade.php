@@ -51,7 +51,7 @@
                                     @foreach ($assets_categorys as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->name }}</td>
+                                            <td><a href="{{ route('accounts.account-report',$item->id) }}">{{ $item->name }}</a></td>
                                             <td>{!! check_status($item->visiblity) !!}</td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>

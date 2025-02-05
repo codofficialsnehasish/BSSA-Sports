@@ -216,6 +216,9 @@ Route::prefix('admin')->group( function (){
 
                 Route::get('/ac/{id?}', 'accountReport')->name('accounts.account-report');
                 Route::post('/ac', 'accountReport')->name('accounts.generate-account-report');
+
+                Route::get('/expence/{id?}', 'expence_accountReport')->name('accounts.expence-account-report');
+                Route::post('/expence', 'expence_accountReport')->name('accounts.generate-expence-account-report');
             });
         });
 

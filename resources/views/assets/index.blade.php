@@ -44,6 +44,7 @@
                                         <th>Sl. No.</th>
                                         <th>Title</th>
                                         <th>Amount</th>
+                                        <th>Description</th>
                                         <th>Remarks</th>
                                         <th>Date</th>
                                         <th>Action</th>
@@ -57,6 +58,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->category->name }}</td>
                                             <td>{{ $item->amount }}</td>
+                                            <td>{{ $item->desc }}</td>
                                             <td>{{ $item->remarks }}</td>
                                             <td>{{ format_datetime($item->created_at) }}</td>
                                             <td>

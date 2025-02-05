@@ -60,13 +60,13 @@
     <div class="main-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Asset Accounts</div>
+            <div class="breadcrumb-title pe-3">Expence Accounts</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Asset Accounts</li>
+                        <li class="breadcrumb-item active" aria-current="page">Expence Accounts</li>
                     </ol>
                 </nav>
             </div>
@@ -76,7 +76,7 @@
         <div class="row">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('accounts.generate-account-report') }}" method="post">
+                    <form action="{{ route('accounts.generate-expence-account-report') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="mb-0 col-md-6">
@@ -87,11 +87,11 @@
                                 <label for="asset_name" class="form-label">Account Name</label>
                                 <div class="input-group">
 
-                                    <select name="asset_name" id="single-select-clear-field" data-placeholder="Choose one thing" class="form-select" required>
+                                    <select name="expenses_category_id" id="single-select-clear-field" data-placeholder="Choose one thing" class="form-select" required>
                                         <option value selected disabled>Select a account</option>
-                                        @foreach($assets_categorys as $assets_category)
-                                        <option value="{{ $assets_category->id }}">
-                                            {{ $assets_category->name }}
+                                        @foreach($expence_categorys as $expence_category)
+                                        <option value="{{ $expence_category->id }}">
+                                            {{ $expence_category->name }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -119,7 +119,7 @@
                         <div class="text-center">
                             <p style="font-size:20px;"><u><strong>BISHNUPUR SUB-DIVISIONAL SPORTS ASSOCIATION</strong></u></p>
                             <p style="font-size:20px;"><u><strong>BISHNUPUR, BANKURA</strong></u></p>
-                            <p style="font-size:18px;">Asset Account Statement @if(!empty($startDate) && !empty($endDate)), FOR THE PERIOD ENDED FROM {{ \Illuminate\Support\Carbon::parse($startDate)->format('d.m.Y') }} TO {{ \Illuminate\Support\Carbon::parse($endDate)->format('d.m.Y') }}@endif</p>
+                            <p style="font-size:18px;">Expence Account Statement @if(!empty($startDate) && !empty($endDate)), FOR THE PERIOD ENDED FROM {{ \Illuminate\Support\Carbon::parse($startDate)->format('d.m.Y') }} TO {{ \Illuminate\Support\Carbon::parse($endDate)->format('d.m.Y') }}@endif</p>
                         </div>
                         
                         <div class="row">

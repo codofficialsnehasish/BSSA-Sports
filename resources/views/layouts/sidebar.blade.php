@@ -528,15 +528,15 @@
                     <li>
                         <a href="{{ route('accounts.account-report') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
-                            <span class="hide-menu"> Accounts</span>
+                            <span class="hide-menu"> Asset Accounts</span>
                         </a>
                     </li>
-                    {{-- <li>
-                        <a href="javascript:void(0)" class="collapsible-header">
+                    <li>
+                        <a href="{{ route('accounts.expence-account-report') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
-                            <span class="hide-menu"> Sallaries</span>
+                            <span class="hide-menu"> Expence Accounts</span>
                         </a>
-                    </li> --}}
+                    </li>
                     {{-- <li>
                         <a href="{{ route('accounts.profit-loss') }}" class="collapsible-header">
                             <i class="material-icons-outlined">arrow_right</i>
